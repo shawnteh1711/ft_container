@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/21 05:17:39 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/21 12:36:28 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,27 @@
 
 namespace ft 
 {
-    template <class T, class Alloc = std::allocator<T> >
+    template <class T, class Allocator = std::allocator<T> >
     class vector
     {
         public:
 
-            typedef size_t      size_type;
-            typedef T           value_type;
-			typedef Alloc       allocator_type;
+            typedef T                                                   value_type;
+			typedef Allocator                                           allocator_type;
+            typedef std::size_t                                         size_type;
+            typedef std::ptrdiff_t                                      difference_type;
+            typedef value_type&                                         reference;
+            typedef const value_type&                                   const_reference;
+            typedef std::allocator_traits<Allocator>::pointer           pointer;
+            typedef std::allocator_traits<Allocator>::const_pointer     const_pointer;
+            typedef vector_iterator<pointer, vector>                    iterator;
+            typedef vector_iterator<const pointer, vector>              const_iterator;
+            typedef ft::reverse_iterator<iterator>                      reverse_iterator;
+            typedef ft::reverse_iterator<const_iterator>                const_reverse_iterator;
+            
+            
+            
+                       
 
             // Constructor
             vector() : _size(0), _capacity(0), _data(NULL) {}
@@ -47,15 +60,23 @@ namespace ft
 
             // Element access functions
 
+            T& operator[](size_type index) {
+                return _data[index];
+            }
+            
+            const T& operator[](size_type index) const {
+                return _data[index];
+            }
+
             // Modifiers
             void    push_back(const T& value)
             {
                 if (_size == _capacity)
                 {
-                    std::cout << "size: " << _size << std::endl;
-                    std::cout << "capacity: " << _capacity << std::endl;
+                    // std::cout << "size: " << _size << std::endl;
+                    // std::cout << "capacity: " << _capacity << std::endl;
                     size_type   new_capacity = _capacity == 0 ? 1 : _capacity * 2;
-                    std::cout << "new_capacity: " << new_capacity << std::endl;
+                    // std::cout << "new_capacity: " << new_capacity << std::endl;
                     T* new_data = _alloc.allocate(new_capacity);
                     for (size_type i = 0; i < _size; i++)
                     {

@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: steh <steh@student.42.fr>                  +#+  +:+       +#+         #
+#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/18 17:07:14 by steh              #+#    #+#              #
-#    Updated: 2022/09/14 09:02:16 by steh             ###   ########.fr        #
+#    Updated: 2022/12/21 07:09:27 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 SRCS			=	$(wildcard $(SRCS_DIR)/*.cpp)
-SRCS_DIR		=	src
+SRCS_DIR		=	tester
 OBJ_DIR			=	obj
 HEAD_DIR		=	header
 DEPENDS 		=	$(patsubst $(SRCS_DIR)/%.cpp, $(OBJ_DIR)/%.d, $(SRCS))
