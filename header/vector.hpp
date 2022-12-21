@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/21 12:36:28 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/21 12:54:49 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,19 @@
 # include <memory> // for allocator
 # include <cstddef>
 
+/**
+ * @brief https://en.cppreference.com/w/cpp/container/vector
+ * 
+ */
+
 namespace ft 
 {
     template <class T, class Allocator = std::allocator<T> >
     class vector
     {
+        
         public:
-
+            // Member types
             typedef T                                                   value_type;
 			typedef Allocator                                           allocator_type;
             typedef std::size_t                                         size_type;
@@ -36,15 +42,11 @@ namespace ft
             typedef ft::reverse_iterator<iterator>                      reverse_iterator;
             typedef ft::reverse_iterator<const_iterator>                const_reverse_iterator;
             
-            
-            
-                       
-
-            // Constructor
+            // Member Function: Constructor
             vector() : _size(0), _capacity(0), _data(NULL) {}
             vector(size_type size) : _size(size), _capacity(size), _data(_alloc.allocate(size)) {}
             
-            // Destructor
+            // Member Function: Destructor
             ~vector()
             {
                 for (size_type i = 0; i < _size; i++)
@@ -53,13 +55,16 @@ namespace ft
                 }
                 _alloc.deallocate(_data, _capacity); 
             };
+
+            // Member Function: Operator=
+
+            // Member Function: Assign
+
+            // Member Function: Get_allocator
+           
+            // Element access: at
             
-            // Size and capacity functions
-            size_type size() const { return _size; }
-            size_type capacity() const { return _capacity; }
-
-            // Element access functions
-
+            // Element access: operator []
             T& operator[](size_type index) {
                 return _data[index];
             }
@@ -67,6 +72,18 @@ namespace ft
             const T& operator[](size_type index) const {
                 return _data[index];
             }
+
+            // Element access: front
+            
+            // Element access: back
+            
+            // Element access: data            
+            
+            // Capacity
+            // Size and capacity functions
+            size_type size() const { return _size; }
+            size_type capacity() const { return _capacity; }
+
 
             // Modifiers
             void    push_back(const T& value)
