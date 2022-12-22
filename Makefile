@@ -6,7 +6,7 @@
 #    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/18 17:07:14 by steh              #+#    #+#              #
-#    Updated: 2022/12/21 07:09:27 by codespace        ###   ########.fr        #
+#    Updated: 2022/12/22 06:41:52 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,8 @@ DEPENDS 		=	$(patsubst $(SRCS_DIR)/%.cpp, $(OBJ_DIR)/%.d, $(SRCS))
 NAME			=	program
 # OBJS			=	$(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
 OBJS			=	$(patsubst $(SRCS_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRCS))
-CFLAGS			=	-Wall -Wextra -Werror -std=c++98 -pedantic -g -fsanitize=address
-CC				=	c++	
+CXXFLAGS		=	-Wall -Wextra -Werror -std=c++98 -pedantic -g -fsanitize=address
+CXX				=	c++	
 
 all				: 	$(NAME)
 					./$(NAME)
@@ -32,7 +32,7 @@ $(NAME)			:	$(OBJS)
 
 $(OBJ_DIR)/%.o	:	$(SRCS_DIR)/%.cpp Makefile
 					mkdir -p $(dir $@)
-					$(CC) $(CFLAGS) -I$(HEAD_DIR) -MMD -MP -c $< -o $@
+					$(CXX) $(CXXFLAGS) -I$(HEAD_DIR) -MMD -MP -c $< -o $@
 
 clean			:
 					@rm -rf $(OBJ_DIR)
