@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
+#    By: steh <steh@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/18 17:07:14 by steh              #+#    #+#              #
-#    Updated: 2022/12/22 06:41:52 by codespace        ###   ########.fr        #
+#    Updated: 2022/12/26 17:05:58 by steh             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,14 +19,14 @@ DEPENDS 		=	$(patsubst $(SRCS_DIR)/%.cpp, $(OBJ_DIR)/%.d, $(SRCS))
 NAME			=	program
 # OBJS			=	$(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
 OBJS			=	$(patsubst $(SRCS_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRCS))
-CXXFLAGS		=	-Wall -Wextra -Werror -std=c++98 -pedantic -g -fsanitize=address
-CXX				=	c++	
+CXXFLAGS		=	-Wall -Wextra -Werror -std=c++98 -pedantic -g #-fsanitize=address
+CXX				=	c++
 
 all				: 	$(NAME)
 					./$(NAME)
 
 $(NAME)			:	$(OBJS)
-					$(CC) $(CFLAGS) $^ -o $@
+					$(CXX) $(CXXFLAGS) $^ -o $@
 
  -include $(DEPENDS)
 

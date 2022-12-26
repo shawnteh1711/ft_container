@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:13:41 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/21 07:43:21 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/26 16:37:19 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
 #include "tester.hpp"
+#include <iostream>
+#include <stdio.h>
 
 int main(void)
 {
-    vector_test();
-    return 0;
+	vector_test();
+	return (0);
 }
