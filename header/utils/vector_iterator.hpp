@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:43:01 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/26 12:47:05 by steh             ###   ########.fr       */
+/*   Updated: 2022/12/27 21:08:02 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,16 @@ namespace ft
 	template <typename Iter, typename Container>
 	class vector_iterator
 	{
+		public:
+			typedef Iter										iterator_type;
+			typedef typename iterator_traits<Iter>::pointer		pointer;
+
+		// constructor accept pointer
+		vector_iterator(pointer ptr): _ptr(ptr) {}
+		// vector_iterator(iterator_type &other): _ptr(other._ptr) {}
+
+		protected:
+			pointer	_ptr;
 
 	};
 }

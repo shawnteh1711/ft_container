@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/26 21:10:07 by steh             ###   ########.fr       */
+/*   Updated: 2022/12/27 21:07:54 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,13 @@ namespace ft
 		
 			// this->_end = this->construct_from_start(this->_start, first, last);
 
-			template <class InputIterator>
+			template <class InputIterator, class ForwardIt>
 			vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
 			{
-				size_type	n = std::distance(first, last);
+				ForwardIt	_first = first;
+				ForwardIt	_last = last;
+				size_type	n = std::distance(_first, _last);
+				std::cout << "n: " << n <<std::endl;
 				if (n == 0)
 					return ;
 				this->_alloc = alloc;
@@ -161,6 +164,8 @@ namespace ft
 			// Iterators
 
 			// begin: return iterator to beginning
+			// vector_iterator need to have default constructor
+			// that accept the pointer
 			iterator begin()
 			{
 				return (iterator(this->_start));
