@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 12:40:37 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/27 20:17:15 by steh             ###   ########.fr       */
+/*   Updated: 2022/12/28 19:27:38 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,9 @@ namespace ft
 		typedef typename Iter::difference_type		difference_type;
 		typedef typename Iter::value_type			value_type;
 		typedef typename Iter::pointer				pointer;
-		typedef typename Iter::reference			reference;
-		typedef typename Iter::iterator_category	iterator_category;
+		typedef typename Iter::reference				reference;
+		typedef typename Iter::iterator_category		iterator_category;
 	};
-
 	
 	// T* specializations class for user-provided types thay may be used as iterators
 	template <class T> struct iterator_traits<T*>
@@ -91,13 +90,13 @@ namespace ft
 				return (*this);
 			this->current = other.current;
 			return (*this);
-		}
+		};
 
 		// Accesses the underlying iterator
 		iterator_type base() const
 		{
 			return (this->current);
-		}
+		};
 
 		// Accesses the pointed-to element.
 		// Return a reference or pointer to the element previous to current.
@@ -120,7 +119,7 @@ namespace ft
 		reference operator[] (difference_type n) const
 		{
 			return (this->base()[ -n - 1]);
-		}
+		};
 
 		// Advances or decrements the iterator
 		// Parameters:
@@ -162,7 +161,7 @@ namespace ft
 		reverse_iterator operator--(int)
 		{
 			return (reverse_iterator(current++));
-		}
+		};
 
 		// Returns an iterator which is advanced by n position (it + n)
 		// Return reverse_iterator(base() - n)
@@ -176,7 +175,7 @@ namespace ft
 		reverse_iterator operator-(difference_type n) const
 		{
 			return (reverse_iterator(this->base() + n + 1));
-		}
+		};
 
 		// Advances the iterator by n positions (it += n)
 		// Return *this
@@ -184,15 +183,15 @@ namespace ft
 		{
 			current -= n;
 			return (*this);
-
 		};
+
 		// Advances the iterator by -n positions (it -= n)
 		// Return *this
 		reverse_iterator& operator-=(difference_type n)
 		{
 			current += n;
 			return (*this);
-		}
+		};
 
 		protected:
 			Iter	current;
@@ -246,7 +245,7 @@ namespace ft
 
 		// Spaceship operator not cover (since C++20)
 
-		// Adcances the iterator
+		// Advances the iterator
 		// Returns the iterator it incremented by n
 		// Parameters
 		//	n - number of positions to increment the iterator

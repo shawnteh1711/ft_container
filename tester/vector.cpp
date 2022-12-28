@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:13:41 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/26 20:22:34 by steh             ###   ########.fr       */
+/*   Updated: 2022/12/28 20:58:24 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,14 @@ void vector_test(void)
 	}
 
 	{
-		ft::vector<int> v (4,100); 
+		ft::vector<int> v (4,100);
 		ft::vector<int> v2 (v.begin(),v.end());  // iterating through second
 		std::vector<int> sv (4,100); 
 		std::vector<int> sv2 (sv.begin(),sv.end());  // iterating through second
 
 		for (size_t i = 0; i < v2.size(); i++)
 		{
+			std::cout << "run program" << std::endl;
 			std::cout << "my vec[" << i << "] = " << v2[i] << std::endl;
 			std::cout << "std vec[" << i << "] = " << sv2[i] << std::endl;
 			if (v2[i] == sv2[i])

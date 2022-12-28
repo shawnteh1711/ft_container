@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/27 21:07:54 by steh             ###   ########.fr       */
+/*   Updated: 2022/12/28 20:58:52 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 # include <memory> // for allocator
 # include <cstddef> //size_t
-# include "./utils/vector_iterator.hpp"
 # include <stdio.h>
 # include <new>
 # include <iterator>
+# include "./utils/vector_iterator.hpp"
 
 /**
  * @brief https://en.cppreference.com/w/cpp/container/vector
@@ -59,33 +59,52 @@ namespace ft
 				for (size_t i = 0; i < _size; i++)
 				{
 					_alloc.construct(_data + i, val);
-				}		
+				}
 			}
 		
 			// this->_end = this->construct_from_start(this->_start, first, last);
 
-			template <class InputIterator, class ForwardIt>
-			vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
+			// template <class InputIterator, class ForwardIt>
+			// vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
+			// {
+			// 	ForwardIt	_first = first;
+			// 	ForwardIt	_last = last;
+			// 	size_type	n = std::distance(_first, _last);
+			// 	std::cout << "n: " << n <<std::endl;
+			// 	if (n == 0)
+			// 		return ;
+			// 	this->_alloc = alloc;
+			// 	this->_start = this->_alloc.allocate(n);
+			// 	// std::copy(first, last, _data);
+			// 	for ( ; first != last; first++, this->_start++)
+			// 	{
+			// 		this->_alloc.construct(this->_start, first);
+			// 	}
+			// 	this->_end = this->_start;
+			// 	this->_size = n;
+			// 	this->_capacity = this->_start + n;
+			// }
+
+
+			template <class InputIt>
+			// vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
+			vector(InputIt first, typename std::enable_if<!std::is_integral<InputIt>::value, InputIt>::type last, const allocator_type& alloc = allocator_type()) : _alloc(alloc), _capacity(0), _start(NULL),  _end(NULL)
 			{
-				ForwardIt	_first = first;
-				ForwardIt	_last = last;
-				size_type	n = std::distance(_first, _last);
-				std::cout << "n: " << n <<std::endl;
-				if (n == 0)
+				_alloc = alloc;
+				// size_t	size = last - first;
+				const size_t size = std::distance(first, last);
+				std::cout << "size: " << size << std::endl;
+				if (size < 0)
 					return ;
-				this->_alloc = alloc;
-				this->_start = this->_alloc.allocate(n);
-				// std::copy(first, last, _data);
-				for ( ; first != last; first++, this->_start++)
-				{
-					this->_alloc.construct(this->_start, first);
-				}
-				this->_end = this->_start;
-				this->_size = n;
-				this->_capacity = this->_start + n;
+				_data = _alloc.allocate(size);
+				_start = _data;
+				_end = _data + size;
+				_capacity = size;
+				_size = size;
+				std::uninitialized_copy(first, last, _start);
 			}
 
-			vector (const vector& x)
+			vector(const vector& x)
 			{
 				this->_alloc = x._alloc;
 				this->_size = x._size;
