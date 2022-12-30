@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:43:01 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/28 20:59:37 by steh             ###   ########.fr       */
+/*   Updated: 2022/12/30 19:39:18 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define VECTOR_ITERATOR_HPP
 
 # include "iterator.hpp"
+# include "type_traits.hpp"
 
 namespace ft
 {
@@ -26,19 +27,18 @@ namespace ft
 			typedef typename iterator_traits<Iter>::value_type			value_type;
 			typedef typename iterator_traits<Iter>::difference_type		difference_type;
 			typedef typename iterator_traits<Iter>::pointer				pointer;
-			typedef typename iterator_traits<Iter>::reference			reference;
-
+			typedef typename iterator_traits<Iter>::reference			reference;		
 
 		vector_iterator() : _iter(iterator_type()){};
 		explicit vector_iterator(const iterator_type& iter) : _iter(iter) {};
 		// constructor accept pointer
 		// vector_iterator(pointer ptr): _ptr(ptr) {}
 		// vector_iterator(iterator_type &other): _ptr(other._ptr) {}
-		template <class It>
 
 		// template type constructor
 		
-		vector_iterator(const vector_iterator<It, typename std::enable_if<std::is_same<It, typename Container::pointer>::value, Container>::type>& iter) : _iter(iter.base()) {};
+		template <class It> vector_iterator(const vector_iterator<It, typename ft::enable_if<std::is_same<It, typename Container::pointer>::value, Container>::type>& iter) : _iter(iter.base()) {};
+
 		~vector_iterator() {};
 
 		vector_iterator &operator=(const vector_iterator& other)
@@ -116,6 +116,7 @@ namespace ft
 		protected:
 			pointer	_ptr;
 			Iter	_iter;
+	
 	};
 
 	template <class Iterator1, class Iterator2, class Container>
@@ -170,8 +171,7 @@ namespace ft
 
 	// Computes the distance
 	template  <class Iterator1, class Iterator2, class Container>
-	typename vector_iterator<Iterator1, Container>::difference_type operator-(const vector_iterator<Iterator1, Container>& lhs,
-																				const vector_iterator<Iterator2, Container>& rhs)
+	typename vector_iterator<Iterator1, Container>::difference_type operator-(const vector_iterator<Iterator1, Container>& lhs, const vector_iterator<Iterator2, Container>& rhs)
 	{
 		return (lhs.base() - rhs.base());
 	}

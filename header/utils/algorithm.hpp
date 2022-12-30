@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utility.hpp                                        :+:      :+:    :+:   */
+/*   algorithm.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/21 07:19:58 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/30 16:38:01 by steh             ###   ########.fr       */
+/*   Created: 2022/12/30 16:49:22 by steh              #+#    #+#             */
+/*   Updated: 2022/12/30 17:07:26 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILITY_HPP
-# define UTILITY_HPP
-#include <iostream>
+#ifndef ALGORITHM_HPP
+# define ALGORITHM_HPP
+
+// swap
+// https://cplusplus.com/reference/utility/swap/
 
 namespace ft
 {
-	// class pair
-	// {
-	// 	public:
-	// 	/*Constructor*/
-	// 		pair()
-	// 		{
-	// 			std::cout << "pair construct" << std::endl;
-	// 		}
-	// 	private:
-	// };
-}
+	template<class T>
+	void swap (T& a, T& b)
+	{
+		T	c(a);
+		a = b;
+		b = c;
+	}
+	
+} // namespace ft
+
+
 
 #endif

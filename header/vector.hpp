@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/28 20:58:52 by steh             ###   ########.fr       */
+/*   Updated: 2022/12/30 20:07:02 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <new>
 # include <iterator>
 # include "./utils/vector_iterator.hpp"
+# include "./utils/type_traits.hpp"
+# include "./utils/pair.hpp"
 
 /**
  * @brief https://en.cppreference.com/w/cpp/container/vector
@@ -54,12 +56,15 @@ namespace ft
 
 			explicit vector(size_type n, const value_type& val = value_type(),
 					const allocator_type& alloc = allocator_type()) 
-				: _alloc(alloc), _size(n), _capacity(n), _data(_alloc.allocate(n))
+				: _alloc(alloc), _size(n), _capacity(n)
 			{
+				this->_data = _alloc.allocate(n);
 				for (size_t i = 0; i < _size; i++)
 				{
 					_alloc.construct(_data + i, val);
 				}
+				this->_start = this->_data;
+				this->_end = this->_data + this->_size;
 			}
 		
 			// this->_end = this->construct_from_start(this->_start, first, last);
@@ -86,22 +91,23 @@ namespace ft
 			// }
 
 
-			template <class InputIt>
 			// vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
-			vector(InputIt first, typename std::enable_if<!std::is_integral<InputIt>::value, InputIt>::type last, const allocator_type& alloc = allocator_type()) : _alloc(alloc), _capacity(0), _start(NULL),  _end(NULL)
+			template <class InputIt>
+			vector(InputIt first, InputIt last, const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIt>::value, void>::type* = NULL)
 			{
 				_alloc = alloc;
-				// size_t	size = last - first;
 				const size_t size = std::distance(first, last);
-				std::cout << "size: " << size << std::endl;
 				if (size < 0)
 					return ;
-				_data = _alloc.allocate(size);
-				_start = _data;
-				_end = _data + size;
-				_capacity = size;
-				_size = size;
-				std::uninitialized_copy(first, last, _start);
+				this->_data = this->_alloc.allocate(size);
+				this->_start = _data;
+				this->_end = this->_data + size;
+				this->_capacity = size;
+				this->_size = size;
+				for (size_t i = 0; i < size; ++i)
+				{
+					_alloc.construct(_start + i, *(first + i));
+				}
 			}
 
 			vector(const vector& x)
@@ -129,6 +135,21 @@ namespace ft
 			};
 
 			// Member Function: Operator=
+			vector& operator=(const vector &other)
+			{
+				if (this != &other)
+				{
+					// Deallocate the current vector's memory
+					this->_alloc.deallocate(this->_start, this->_capacity);
+
+					// Allocate new memory for the current vector using the other vector's allocator
+					this->_capacity = other._capacity;
+					this->_start = _alloc.allocate(_capacity);
+					this->_end = _start + _capacity;
+					std::uninitialized_copy(other._start, other._end, this->_start);
+				}
+				return (*this);
+			};
 
 			// Member Function: Assign
 
@@ -156,10 +177,7 @@ namespace ft
 			{
 				if (_size == _capacity)
 				{
-					// std::cout << "size: " << _size << std::endl;
-					// std::cout << "capacity: " << _capacity << std::endl;
 					size_type   new_capacity = _capacity == 0 ? 1 : _capacity * 2;
-					// std::cout << "new_capacity: " << new_capacity << std::endl;
 					T* new_data = _alloc.allocate(new_capacity);
 					for (size_type i = 0; i < _size; i++)
 					{
@@ -208,12 +226,12 @@ namespace ft
 
 		private:
 
-		allocator_type		_alloc;
-		size_type			_size;
-		size_type			_capacity;
-		T*					_data;
-		pointer				_start;
-		pointer				_end;
+			allocator_type		_alloc;
+			size_type			_size;
+			size_type			_capacity;
+			T*					_data;
+			pointer				_start;
+			pointer				_end;
 
 	};
 }

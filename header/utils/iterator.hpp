@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 12:40:37 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/28 19:27:38 by steh             ###   ########.fr       */
+/*   Updated: 2022/12/30 15:27:31 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
  * https://en.cppreference.com/w/cpp/iterator/iterator_traits
  * https://en.cppreference.com/w/cpp/iterator/reverse_iterator
  */
+#include "type_traits.hpp"
 
 namespace ft
 {
@@ -25,9 +26,9 @@ namespace ft
 	// iter - the iterator type to retrieve properties for
 	template <class Iter> struct iterator_traits
 	{
-		typedef typename Iter::difference_type		difference_type;
-		typedef typename Iter::value_type			value_type;
-		typedef typename Iter::pointer				pointer;
+		typedef typename Iter::difference_type			difference_type;
+		typedef typename Iter::value_type				value_type;
+		typedef typename Iter::pointer					pointer;
 		typedef typename Iter::reference				reference;
 		typedef typename Iter::iterator_category		iterator_category;
 	};
