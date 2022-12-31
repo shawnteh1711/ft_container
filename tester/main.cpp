@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:13:41 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/30 17:45:15 by steh             ###   ########.fr       */
+/*   Updated: 2022/12/31 20:07:56 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,19 @@
 #include <stdio.h>
 #include <cassert>
 #include <utility>
+#include <algorithm>
+#include <vector>
+#include <random>
 
 // #include <type_traits>
 
 int main(void)
 {
-	vector_test();
+	// vector_test();
 	// is_integral_test();
 	// pair_test();
+	algorithms_test();
 
-	
+
+
 }
