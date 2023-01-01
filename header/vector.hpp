@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/30 20:07:02 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/01 21:59:20 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@
 # include <iterator>
 # include "./utils/vector_iterator.hpp"
 # include "./utils/type_traits.hpp"
+# include "./utils/algorithm.hpp"
 # include "./utils/pair.hpp"
+# include "./utils/utility.hpp"
 
 /**
  * @brief https://en.cppreference.com/w/cpp/container/vector
@@ -50,73 +52,48 @@ namespace ft
 
 			// Member Function: Constructor
 
-			// vector() : _size(0), _capacity(0), _data(NULL) {};
-			explicit vector(const allocator_type& alloc = allocator_type())
-				: _alloc(alloc), _size(0), _capacity(0), _data(NULL) {};
+			// Default constructor. Constructs an empty container with a default-constructed allocator.
+			vector() : _alloc(allocator_type()), _size(0), _capacity(0), _data(NULL), _start(NULL), _end(NULL) {};
 
+			// Constructs an empty container with the given allocator alloc
+			explicit vector(const allocator_type& alloc)
+				: _alloc(alloc), _size(0), _capacity(0), _data(NULL), _start(NULL), _end(NULL) {
+				};
+
+			// Constructs the container with count copies of elements with value value.
 			explicit vector(size_type n, const value_type& val = value_type(),
 					const allocator_type& alloc = allocator_type()) 
 				: _alloc(alloc), _size(n), _capacity(n)
 			{
-				this->_data = _alloc.allocate(n);
-				for (size_t i = 0; i < _size; i++)
-				{
-					_alloc.construct(_data + i, val);
-				}
-				this->_start = this->_data;
-				this->_end = this->_data + this->_size;
+				clear();
+				for (size_t i = 0; i < n; i++)
+					push_back(val);
 			}
-		
-			// this->_end = this->construct_from_start(this->_start, first, last);
 
-			// template <class InputIterator, class ForwardIt>
-			// vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
-			// {
-			// 	ForwardIt	_first = first;
-			// 	ForwardIt	_last = last;
-			// 	size_type	n = std::distance(_first, _last);
-			// 	std::cout << "n: " << n <<std::endl;
-			// 	if (n == 0)
-			// 		return ;
-			// 	this->_alloc = alloc;
-			// 	this->_start = this->_alloc.allocate(n);
-			// 	// std::copy(first, last, _data);
-			// 	for ( ; first != last; first++, this->_start++)
-			// 	{
-			// 		this->_alloc.construct(this->_start, first);
-			// 	}
-			// 	this->_end = this->_start;
-			// 	this->_size = n;
-			// 	this->_capacity = this->_start + n;
-			// }
-
-
-			// vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
+			// Constructs the container with the contents of the range [first, last).
 			template <class InputIt>
 			vector(InputIt first, InputIt last, const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIt>::value, void>::type* = NULL)
 			{
 				_alloc = alloc;
-				const size_t size = std::distance(first, last);
-				if (size < 0)
-					return ;
-				this->_data = this->_alloc.allocate(size);
-				this->_start = _data;
-				this->_end = this->_data + size;
-				this->_capacity = size;
-				this->_size = size;
-				for (size_t i = 0; i < size; ++i)
-				{
-					_alloc.construct(_start + i, *(first + i));
-				}
+				clear();
+				// const size_t size = ft::distance(first, last);
+				// reserve(size);
+				for (; first != last; ++first)
+					push_back(*first);
 			}
 
-			vector(const vector& x)
+			// Copy constructor
+			vector(const vector& x) : _alloc(x._alloc), _size(x._size), _capacity(x._capacity)
 			{
-				this->_alloc = x._alloc;
-				this->_size = x._size;
-				this->_capacity = x._capacity;
-				this->_data = this->_alloc.allocate(this->_capacity);
-				std::uninitialized_copy(x._data, x._data + this->_size, this->_data);
+				if (_capacity == 0)
+					return ;
+				_data = this->_alloc.allocate(this->_capacity);
+				// for (pointer q = x._start; q != x._end; ++q)
+				// 	push_back(*q);
+				for (size_type i = 0; i < this->size(); i++)
+					_alloc.construct(&(_data[i]), x[i]);
+				_start = _data;
+				_end = _data + _size;
 			}
 			
 			// Member Function: Destructor
@@ -130,8 +107,7 @@ namespace ft
 				{
 					_alloc.deallocate(_data, _capacity);
 				}
-				_size = 0;
-				_capacity = 0;
+				clear();
 			};
 
 			// Member Function: Operator=
@@ -139,68 +115,83 @@ namespace ft
 			{
 				if (this != &other)
 				{
-					// Deallocate the current vector's memory
-					this->_alloc.deallocate(this->_start, this->_capacity);
-
-					// Allocate new memory for the current vector using the other vector's allocator
-					this->_capacity = other._capacity;
-					this->_start = _alloc.allocate(_capacity);
-					this->_end = _start + _capacity;
-					std::uninitialized_copy(other._start, other._end, this->_start);
+					_alloc.deallocate(_start, _capacity);
+					_size = other._size;
+					_capacity = other._capacity;
+					_data = _alloc.allocate(_capacity);
+					_start = _data;
+					_end = _start + _capacity;
+					for (size_type i = 0; i < this->size(); i++)
+						_alloc.construct(&(_data[i]), other[i]);
 				}
 				return (*this);
 			};
 
 			// Member Function: Assign
+			// Replaces the contents with count copies of value's value
+			// count - the new size of container
+			// value - the value to initialize elements of the container with
+			void assign(size_type count, const T& value)
+			{
+				clear();
+				reserve(count);
+				for (size_t i = 0; i < count; ++i)
+				{
+					push_back(value);
+				}
+			}
+
+			// Replaces the contents with copies of those in the rage [first, last]. The behaviour is undefined if either argument is an iterator *this.
+			template<class InputIt>
+			void assign(InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = NULL)
+			{
+				clear();
+				size_type count = ft::distance(first, last);
+				reserve(count);
+				while (first != last)
+				{
+					push_back(*first);
+					++first;
+				}
+			}
 
 			// Member Function: Get_allocator
+			// Returns the allocator associated with the container.
+			allocator_type get_allocator() const
+			{
+				return (this->_alloc);
+			}
+
+			// Element access
 			// Element access: at
+			
 			// Element access: operator []
-			T& operator[](size_type index) {
+			T& operator[](size_type index)
+			{
 				return _data[index];
 			}
 			
-			const T& operator[](size_type index) const {
+			const T& operator[](size_type index) const
+			{
 				return _data[index];
 			}
 
 			// Element access: front
 			// Element access: back
-			// Element access: data
-			// Capacity
-			// Size and capacity functions
-			size_type size() const { return _size; }
-			size_type capacity() const { return _capacity; }
-
-			// Modifiers
-			void	push_back(const T& value)
+			reference back()
 			{
-				if (_size == _capacity)
-				{
-					size_type   new_capacity = _capacity == 0 ? 1 : _capacity * 2;
-					T* new_data = _alloc.allocate(new_capacity);
-					for (size_type i = 0; i < _size; i++)
-					{
-						_alloc.construct(new_data + i, _data[i]);
-					}
-					for (size_type i = 0; i < _size; i++)
-					{
-						_alloc.destroy(_data + i);
-					}
-					_alloc.deallocate(_data, _capacity);
-					_data = new_data;
-					_capacity = new_capacity;
+				return (*(this->end() - 1));
+			};
 
-				}
-				_alloc.construct(_data + _size, value);
-				_size++;
-			}
-
-			void	pop_back();
-
+			const_reference back() const
+			{
+				return (*(this->end() - 1));
+			};
+			// Element access: data
+			
 			// Iterators
 
-			// begin: return iterator to beginning
+			// Iterators:begin - return iterator to beginning
 			// vector_iterator need to have default constructor
 			// that accept the pointer
 			iterator begin()
@@ -213,7 +204,7 @@ namespace ft
 				return (const_iterator(this->_start));
 			};
 
-			// end: return iterator to end
+			// Iterators:end - return iterator to end
 			iterator end()
 			{
 				return (iterator(this->_end));
@@ -223,6 +214,86 @@ namespace ft
 			{
 				return (const_iterator(this->end));
 			};
+
+			// Capacity	
+
+			// Capacity: empty
+
+			// Capacity: size
+			size_type size() const { return (_size); }
+
+			// Capacity: max_size
+			size_type max_size(void) const { return (_alloc.max_size()); }
+
+			// Capacity:  reserve
+			void reserve(size_type new_cap)
+			{
+				pointer	new_data;
+				pointer	p;
+
+				if (new_cap > this->max_size())
+					throw (std::length_error("ft::vector::reserve"));
+				if (new_cap > _capacity)
+				{
+					new_data = _alloc.allocate(new_cap);
+					p = new_data;
+					for (pointer q = _start; q != _end; ++q)
+						*p++ = *q;
+					_alloc.deallocate(_data, _capacity);
+					_data = new_data;
+					_capacity = new_cap;
+					_start = new_data;
+					_end = new_data + _size;
+				}
+			};
+
+			// Capacity: capacity
+			size_type capacity() const { return _capacity; };
+
+			// Modifiers
+
+			// Modifiers: clear
+			void clear()
+			{
+				// this->_alloc.deallocate(_data, _capacity);
+				// for (size_type i = 0; i < _size; i++)
+				// 	_alloc.destroy(&(_data[i]));
+				this->_data = nullptr;
+				this->_start = nullptr;
+				this->_end = nullptr;
+				this->_size = 0;
+				this->_capacity = 0;
+			};
+			
+			// Modifiers: insert
+			// Modifiers: erase
+
+			// Modifiers: push_back
+			void	push_back(const T& value)
+			{
+				if (_capacity == 0)
+					reserve(1);
+				else if (_size == _capacity)
+					reserve(_capacity * 2);
+				*_end++ = value;
+				++_size;
+			}
+
+			// Modifier: pop_back
+			void	pop_back();
+
+			// Modifier: resize
+			// Modifier: swap
+			void	swap(vector& other)
+			{
+				ft::swap(_alloc, other._alloc);
+				ft::swap(_size, other._size);
+				ft::swap(_capacity, other._capacity);
+				ft::swap(_data, other._data);
+				ft::swap(_start, other._start);
+				ft::swap(_start, other._start);
+				ft::swap(_end, other._end);
+			}
 
 		private:
 
@@ -234,6 +305,8 @@ namespace ft
 			pointer				_end;
 
 	};
+
+	// Non-member functions
 }
 
 #endif
