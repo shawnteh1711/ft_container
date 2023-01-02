@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 12:40:37 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/30 15:27:31 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/02 15:17:04 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,9 +124,7 @@ namespace ft
 
 		// Advances or decrements the iterator
 		// Parameters:
-		//	n - position relative to current location
-		// Return value:
-
+		// n - position relative to current location
 
 		// Pre-increments by one (++it)
 		// Return *this
