@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/02 16:16:36 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/02 21:43:42 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,12 +112,19 @@ namespace ft
 				const_reference operator[](size_type index) const;
 
 				// Element access: front
+				reference front();
+
+				const_reference front() const;
+
 				// Element access: back
 				reference back();
 
 				const_reference back() const;
+
 				// Element access: data
+				value_type* data();
 				
+				const value_type* data() const;
 				// Iterators
 
 				// Iterators:begin - return iterator to beginning
@@ -132,9 +139,20 @@ namespace ft
 
 				const_iterator end() const;
 
+				// Iterators: rbegin - returns a reverse iterator to the beginning
+				reverse_iterator rbegin();
+
+				const_reverse_iterator rbegin() const;
+
+				// Iterators: rend - returns a reverse iterator to the end
+				reverse_iterator rend();
+
+				const_reverse_iterator rend() const;
+
 				// Capacity	
 
 				// Capacity: empty
+				bool empty() const;
 
 				// Capacity: size
 				size_type size() const;
@@ -142,11 +160,14 @@ namespace ft
 				// Capacity: max_size
 				size_type max_size(void) const;
 
-				// Capacity:  reserve
+				// Capacity: reserve
 				void reserve(size_type new_cap);
 
 				// Capacity: capacity
 				size_type capacity() const;
+
+				// Capacity: shrink_to_fit
+				void shrink_to_fit();
 
 				// Modifiers
 
@@ -154,6 +175,16 @@ namespace ft
 				void clear();
 				
 				// Modifiers: insert
+				// Insert value before pos
+				iterator insert(const_iterator pos, const value_type& value);
+
+				iterator insert(const_iterator pos, value_type& value);
+				// Insert count copies of the value before pos
+				iterator insert(const_iterator pos, size_type count, const T& value );
+
+				// Insert elements from range [first, last) before pos
+				template <class InputIt>
+				iterator insert(const_iterator pos, InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type* = NULL);
 
 				// Modifiers: erase
 
