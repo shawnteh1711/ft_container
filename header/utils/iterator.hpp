@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 12:40:37 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/02 15:17:04 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/03 19:54:49 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
  * https://en.cppreference.com/w/cpp/iterator/reverse_iterator
  */
 #include "type_traits.hpp"
+#include <iostream>
 
 namespace ft
 {
@@ -77,26 +78,26 @@ namespace ft
 		reverse_iterator() {}; 
 
 		// Initialization constructor with X(iterator to adapt)
-		explicit reverse_iterator( iterator_type x ) : current(x){};
+		explicit reverse_iterator( iterator_type x ) : _current(x) {};
 
 		// Initialization constructor with other(iterator adoptor to copy)
 		template <class U>
-		reverse_iterator(const reverse_iterator<U>& other) : current(other.base()){};
+		reverse_iterator(const reverse_iterator<U>& other) : _current(other.base()){};
 
 		// Assign another iterator adaptor
 		template <class U>
-		reverse_iterator& operator=(const reverse_iterator<U>& other)
+		reverse_iterator &operator=(const reverse_iterator<U>& other)
 		{
 			if (this == &other)
 				return (*this);
-			this->current = other.current;
+			this->_current = other._current;
 			return (*this);
 		};
 
 		// Accesses the underlying iterator
 		iterator_type base() const
 		{
-			return (this->current);
+			return (this->_current);
 		};
 
 		// Accesses the pointed-to element.
@@ -104,14 +105,14 @@ namespace ft
 		// https://en.cppreference.com/w/cpp/iterator/reverse_iterator/operator*
 		reference operator*() const
 		{
-			Iter tmp = current;
+			Iter tmp = _current;
 			return (*(--tmp));
 		};
 
 		pointer operator->() const
 		{
-			return std::addressof(operator*());
-			// return &(*this->operator*());
+			// return std::addressof(operator*());
+			return (&(*this->operator*()));
 		};
 
 		// Accesses an element by index
@@ -130,7 +131,7 @@ namespace ft
 		// Return *this
 		reverse_iterator& operator++()
 		{
-			--current;
+			_current--;
 			return (*this);
 		};
 
@@ -138,7 +139,7 @@ namespace ft
 		// Return *this
 		reverse_iterator& operator--()
 		{
-			++current;
+			_current++;
 			return (*this);
 		};
 
@@ -152,35 +153,35 @@ namespace ft
 			// --current;
 			// Return the copy of the iterator.
 			// return tmp;
-			return (reverse_iterator(current--));
+			return (reverse_iterator(_current--));
 		};
 
 		// Post-decrements by one (it--)
 		// Return a copy of *this that was made before the change
 		reverse_iterator operator--(int)
 		{
-			return (reverse_iterator(current++));
+			return (reverse_iterator(_current++));
 		};
 
 		// Returns an iterator which is advanced by n position (it + n)
 		// Return reverse_iterator(base() - n)
 		reverse_iterator operator+(difference_type n) const
 		{
-			return (reverse_iterator(this->base() - n - 1));
+			return (reverse_iterator(_current - n));
 		};
 
 		// Returns an iterator which is advanced by -n position (it - n)
 		// Return reverse_iterator(base() + n)
 		reverse_iterator operator-(difference_type n) const
 		{
-			return (reverse_iterator(this->base() + n + 1));
+			return (reverse_iterator(_current + n));
 		};
 
 		// Advances the iterator by n positions (it += n)
 		// Return *this
 		reverse_iterator& operator+=(difference_type n)
 		{
-			current -= n;
+			_current -= n;
 			return (*this);
 		};
 
@@ -188,12 +189,12 @@ namespace ft
 		// Return *this
 		reverse_iterator& operator-=(difference_type n)
 		{
-			current += n;
+			_current += n;
 			return (*this);
 		};
 
 		protected:
-			Iter	current;
+			Iter	_current;
 	};
 
 		// Non-member functions
@@ -259,7 +260,7 @@ namespace ft
 		// Computes the distance
 		template <class Iterator1, class Iterator2>
 		typename reverse_iterator<Iterator1>::difference_type operator-(const reverse_iterator<Iterator1>& lhs,
-																		const reverse_iterator<Iterator2>& rhs)
+		const reverse_iterator<Iterator2>& rhs)
 		{
 			return (rhs.base() - lhs.base());
 		}

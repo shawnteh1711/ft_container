@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:43:01 by codespace         #+#    #+#             */
-/*   Updated: 2022/12/30 19:39:18 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/03 19:55:30 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "iterator.hpp"
 # include "type_traits.hpp"
+#include <iostream>
 
 namespace ft
 {
@@ -27,17 +28,17 @@ namespace ft
 			typedef typename iterator_traits<Iter>::value_type			value_type;
 			typedef typename iterator_traits<Iter>::difference_type		difference_type;
 			typedef typename iterator_traits<Iter>::pointer				pointer;
-			typedef typename iterator_traits<Iter>::reference			reference;		
+			typedef typename iterator_traits<Iter>::reference			reference;
 
 		vector_iterator() : _iter(iterator_type()){};
-		explicit vector_iterator(const iterator_type& iter) : _iter(iter) {};
-		// constructor accept pointer
-		// vector_iterator(pointer ptr): _ptr(ptr) {}
-		// vector_iterator(iterator_type &other): _ptr(other._ptr) {}
+		explicit vector_iterator(const iterator_type& iter) : _iter(iter) {
+			// std::cout << "vector iterator" << std::endl;
+		};
 
 		// template type constructor
 		
-		template <class It> vector_iterator(const vector_iterator<It, typename ft::enable_if<std::is_same<It, typename Container::pointer>::value, Container>::type>& iter) : _iter(iter.base()) {};
+		template <class It> vector_iterator(const vector_iterator<It, typename ft::enable_if<std::is_same<It, typename Container::pointer>::value, Container>::type>& iter) : _iter(iter.base()) {
+		};
 
 		~vector_iterator() {};
 
@@ -114,7 +115,6 @@ namespace ft
 		};
 
 		protected:
-			pointer	_ptr;
 			Iter	_iter;
 	
 	};
