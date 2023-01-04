@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/03 21:42:42 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/04 13:50:56 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,20 @@ template<typename T, typename Alloc>
 ft::vector<T, Alloc>::vector(size_type n, const value_type& val,
 		const allocator_type& alloc)
 {
-	// if (n <= 0 || n > this->max_size())
-	// 	return ;
-	// _alloc = alloc;
-	// _size = n;
-	// _capacity = n;
-	// _data = _alloc.allocate(_capacity);
-	// _start = _data;
-	// _end = _data + _size;
-	// for (size_t i = 0; i < _size; i++)
-	// 	_alloc.construct(&_data[i], val);
+	if (n <= 0 || n > this->max_size())
+		return ;
 	_alloc = alloc;
-	clear();
-	for (size_t i = 0; i < n; i++)
-		push_back(val);
+	_size = n;
+	_capacity = n;
+	_data = _alloc.allocate(_capacity);
+	_start = _data;
+	_end = _data + _size;
+	for (size_t i = 0; i < _size; i++)
+		_alloc.construct(&_data[i], val);
+	// _alloc = alloc;
+	// clear();
+	// for (size_t i = 0; i < n; i++)
+	// 	push_back(val);
 }
 
 // Constructs the container with the contents of the range [first, last).
@@ -64,12 +64,28 @@ ft::vector<T, Alloc>::vector(InputIt first, InputIt last, const allocator_type& 
 	// _alloc = alloc;
 	// for (; first != last; ++first)
 	// 	push_back(*first);
-	_alloc = alloc;
-	clear();
 	// const size_t size = ft::distance(first, last);
 	// reserve(size);
-	for (; first != last; ++first)
-		push_back(*first);
+	// _alloc = alloc;
+	// clear();
+	// for (; first != last; ++first)
+	// 	push_back(*first);
+
+
+	const size_type size = std::distance(first, last);
+	if (size < 0)
+		return ;
+	_alloc = alloc;
+	_data = _alloc.allocate(size);
+	_start = _data;
+	_end = _data + size;
+	_capacity = size;
+	_size = size;
+	for (InputIt it = first; it != last; ++it)
+	{
+		_alloc.construct(_start, *it);
+		++_start;
+	}
 }
 
 // Copy constructor
@@ -352,7 +368,23 @@ typename ft::vector<T, Alloc>::size_type ft::vector<T, Alloc>::capacity() const
 template<typename T, typename Alloc>
 void ft::vector<T, Alloc>::shrink_to_fit()
 {
+	size_type	new_size;
+	T*			new_data;
 
+	if (_size == _capacity)
+		return ;
+	new_size = _end - _start;
+	new_data = _alloc.allocate(new_size);
+	for (size_type i = 0; i < new_size; i++)
+		_alloc.construct(new_data + i, _data[i]);
+	for (size_type i = 0; i < _size; i++)
+		_alloc.destroy(_data + i);
+	_alloc.deallocate(_data, _capacity);
+	_data = new_data;
+	_start = _data;
+	_end = _data + new_size;
+	_capacity = new_size;
+	_size = new_size;
 }
 
 // Modifiers
@@ -361,14 +393,13 @@ void ft::vector<T, Alloc>::shrink_to_fit()
 template<typename T, typename Alloc>
 void ft::vector<T, Alloc>::clear()
 {
+	for (size_type i = 0; i < _size; i++)
+		_alloc.destroy(&(_data[i]));
 	// this->_alloc.deallocate(_data, _capacity);
-	// for (size_type i = 0; i < _size; i++)
-	// 	_alloc.destroy(&(_data[i]));
 	this->_data = nullptr;
 	this->_start = nullptr;
 	this->_end = nullptr;
 	this->_size = 0;
-	this->_capacity = 0;
 }
 
 // Modifiers: insert
@@ -432,6 +463,26 @@ void	ft::vector<T, Alloc>::pop_back()
 }
 
 // Modifier: resize
+template<typename T, typename Alloc>
+void	ft::vector<T, Alloc>::resize(size_type count)
+{
+	(void)count;
+	if (count > _size)
+		;
+		// insert elements to increase size
+	else if (count < _size)
+		// erase elements to decrease size
+		;
+}
+
+template<typename T, typename Alloc>
+void	ft::vector<T, Alloc>::resize(size_type count, const value_type& value)
+// void	ft::vector<T, Alloc>::resize(size_type count, const value_type& value, typename ft::enable_if<ft::is_integral<T>::value>::type*)
+{
+	(void)count;
+	(void)value;
+}
+
 // Modifier: swap
 template<typename T, typename Alloc>
 void	ft::vector<T, Alloc>::swap(vector& other)

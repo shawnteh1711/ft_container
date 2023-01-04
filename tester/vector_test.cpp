@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:13:41 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/03 21:40:04 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/04 14:33:26 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <vector>
 #include <cassert>
 #include "tester.hpp"
+#include <iomanip> 
 
 void vector_test(void)
 {
@@ -456,18 +457,18 @@ void vector_test(void)
 
 		v.reserve(10);
 		sv.reserve(10);
-		ft::test_assert(v.capacity(),  (size_t)10, "Reserve incorrect", "Passed");
-		ft::test_assert(sv.capacity(),  (size_t)10, "Reserve incorrect", "Passed");
+		ft::test_assert(v.capacity(), (size_t)10, "Reserve incorrect", "Passed");
+		ft::test_assert(sv.capacity(), (size_t)10, "Reserve incorrect", "Passed");
+		ft::test_assert(v.size(),  sv.size(), "Size incorrect", "Passed");
 
 		ft::vector<int> v2(20);
 		std::vector<int> sv2(20);
 
-		std::cout<<"capcity:"<<v2.capacity()<<std::endl;
 		v2.reserve(10);
-		std::cout<<"capcity:"<<v2.capacity()<<std::endl;
 		sv2.reserve(10);
 		ft::test_assert(v2.capacity(), (size_t)20, "Reserve incorrect", "Passed");
 		ft::test_assert(sv2.capacity(), (size_t)20, "Reserve incorrect", "Passed");
+		ft::test_assert(v2.size(),  sv2.size(), "Size incorrect", "Passed");
 
 		ft::vector<int> v3(10);
 		std::vector<int> sv3(10);
@@ -475,24 +476,156 @@ void vector_test(void)
 		v3.reserve(10);
 		sv3.reserve(10);
 		ft::test_assert(v3.capacity(), (size_t)10, "Reserve incorrect", "Passed");
-		ft::test_assert(sv3.capacity(), (size_t)10, "Reserve incorrect", "Passed");
+		ft::test_assert(sv3.capacity(), (size_t)10, "Reserve incorrect", "Passed");ft::test_assert(v3.size(),  sv3.size(), "Size incorrect", "Passed");
 		
 		ft::vector<int> v4(10, 0);
 		std::vector<int> sv4(10, 0);
 
 		v4.reserve(20);
 		sv4.reserve(20);
-		ft::test_assert(v4.capacity(),  (size_t)20, "Reserve incorrect", "Passed");
-		ft::test_assert(sv4.capacity(),  (size_t)20, "Reserve incorrect", "Passed");
+		ft::test_assert(v4.capacity(), (size_t)20, "Reserve incorrect", "Passed");
+		ft::test_assert(sv4.capacity(), (size_t)20, "Reserve incorrect", "Passed");
 
 		ft::vector<int> v5(10000);
 		std::vector<int> sv5(10000);
 
 		v5.reserve(20);
 		sv5.reserve(20);
-		ft::test_assert(v5.capacity(),  (size_t)10000, "Reserve incorrect", "Passed");
-		ft::test_assert(sv5.capacity(),  (size_t)10000, "Reserve incorrect", "Passed");
+		ft::test_assert(v5.capacity(), (size_t)10000, "Reserve incorrect", "Passed");
+		ft::test_assert(sv5.capacity(), (size_t)10000, "Reserve incorrect", "Passed");
+
+		ft::vector<int> v6(v5);
+		std::vector<int> sv6(sv5);
+
+		v6.reserve(20);
+		sv6.reserve(20);
+		ft::test_assert(v6.capacity(), (size_t)10000, "Reserve incorrect", "Passed");
+		ft::test_assert(sv6.capacity(), (size_t)10000, "Reserve incorrect", "Passed");
+
+		v6.reserve(10001);
+		sv6.reserve(10001);
+		v6.push_back(1);
+		sv6.push_back(1);
+		ft::test_assert(v6.capacity(), (size_t)10001, "Reserve incorrect", "Passed");
+		ft::test_assert(sv6.capacity(), (size_t)10001, "Reserve incorrect", "Passed");
+	}
+
+	{
+		std::cout << std::endl <<  "Capacity function" << std::endl;
+
+		// Test 1: Default capacity of vector
+		ft::vector<int> v;
+		std::vector<int> sv;
+
+		ft::test_assert(v.capacity(), (size_t)0, "Capacity incorrect", "Passed");
+		ft::test_assert(sv.capacity(), (size_t)0, "Capacity incorrect", "Passed");
+
+		// Test 2: capacity of vector after reserve
+		v.reserve(10);
+		sv.reserve(10);
+		ft::test_assert(v.capacity(), (size_t)10, "Capacity incorrect", "Passed");
+		ft::test_assert(sv.capacity(), (size_t)10, "Capacity incorrect", "Passed");
 
 
+		// Test 3: capacity of vector after resizing
+		v.resize(5);
+		sv.resize(5);
+		// ft::test_assert(v.capacity(), (size_t)10, "Capacity incorrect", "Passed");
+		ft::test_assert(sv.capacity(), (size_t)10, "Capacity incorrect", "Passed");
+
+		v.push_back(1);
+		sv.push_back(1);
+		ft::test_assert(v.capacity(), (size_t)10, "Capacity incorrect", "Passed");
+		ft::test_assert(sv.capacity(), (size_t)10, "Capacity incorrect", "Passed");
+
+		int	sz = 100;
+
+		ft::vector <int>	v2;
+		ft::vector<int>::size_type	cap = v2.capacity();
+		std::cout << "Initial size: " << v2.size() << ", capacity: " << cap << '\n';
+		std::cout << "\nDemonstrate the capacity's growth policy." "\nSize:  Capacity:  Ratio:\n" << std::left;
+		while (sz-- > 0)
+		{
+			v2.push_back(sz);
+			if (cap != v2.capacity())
+			{
+				std::cout << std::setw( 7) << v2.size()
+						<< std::setw(11) << v2.capacity()
+						<< std::setw(10) << static_cast<float>(v2.capacity()) / static_cast<float>(cap) << '\n';
+				cap = v2.capacity();
+			}
+		}
+		std::cout << "\nFinal size: " << v2.size() << ", capacity: " << v2.capacity() << '\n';
+	}
+
+	{
+		std::cout << std::endl <<  "Shrink_to_fit function" << std::endl;
+
+		ft::vector<int> v(5);
+		std::vector<int> sv(5);
+
+		v.shrink_to_fit();
+		sv.shrink_to_fit();
+		ft::test_assert(v.size(), (size_t)5, "Capacity incorrect", "Passed");
+		ft::test_assert(v.size(), v.capacity(), "Capacity incorrect", "Passed");
+		ft::test_assert(sv.size(), (size_t)5, "Capacity incorrect", "Passed");
+		ft::test_assert(sv.size(), sv.capacity(), "Capacity incorrect", "Passed");
+		
+		// std::cout << "Default-constructed capacity is " << v.capacity() << '\n';
+		// // v.resize(100);
+		// std::cout << "Capacity of a 100-element vector is " << v.capacity() << '\n';
+		// // v.resize(50);
+		// std::cout << "Capacity after resize(50) is " << v.capacity() << '\n';
+		// v.shrink_to_fit();
+		// std::cout << "Capacity after shrink_to_fit() is " << v.capacity() << '\n';
+		// v.clear();
+		// std::cout << "Capacity after clear() is " << v.capacity() << '\n';
+		// v.shrink_to_fit();
+		// std::cout << "Capacity after shrink_to_fit() is " << v.capacity() << '\n';
+		// for (int i = 1000; i < 1300; ++i)
+		// 	v.push_back(i);
+		// std::cout << "Capacity after adding 300 elements is " << v.capacity() << '\n';
+		// v.shrink_to_fit();
+	
+		// std::vector<int> sv;
+		// std::cout << "Capacity after shrink_to_fit() is " << sv.capacity() << '\n';
+		// std::cout << "Default-constructed capacity is " << sv.capacity() << '\n';
+		// sv.resize(100);
+		// std::cout << "Capacity of a 100-element vector is " << sv.capacity() << '\n';
+		// sv.resize(50);
+		// std::cout << "Capacity after resize(50) is " << sv.capacity() << '\n';
+		// sv.shrink_to_fit();
+		// std::cout << "Capacity after shrink_to_fit() is " << sv.capacity() << '\n';
+		// sv.clear();
+		// std::cout << "Capacity after clear() is " << sv.capacity() << '\n';
+		// sv.shrink_to_fit();
+		// std::cout << "Capacity after shrink_to_fit() is " << sv.capacity() << '\n';
+		// for (int i = 1000; i < 1300; ++i)
+		// 	sv.push_back(i);
+		// std::cout << "Capacity after adding 300 elements is " << sv.capacity() << '\n';
+		// sv.shrink_to_fit();
+		// std::cout << "Capacity after shrink_to_fit() is " << sv.capacity() << '\n';
+	}
+
+	{
+		std::cout << std::endl <<  "Clear function" << std::endl;
+
+		ft::vector<int> v(5, 1);
+		std::vector<int> sv(5, 1);
+
+		// ft::print_functor<int> printer;
+		// std::for_each(v.begin(), v.end(), printer);
+		ft::print_vector(v);
+		std::cout << std::endl;
+		v.clear();
+		// std::for_each(v.begin(), v.end(), printer);
+		// std::for_each(sv.begin(), sv.end(), printer);
+		std::cout << std::endl;
+		sv.clear();
+		// std::for_each(sv.begin(), sv.end(), printer);
+		ft::test_assert(v.size(), (size_t)0, "Clear incorrect", "Passed");
+		ft::test_assert(v.capacity(),  (size_t)5, "Clear incorrect", "Passed");
+		ft::test_assert(sv.size(), (size_t)0, "Clear incorrect", "Passed");
+		ft::test_assert(sv.capacity(), (size_t)5, "Clear incorrect", "Passed");
 	}
 }

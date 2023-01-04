@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/03 20:04:56 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/04 12:24:27 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,9 @@ namespace ft
 				void	pop_back();
 
 				// Modifier: resize
+				void	resize(size_type count);
+	
+				void	resize(size_type count, const value_type& value);
 
 				// Modifier: swap
 				void	swap(vector& other);

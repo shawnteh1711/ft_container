@@ -6,13 +6,14 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 07:19:58 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/03 21:22:54 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/04 14:32:12 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILITY_HPP
 # define UTILITY_HPP
 #include <iostream>
+#include "../vector.hpp"
 
 namespace ft
 {
@@ -48,6 +49,26 @@ namespace ft
 			assert(false);
 		}
 		std::cout << success << std::endl;
+	}
+
+	// A functor is a type of object that behaves like a function. 
+	// A print_functor is a specific type of functor that is designed to print the value of some object.
+
+	template<typename T>
+	struct	print_functor
+	{
+		void	operator() (const T& value)
+		{			
+			std::cout << " " << value;
+		}
+	};
+
+	template<typename T>
+	void print_vector(const T& v)
+	{
+		std::cout << "[";
+		std::for_each(v.begin(), v.end(), print_functor<T>());
+		std::cout << "]" << std::endl;
 	}
 }
 
