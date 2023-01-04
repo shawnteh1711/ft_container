@@ -6,17 +6,15 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:13:41 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/04 14:33:26 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/04 16:26:31 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
-#include "../header/vector.hpp"
-#include "../header/utils/utility.hpp"
 #include <vector>
 #include <cassert>
-#include "tester.hpp"
 #include <iomanip> 
+#include "tester.hpp"
 
 void vector_test(void)
 {
@@ -613,19 +611,39 @@ void vector_test(void)
 		ft::vector<int> v(5, 1);
 		std::vector<int> sv(5, 1);
 
-		// ft::print_functor<int> printer;
-		// std::for_each(v.begin(), v.end(), printer);
 		ft::print_vector(v);
-		std::cout << std::endl;
 		v.clear();
-		// std::for_each(v.begin(), v.end(), printer);
-		// std::for_each(sv.begin(), sv.end(), printer);
-		std::cout << std::endl;
+		ft::print_vector(v);
+		ft::print_vector(sv);
 		sv.clear();
-		// std::for_each(sv.begin(), sv.end(), printer);
+		ft::print_vector(sv);
 		ft::test_assert(v.size(), (size_t)0, "Clear incorrect", "Passed");
 		ft::test_assert(v.capacity(),  (size_t)5, "Clear incorrect", "Passed");
 		ft::test_assert(sv.size(), (size_t)0, "Clear incorrect", "Passed");
 		ft::test_assert(sv.capacity(), (size_t)5, "Clear incorrect", "Passed");
+	}
+
+	{
+		std::cout << std::endl <<  "Insert function" << std::endl;
+		ft::vector<int> v(3, 100);
+		ft::vector<int> v2(3, 100);
+		std::vector<int> sv(3, 100);
+
+
+		ft::vector<int>::const_iterator it;
+		ft::print_vector(v);
+		it = v.begin();
+		it = v.insert(it, 200);
+		ft::print_vector(v);
+		ft::vector_iterator<int*, ft::vector<int> > vit;
+		ft::print_vector(v2);
+		vit = v2.begin();
+		vit = v2.insert(vit, 200);
+		ft::print_vector(v2);
+		std::vector<int>::const_iterator it2;
+		ft::print_vector(sv);
+		it2 = sv.begin();
+		it2 = sv.insert(it2, 200);
+		ft::print_vector(sv);
 	}
 }

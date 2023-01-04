@@ -16,4 +16,4 @@ There are multiple containers in c++ and have different usage. We need to unders
 * Peculiar situations
 * Debugging methods
 * Best Practices
-* Anything which can help you in future
+* Anything which can help you in futureq

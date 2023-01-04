@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/04 12:24:27 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/04 16:03:37 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,8 @@
 # include <iterator>
 # include "./utils/vector_iterator.hpp"
 # include "./utils/type_traits.hpp"
-# include "./utils/algorithm.hpp"
 # include "./utils/pair.hpp"
-# include "./utils/utility.hpp"
+
 
 /**
  * @brief https://en.cppreference.com/w/cpp/container/vector

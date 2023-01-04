@@ -6,12 +6,15 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/04 13:50:56 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/04 16:41:38 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "vector.hpp"
-
+# include "./utils/vector_iterator.hpp"
+# include "./utils/type_traits.hpp"
+# include "./utils/algorithm.hpp"
+# include "./utils/utility.hpp"
 
 // Member Function: Constructor
 
@@ -408,18 +411,36 @@ void ft::vector<T, Alloc>::clear()
 template<typename T, typename Alloc>
 typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_iterator pos, const value_type& value)
 {
-	(void)pos;
-	(void)value;
-	;
+	// (void)pos;
+	// (void)value;
+	// ;
+	// if (_size == _capacity)
+	// 	reserve(_capacity);
+	// if (pos == iterator(_end))
+	// {
+	// 	_alloc.construct(_end, value);
+	// 	++_end;
+	// 	++_size;
+	// 	return (iterator(_end) - 1);
+	// }
+	// else
+	// {
+	// 	_alloc.construct(_end, *(_end - 1));
+	// 	std::copy_backward(pos, _end - 1, _end);
+	// 	*pos = value;
+	// 	++_size;
+	// 	++_end;
+	// 	return (pos);
+	// }
 }
 
-template<typename T, typename Alloc>
-typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_iterator pos, value_type& value)
-{
-	(void)pos;
-	(void)value;
-	;
-}
+// template<typename T, typename Alloc>
+// typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_iterator pos, value_type& value)
+// {
+// 	(void)pos;
+// 	(void)value;
+// 	;
+// }
 
 // Insert count copies of the value before pos
 template<typename T, typename Alloc>

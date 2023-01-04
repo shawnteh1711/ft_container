@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 07:19:58 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/04 14:32:12 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/04 16:01:41 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,20 @@ namespace ft
 	};
 
 	template<typename T>
-	void print_vector(const T& v)
+	void print_vector(const ft::vector<T>& v)
 	{
+		// ft::print_functor<T> printer;
+		// std::for_each(v.begin(), v.end(), printer);
+		std::cout << "[";
+		std::for_each(v.begin(), v.end(), print_functor<T>());
+		std::cout << "]" << std::endl;
+	}
+
+	template<typename T>
+	void print_vector(const std::vector<T>& v)
+	{
+		// ft::print_functor<T> printer;
+		// std::for_each(v.begin(), v.end(), printer);
 		std::cout << "[";
 		std::for_each(v.begin(), v.end(), print_functor<T>());
 		std::cout << "]" << std::endl;
