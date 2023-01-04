@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/04 16:41:38 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/04 20:59:15 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -411,11 +411,34 @@ void ft::vector<T, Alloc>::clear()
 template<typename T, typename Alloc>
 typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_iterator pos, const value_type& value)
 {
-	// (void)pos;
-	// (void)value;
+	(void)pos;
+	(void)value;
+	iterator	insert_pos = static_cast<iterator>(pos.base());
+	iterator	temp = this->end();
 	// ;
-	// if (_size == _capacity)
-	// 	reserve(_capacity);
+	if (_size == _capacity)
+		reserve(_capacity == 0 ? 1 : _capacity * 2);
+	if (pos == this->end())
+	{
+		_alloc.construct(_end, value);
+		++_end;
+		++_size;
+		return (iterator(_end - 1));
+	}
+	else
+	{
+		_alloc.construct(_end, *(_end) - 1);
+		std::copy_backward(insert_pos, temp, this->end());
+		*insert_pos = std::move(value);
+		++_size;
+		++_end;
+		return (insert_pos);
+		// std::copy_backward(insert_pos, this->end() - 1, this->end());
+		// return (ft::vector_iterator<pointer, vector>(_end - 1));
+
+	}
+	return (ft::vector_iterator<pointer, vector>(_end - 1));
+	// return (pos);
 	// if (pos == iterator(_end))
 	// {
 	// 	_alloc.construct(_end, value);

@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:13:41 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/04 16:26:31 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/04 20:12:20 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -630,11 +630,11 @@ void vector_test(void)
 		std::vector<int> sv(3, 100);
 
 
-		ft::vector<int>::const_iterator it;
-		ft::print_vector(v);
-		it = v.begin();
-		it = v.insert(it, 200);
-		ft::print_vector(v);
+		// ft::vector<int>::const_iterator it;
+		// ft::print_vector(v);
+		// it = v.begin();
+		// it = v.insert(it, 200);
+		// ft::print_vector(v);
 		ft::vector_iterator<int*, ft::vector<int> > vit;
 		ft::print_vector(v2);
 		vit = v2.begin();
