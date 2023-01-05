@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/04 20:59:15 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/05 23:03:42 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include "./utils/type_traits.hpp"
 # include "./utils/algorithm.hpp"
 # include "./utils/utility.hpp"
+# include <vector>
 
 // Member Function: Constructor
 
@@ -411,68 +412,68 @@ void ft::vector<T, Alloc>::clear()
 template<typename T, typename Alloc>
 typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_iterator pos, const value_type& value)
 {
-	(void)pos;
-	(void)value;
-	iterator	insert_pos = static_cast<iterator>(pos.base());
-	iterator	temp = this->end();
-	// ;
-	if (_size == _capacity)
-		reserve(_capacity == 0 ? 1 : _capacity * 2);
-	if (pos == this->end())
-	{
-		_alloc.construct(_end, value);
-		++_end;
-		++_size;
-		return (iterator(_end - 1));
-	}
-	else
-	{
-		_alloc.construct(_end, *(_end) - 1);
-		std::copy_backward(insert_pos, temp, this->end());
-		*insert_pos = std::move(value);
-		++_size;
-		++_end;
-		return (insert_pos);
-		// std::copy_backward(insert_pos, this->end() - 1, this->end());
-		// return (ft::vector_iterator<pointer, vector>(_end - 1));
+	size_type	index;
 
-	}
-	return (ft::vector_iterator<pointer, vector>(_end - 1));
-	// return (pos);
-	// if (pos == iterator(_end))
-	// {
-	// 	_alloc.construct(_end, value);
-	// 	++_end;
-	// 	++_size;
-	// 	return (iterator(_end) - 1);
-	// }
-	// else
-	// {
-	// 	_alloc.construct(_end, *(_end - 1));
-	// 	std::copy_backward(pos, _end - 1, _end);
-	// 	*pos = value;
-	// 	++_size;
-	// 	++_end;
-	// 	return (pos);
-	// }
+	index = 0;
+	for (iterator it = begin(); it != pos; ++it)
+		++index;
+	if (_size == capacity())
+		reserve(capacity() * 2);
+	pointer new_element = _alloc.allocate(1);
+	_alloc.construct(new_element, value);
+	for (size_type i = _size; i > index; --i)
+		_data[i] = _data[i - 1];
+	_data[index] = *new_element;
+	++_size;
+	_start = _data;
+	_end = _data + _size;
+	_alloc.deallocate(new_element, 1);
+	return (iterator(_data + index));
 }
 
-// template<typename T, typename Alloc>
-// typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_iterator pos, value_type& value)
-// {
-// 	(void)pos;
-// 	(void)value;
-// 	;
-// }
+
+// Insert: non_const value_type
+template<typename T, typename Alloc>
+typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_iterator pos, value_type& value)
+{
+	size_type	index;
+
+	index = 0;
+	for (iterator it = begin(); it != pos; ++it)
+		++index;
+	if (_size == capacity())
+		reserve(capacity() * 2);
+	// pointer new_element = _alloc.allocate(1);
+	// _alloc.construct(new_element, value);
+	for (size_type i = _size; i > index; --i)
+		_data[i] = _data[i - 1];
+	_data[index] = value;
+	_start = _data;
+	++_size;
+	_start = _data;
+	_end = _data + _size;
+	// _alloc.deallocate(new_element, 1);
+	return (iterator(_data + index));
+}
 
 // Insert count copies of the value before pos
 template<typename T, typename Alloc>
 typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_iterator pos, size_type count, const T& value )
 {
-	(void)pos;
-	(void)count;
-	(void)value;
-	;
+	size_type	index;
+
+	index = 0;
+	for (iterator it = begin(); it != pos; ++it)
+		++index;
+	if (_size + count > capacity())
+		reserve((capacity() + count) * 1.5);
+	for (size_t i = _size; i > index; --i)
+		_data[i + count - 1] = _data[i - 1];
+	for (size_t i = index; i < index + count; ++i)
+		_data[i] = value;
+	_end += count;
+	_size += count;
+	return (iterator(_data + index));
 }
 
 // Insert elements from range [first, last) before pos
@@ -480,10 +481,19 @@ template<typename T, typename Alloc>
 template <class InputIt>
 typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_iterator pos, InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type*)
 {
-	(void)pos;
-	(void)first;
-	(void)last;
-	;
+	size_type		index;
+	index = ft::distance<iterator>(first, last);
+
+	std::cout<<"index:"<<index<<std::endl;
+	for (InputIt it = first ; it != last; ++it)
+	{
+		std::cout<<"*it"<<*it<<std::endl;
+		this->insert(pos, *it);
+		// pos = this->insert(pos, value_type(*it));
+		// ++pos;
+		++index;
+	}
+	return (iterator(_data + index));
 }
 // Modifiers: erase
 

@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:13:41 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/04 20:12:20 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/05 22:23:05 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -553,7 +553,27 @@ void vector_test(void)
 				cap = v2.capacity();
 			}
 		}
-		std::cout << "\nFinal size: " << v2.size() << ", capacity: " << v2.capacity() << '\n';
+		
+		// int	sz2 = 100;
+
+		// std::cout << "\nFinal size: " << v2.size() << ", capacity: " << v2.capacity() << '\n';
+
+		// std::vector <int>	sv2;
+		// std::vector<int>::size_type	std_cap = sv2.capacity();
+		// std::cout << "Initial size: " << sv2.size() << ", capacity: " << std_cap << '\n';
+		// std::cout << "\nDemonstrate the capacity's growth policy." "\nSize:  Capacity:  Ratio:\n" << std::left;
+		// while (sz2-- > 0)
+		// {
+		// 	sv2.push_back(sz);
+		// 	if (cap != sv2.capacity())
+		// 	{
+		// 		std::cout << std::setw( 7) << sv2.size()
+		// 				<< std::setw(11) << sv2.capacity()
+		// 				<< std::setw(10) << static_cast<float>(sv2.capacity()) / static_cast<float>(std_cap) << '\n';
+		// 		std_cap = sv2.capacity();
+		// 	}
+		// }
+		// std::cout << "\nFinal size: " << sv2.size() << ", capacity: " << sv2.capacity() << '\n';
 	}
 
 	{
@@ -625,25 +645,62 @@ void vector_test(void)
 
 	{
 		std::cout << std::endl <<  "Insert function" << std::endl;
-		ft::vector<int> v(3, 100);
-		ft::vector<int> v2(3, 100);
-		std::vector<int> sv(3, 100);
+		ft::vector<int> v(3, 300);
+		std::vector<int> sv(3, 300);
 
+		// Test 1: const value
+		v.insert(v.begin(), 100);
+		sv.insert(sv.begin(), 100);
+		ft::test_assert(v.size(), sv.size(), "Insert incorrect", "Passed");
+		ft::test_assert(v.capacity(), sv.capacity(), "Insert incorrect", "Passed");
+		for (size_t i = 0; i < v.size(); i++)
+			ft::test_assert(v[i], sv[i], "Insert incorrect", "Passed");
+	
+		// Test 2: const value and add into middle
+		v.insert(v.begin() + 1, 200);
+		ft::print_vector(v);
+		sv.insert(sv.begin() + 1, 200);
+		ft::test_assert(v.size(), sv.size(), "Insert incorrect", "Passed");
+		ft::test_assert(v.capacity(), sv.capacity(), "Insert incorrect", "Passed");
+		for (size_t i = 0; i < v.size(); i++)
+			ft::test_assert(v[i], sv[i], "Insert incorrect", "Passed");
 
-		// ft::vector<int>::const_iterator it;
-		// ft::print_vector(v);
-		// it = v.begin();
-		// it = v.insert(it, 200);
-		// ft::print_vector(v);
-		ft::vector_iterator<int*, ft::vector<int> > vit;
-		ft::print_vector(v2);
-		vit = v2.begin();
-		vit = v2.insert(vit, 200);
-		ft::print_vector(v2);
-		std::vector<int>::const_iterator it2;
-		ft::print_vector(sv);
-		it2 = sv.begin();
-		it2 = sv.insert(it2, 200);
-		ft::print_vector(sv);
+		// Test 3: non_const value and end()
+		int	value = 400;
+		v.insert(v.end(), value);
+		sv.insert(sv.end(), value);
+		ft::test_assert(v.size(), sv.size(), "Insert incorrect", "Passed");
+		ft::test_assert(v.capacity(), sv.capacity(), "Insert incorrect", "Passed");
+		for (size_t i = 0; i < v.size(); i++)
+			ft::test_assert(v[i], sv[i], "Insert incorrect", "Passed");
+
+		// Test 4: inserting multiple values at beginning vector
+		v.insert(v.begin(), 2, 50);
+		sv.insert(sv.begin(), 2, 50);
+		ft::test_assert(v.size(), sv.size(), "Insert incorrect", "Passed");
+		ft::test_assert(v.capacity(), sv.capacity(), "Insert incorrect", "Passed");
+		for (size_t i = 0; i < v.size(); i++)
+			ft::test_assert(v[i], sv[i], "Insert incorrect", "Passed");
+
+		// Test 5: inserting multiple value at middle vector
+		v.insert(v.begin() + 2, 2, 70);
+		sv.insert(sv.begin() + 2, 2, 70);
+		ft::test_assert(v.size(), sv.size(), "Insert incorrect", "Passed");
+		ft::test_assert(v.capacity(), sv.capacity(), "Insert incorrect", "Passed");
+		for (size_t i = 0; i < v.size(); i++)
+			ft::test_assert(v[i], sv[i], "Insert incorrect", "Passed");
+		
+		// Test 5: inserting multiple value at end vector
+		v.insert(v.end(), 2, 500);
+		sv.insert(sv.end(), 2, 500);
+		ft::test_assert(v.size(), sv.size(), "Insert incorrect", "Passed");
+		ft::test_assert(v.capacity(), sv.capacity(), "Insert incorrect", "Passed");
+		for (size_t i = 0; i < v.size(); i++)
+			ft::test_assert(v[i], sv[i], "Insert incorrect", "Passed");
+		ft::vector<int>	v2;
+		ft::print_vector(v);
+		v2.insert(v2.begin(), v.begin(), v.end());
+		// int arr[] = {501, 502, 503};
+		// (void)arr;
 	}
 }
