@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/05 23:03:42 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/05 23:13:31 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -447,12 +447,19 @@ typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_itera
 	// _alloc.construct(new_element, value);
 	for (size_type i = _size; i > index; --i)
 		_data[i] = _data[i - 1];
+	if (_data == nullptr)
+	{
+		std::cout<<"NULLL"<< std::endl;
+		_data = _alloc.allocate(_capacity);
+	}
 	_data[index] = value;
+	std::cout<<"pass _data[index]"<< std::endl;
 	_start = _data;
 	++_size;
 	_start = _data;
 	_end = _data + _size;
 	// _alloc.deallocate(new_element, 1);
+	// _alloc.deallocate(_data, _capacity);
 	return (iterator(_data + index));
 }
 
