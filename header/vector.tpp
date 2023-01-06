@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/06 22:26:18 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/06 22:54:05 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -506,14 +506,50 @@ typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_itera
 template<typename T, typename Alloc>
 typename ft::vector<T, Alloc>::iterator	ft::vector<T, Alloc>::erase(iterator pos)
 {
-	(void)pos;
+
+	
+	// size_type	index;
+	// index = ft::distance(rbegin(), pos);
+	// for (size_type i = index; i < _size - 1; ++i)
+	// {
+	// 	_data = _data[i + 1];
+	// }
+	// --_size;
+	// _end = _data + _size;
+	// return (iterator(_data + index));
+
+	if (pos < begin() || pos >= end())
+		throw std::out_of_range("Invalid iterator");
+	for (iterator it = pos; it < end() - 1; ++it)
+		*it = *(it + 1);
+
+	--_size;
+	_end = _data + _size;
+	return (pos);
 }
 
 template<typename T, typename Alloc>
 typename ft::vector<T, Alloc>::iterator	ft::vector<T, Alloc>::erase(const_iterator pos)
 {
-	(void)pos;
+	// size_type	index;
 
+	// if (pos < begin() || pos >= end())
+	// 	throw std::out_of_range("Invalid iterator");
+	// index = ft::distance(rbegin(), pos);
+	// for (size_type i = index; i < _size - 1; ++i)
+	// {
+	// 	_data = _data[i + 1];
+	// }
+	// --_size;
+	// _end = _data + _size;
+	// return (iterator(_data + index));
+	if (pos < begin() || pos >= end())
+		throw std::out_of_range("Invalid iterator");
+	for (iterator it = pos; it < end() - 1; ++it)
+		*it = *(it + 1);
+	--_size;
+	_end = _data + _size;
+	return (pos);
 }
 
 template<typename T, typename Alloc>

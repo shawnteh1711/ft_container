@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:13:41 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/06 22:03:58 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/06 22:49:30 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -728,5 +728,23 @@ void vector_test(void)
 			ft::test_assert(v2[i], sv2[i], "Insert incorrect", "Passed");
 		// int arr[] = {501, 502, 503};
 		// (void)arr;
+	}
+
+	{
+		std::cout << std::endl <<  "Erase function" << std::endl;
+		ft::vector<int> v(1, 0);
+		std::vector<int> sv(1, 0);
+
+		v.push_back(1);
+		sv.push_back(1);
+
+		// Test1: remove elements at beginning of vector
+		v.erase(v.begin());
+		sv.erase(sv.begin());
+		ft::print_vector(v);
+		ft::print_vector(sv);
+
+
+
 	}
 }
