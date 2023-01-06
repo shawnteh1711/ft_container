@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/06 21:52:54 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/06 22:26:18 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -502,6 +502,34 @@ typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_itera
 	return iterator(begin() + index);
 }
 // Modifiers: erase
+
+template<typename T, typename Alloc>
+typename ft::vector<T, Alloc>::iterator	ft::vector<T, Alloc>::erase(iterator pos)
+{
+	(void)pos;
+}
+
+template<typename T, typename Alloc>
+typename ft::vector<T, Alloc>::iterator	ft::vector<T, Alloc>::erase(const_iterator pos)
+{
+	(void)pos;
+
+}
+
+template<typename T, typename Alloc>
+typename ft::vector<T, Alloc>::iterator	ft::vector<T, Alloc>::erase(iterator first, iterator last)
+{
+	(void)first;
+	(void)last;
+
+}
+
+template<typename T, typename Alloc>
+typename ft::vector<T, Alloc>::iterator	ft::vector<T, Alloc>::erase(const_iterator first, const_iterator last)
+{
+	(void)first;
+	(void)last;
+}
 
 // Modifiers: push_back
 template<typename T, typename Alloc>

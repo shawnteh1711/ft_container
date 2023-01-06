@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/06 16:09:41 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/06 22:21:45 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,10 @@ namespace ft
 				iterator emplace(const_iterator position, value_type& x);
 
 				// Modifiers: erase
+				iterator	erase(iterator pos);
+				iterator	erase(const_iterator pos);
+				iterator	erase(iterator first, iterator last);
+				iterator	erase(const_iterator first, const_iterator last);
 
 				// Modifiers: push_back
 				void	push_back(const T& value);
