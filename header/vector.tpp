@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/05 23:13:31 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/06 21:52:54 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -357,6 +357,7 @@ void ft::vector<T, Alloc>::reserve(size_type new_cap)
 		_capacity = new_cap;
 		_start = new_data;
 		_end = new_data + _size;
+		// std::cout<<"_capacity inside reserve"<<_capacity<<std::endl;
 	}
 }
 
@@ -408,7 +409,7 @@ void ft::vector<T, Alloc>::clear()
 
 // Modifiers: insert
 
-// Insert value before pos
+// Insert value before pos for single element
 template<typename T, typename Alloc>
 typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_iterator pos, const value_type& value)
 {
@@ -418,7 +419,12 @@ typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_itera
 	for (iterator it = begin(); it != pos; ++it)
 		++index;
 	if (_size == capacity())
-		reserve(capacity() * 2);
+	{
+		if (_size == 0 && _capacity == 0)
+			reserve(1);
+		else
+			reserve(capacity() * 2);
+	}
 	pointer new_element = _alloc.allocate(1);
 	_alloc.construct(new_element, value);
 	for (size_type i = _size; i > index; --i)
@@ -432,7 +438,7 @@ typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_itera
 }
 
 
-// Insert: non_const value_type
+// Insert: non_const value_type for single element
 template<typename T, typename Alloc>
 typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_iterator pos, value_type& value)
 {
@@ -442,28 +448,23 @@ typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_itera
 	for (iterator it = begin(); it != pos; ++it)
 		++index;
 	if (_size == capacity())
-		reserve(capacity() * 2);
-	// pointer new_element = _alloc.allocate(1);
-	// _alloc.construct(new_element, value);
+	{
+		if (_size == 0 && _capacity == 0)
+			reserve(1);
+		else
+			reserve(capacity() * 2.0);
+	}
 	for (size_type i = _size; i > index; --i)
 		_data[i] = _data[i - 1];
-	if (_data == nullptr)
-	{
-		std::cout<<"NULLL"<< std::endl;
-		_data = _alloc.allocate(_capacity);
-	}
 	_data[index] = value;
-	std::cout<<"pass _data[index]"<< std::endl;
 	_start = _data;
 	++_size;
 	_start = _data;
 	_end = _data + _size;
-	// _alloc.deallocate(new_element, 1);
-	// _alloc.deallocate(_data, _capacity);
 	return (iterator(_data + index));
 }
 
-// Insert count copies of the value before pos
+// Insert count copies of the value before pos: fill
 template<typename T, typename Alloc>
 typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_iterator pos, size_type count, const T& value )
 {
@@ -483,24 +484,22 @@ typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_itera
 	return (iterator(_data + index));
 }
 
-// Insert elements from range [first, last) before pos
+// Insert elements from range [first, last) before pos: range
 template<typename T, typename Alloc>
 template <class InputIt>
 typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_iterator pos, InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type*)
 {
-	size_type		index;
-	index = ft::distance<iterator>(first, last);
+	size_type	index;
 
-	std::cout<<"index:"<<index<<std::endl;
-	for (InputIt it = first ; it != last; ++it)
+	if (pos < begin() || pos > end())
+		throw std::out_of_range("Invalid iterator");
+	index = ft::distance<const_iterator>(this->begin(), pos);
+	for (InputIt it = first; it != last; ++it)
 	{
-		std::cout<<"*it"<<*it<<std::endl;
-		this->insert(pos, *it);
-		// pos = this->insert(pos, value_type(*it));
-		// ++pos;
+		this->insert(begin() + index, *it);
 		++index;
 	}
-	return (iterator(_data + index));
+	return iterator(begin() + index);
 }
 // Modifiers: erase
 

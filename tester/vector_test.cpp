@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:13:41 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/05 22:23:05 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/06 22:03:58 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -658,7 +658,7 @@ void vector_test(void)
 	
 		// Test 2: const value and add into middle
 		v.insert(v.begin() + 1, 200);
-		ft::print_vector(v);
+		// ft::print_vector(v);
 		sv.insert(sv.begin() + 1, 200);
 		ft::test_assert(v.size(), sv.size(), "Insert incorrect", "Passed");
 		ft::test_assert(v.capacity(), sv.capacity(), "Insert incorrect", "Passed");
@@ -690,16 +690,42 @@ void vector_test(void)
 		for (size_t i = 0; i < v.size(); i++)
 			ft::test_assert(v[i], sv[i], "Insert incorrect", "Passed");
 		
-		// Test 5: inserting multiple value at end vector
+		// Test 6: inserting multiple value at end vector
 		v.insert(v.end(), 2, 500);
 		sv.insert(sv.end(), 2, 500);
 		ft::test_assert(v.size(), sv.size(), "Insert incorrect", "Passed");
 		ft::test_assert(v.capacity(), sv.capacity(), "Insert incorrect", "Passed");
 		for (size_t i = 0; i < v.size(); i++)
 			ft::test_assert(v[i], sv[i], "Insert incorrect", "Passed");
-		ft::vector<int>	v2;
-		ft::print_vector(v);
+		ft::vector<int>		v2;
+		std::vector<int>	sv2;
 		v2.insert(v2.begin(), v.begin(), v.end());
+		sv2.insert(sv2.begin(), sv.begin(), sv.end());
+		// capacity is not same as std growth strategy depends on size of vector,
+		// our reserve is fix with growth factor * 2
+		ft::test_assert(v2.size(), sv2.size(), "Insert incorrect", "Passed");
+		for (size_t i = 0; i < v.size(); i++)
+			ft::test_assert(v2[i], sv2[i], "Insert incorrect", "Passed");
+
+		// Test: Add the ranve at end
+		ft::vector<int>		v3(2, 700);
+		std::vector<int>	sv3(2, 700);
+		v2.insert(v2.end(), v3.begin(), v3.end());
+		sv2.insert(sv2.end(), sv3.begin(), sv3.end());
+		ft::test_assert(v2.size(), sv2.size(), "Insert incorrect", "Passed");
+		for (size_t i = 0; i < v.size(); i++)
+			ft::test_assert(v2[i], sv2[i], "Insert incorrect", "Passed");
+
+		// Test: Add the second element of vector at middle 
+		ft::vector<int>		v4(1, 250);
+		v4.push_back(270);
+		std::vector<int>	sv4(1, 250);
+		sv4.push_back(270);
+		v2.insert(v2.begin() + 6, v4.begin() + 1, v4.end());
+		sv2.insert(sv2.begin() + 6, sv4.begin() + 1, sv4.end());
+		ft::test_assert(v2.size(), sv2.size(), "Insert incorrect", "Passed");
+		for (size_t i = 0; i < v.size(); i++)
+			ft::test_assert(v2[i], sv2[i], "Insert incorrect", "Passed");
 		// int arr[] = {501, 502, 503};
 		// (void)arr;
 	}
