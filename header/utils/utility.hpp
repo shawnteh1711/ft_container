@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 07:19:58 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/05 20:00:52 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/08 00:07:32 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,12 @@ namespace ft
 	T as(U value)
 	{
 		return (static_cast<T>(value));
+	}
+
+	template<typename T>
+	void	print_header(T msg)
+	{
+		std::cout << std::endl << msg << std::endl;
 	}
 }
 

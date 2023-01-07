@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/07 20:46:32 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/08 00:40:52 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -398,13 +398,17 @@ void ft::vector<T, Alloc>::shrink_to_fit()
 template<typename T, typename Alloc>
 void ft::vector<T, Alloc>::clear()
 {
+	if (_size == 0)
+		return ;
 	for (size_type i = 0; i < _size; i++)
 		_alloc.destroy(&(_data[i]));
 	// this->_alloc.deallocate(_data, _capacity);
-	this->_data = nullptr;
-	this->_start = nullptr;
-	this->_end = nullptr;
+	// this->_data = nullptr;
+	// this->_start = nullptr;
+	// this->_end = nullptr;
 	this->_size = 0;
+	this->_start = _data;
+	this->_end = _data;
 }
 
 // Modifiers: insert
@@ -540,7 +544,7 @@ typename ft::vector<T, Alloc>::iterator	ft::vector<T, Alloc>::erase(iterator fir
 	if (first < begin() || first >= end() || last < begin() || last > end())
 		throw (std::out_of_range("Invalid iterator: Erase Range"));
 	if (first > last)
-		return last;
+		return (last);
 	iterator it = first;
 	while (it != last)
 	{
@@ -548,20 +552,30 @@ typename ft::vector<T, Alloc>::iterator	ft::vector<T, Alloc>::erase(iterator fir
 		if (it == end())
 			break;
 	}
-	return first;
+	return (first);
 }
 
 template<typename T, typename Alloc>
 typename ft::vector<T, Alloc>::iterator	ft::vector<T, Alloc>::erase(const_iterator first, const_iterator last)
 {
+	size_type	distance;
+	
 	if (first < begin() || first >= end() || last < begin() || last > end())
 		throw std::out_of_range("Invalid iterator: Const Erase Range");
-
-	while (first != last)
+	if (first > last)
 	{
-		first = this->erase(first);
+		distance = ft::distance<const_iterator>(this->begin(), last);
+		return (begin() + distance);
 	}
-	return first;
+	distance = ft::distance<const_iterator>(this->begin(), first);
+	iterator it = begin() + distance;
+	while (it != last)
+	{
+		it = this->erase(it);
+		if (it == end())
+			break;
+	}
+	return (begin() + distance);
 }
 
 // Modifiers: push_back
@@ -580,28 +594,26 @@ void	ft::vector<T, Alloc>::push_back(const T& value)
 template<typename T, typename Alloc>
 void	ft::vector<T, Alloc>::pop_back()
 {
-
+	if (_size == 0)
+		throw (std::out_of_range("Vector is empty: Pop_back"));
+	--_size;
+	_end = _data + _size;
 }
 
 // Modifier: resize
 template<typename T, typename Alloc>
-void	ft::vector<T, Alloc>::resize(size_type count)
-{
-	(void)count;
-	if (count > _size)
-		;
-		// insert elements to increase size
-	else if (count < _size)
-		// erase elements to decrease size
-		;
-}
-
-template<typename T, typename Alloc>
 void	ft::vector<T, Alloc>::resize(size_type count, const value_type& value)
-// void	ft::vector<T, Alloc>::resize(size_type count, const value_type& value, typename ft::enable_if<ft::is_integral<T>::value>::type*)
 {
-	(void)count;
-	(void)value;
+	if (count > this->max_size())
+		throw (std::length_error("ft::vector::resize"));
+	if (count < _size)
+	{
+		this->erase(begin() + count, end());
+	}
+	else if (count > _size)
+	{
+		this->insert(this->end(), count - _size, value);
+	}
 }
 
 // Modifier: swap
@@ -612,7 +624,6 @@ void	ft::vector<T, Alloc>::swap(vector& other)
 	ft::swap(_size, other._size);
 	ft::swap(_capacity, other._capacity);
 	ft::swap(_data, other._data);
-	ft::swap(_start, other._start);
 	ft::swap(_start, other._start);
 	ft::swap(_end, other._end);
 }
