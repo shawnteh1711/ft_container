@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/06 22:54:05 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/07 20:46:32 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -492,7 +492,7 @@ typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_itera
 	size_type	index;
 
 	if (pos < begin() || pos > end())
-		throw std::out_of_range("Invalid iterator");
+		throw (std::out_of_range("Invalid iterator: Insert"));
 	index = ft::distance<const_iterator>(this->begin(), pos);
 	for (InputIt it = first; it != last; ++it)
 	{
@@ -503,68 +503,65 @@ typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_itera
 }
 // Modifiers: erase
 
+// erase one element at iterator pos
 template<typename T, typename Alloc>
 typename ft::vector<T, Alloc>::iterator	ft::vector<T, Alloc>::erase(iterator pos)
 {
-
-	
-	// size_type	index;
-	// index = ft::distance(rbegin(), pos);
-	// for (size_type i = index; i < _size - 1; ++i)
-	// {
-	// 	_data = _data[i + 1];
-	// }
-	// --_size;
-	// _end = _data + _size;
-	// return (iterator(_data + index));
-
 	if (pos < begin() || pos >= end())
-		throw std::out_of_range("Invalid iterator");
+		throw (std::out_of_range("Invalid iterator: Erase"));
 	for (iterator it = pos; it < end() - 1; ++it)
 		*it = *(it + 1);
-
 	--_size;
 	_end = _data + _size;
 	return (pos);
 }
 
+// erase one element at const_iterator pos
 template<typename T, typename Alloc>
 typename ft::vector<T, Alloc>::iterator	ft::vector<T, Alloc>::erase(const_iterator pos)
 {
-	// size_type	index;
+	size_type	index;
 
-	// if (pos < begin() || pos >= end())
-	// 	throw std::out_of_range("Invalid iterator");
-	// index = ft::distance(rbegin(), pos);
-	// for (size_type i = index; i < _size - 1; ++i)
-	// {
-	// 	_data = _data[i + 1];
-	// }
-	// --_size;
-	// _end = _data + _size;
-	// return (iterator(_data + index));
+	index = 0;
 	if (pos < begin() || pos >= end())
-		throw std::out_of_range("Invalid iterator");
-	for (iterator it = pos; it < end() - 1; ++it)
-		*it = *(it + 1);
+		throw (std::out_of_range("Invalid iterator: Const Erase"));
+	for (iterator it = begin(); it != pos; ++it)
+		++index;
+	for (size_type i = index; i < _size - 1; ++i)
+		_data[i] = _data[i + 1];
 	--_size;
 	_end = _data + _size;
-	return (pos);
+	return (iterator(_data + index));
 }
 
 template<typename T, typename Alloc>
 typename ft::vector<T, Alloc>::iterator	ft::vector<T, Alloc>::erase(iterator first, iterator last)
 {
-	(void)first;
-	(void)last;
-
+	if (first < begin() || first >= end() || last < begin() || last > end())
+		throw (std::out_of_range("Invalid iterator: Erase Range"));
+	if (first > last)
+		return last;
+	iterator it = first;
+	while (it != last)
+	{
+		it = this->erase(it);
+		if (it == end())
+			break;
+	}
+	return first;
 }
 
 template<typename T, typename Alloc>
 typename ft::vector<T, Alloc>::iterator	ft::vector<T, Alloc>::erase(const_iterator first, const_iterator last)
 {
-	(void)first;
-	(void)last;
+	if (first < begin() || first >= end() || last < begin() || last > end())
+		throw std::out_of_range("Invalid iterator: Const Erase Range");
+
+	while (first != last)
+	{
+		first = this->erase(first);
+	}
+	return first;
 }
 
 // Modifiers: push_back

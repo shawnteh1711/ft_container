@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:13:41 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/06 22:49:30 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/07 20:46:10 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -738,13 +738,112 @@ void vector_test(void)
 		v.push_back(1);
 		sv.push_back(1);
 
-		// Test1: remove elements at beginning of vector
+		// Test1: remove elements at beginning of vector non_const
 		v.erase(v.begin());
 		sv.erase(sv.begin());
-		ft::print_vector(v);
-		ft::print_vector(sv);
+		ft::test_assert(v.size(), sv.size(), "Erase incorrect", "Passed");
+		ft::test_assert(v.capacity(), sv.capacity(), "Erase incorrect", "Passed");
+		for (size_t i = 0; i < v.size(); i++)
+			ft::test_assert(v[i], sv[i], "Erase incorrect", "Passed");
 
+		// Test2: remove elements at beginning of vector const
+		v.insert(v.begin(), 0);
+		sv.insert(sv.begin(), 0);
+		ft::vector<int>::const_iterator pos = v.begin();
+		std::vector<int>::const_iterator pos2 = sv.begin();
+		v.erase(pos);
+		sv.erase(pos2);
+		ft::test_assert(v.size(), sv.size(), "Erase incorrect", "Passed");
+		ft::test_assert(v.capacity(), sv.capacity(), "Erase incorrect", "Passed");
+		for (size_t i = 0; i < v.size(); i++)
+			ft::test_assert(v[i], sv[i], "Erase incorrect", "Passed");
 
+		
+		// Test3: remove elements at middle of vector non_const iterator
+		v.push_back(2);
+		v.push_back(3);
+		v.push_back(4);
+		v.erase(v.begin() + 1);
+		sv.push_back(2);
+		sv.push_back(3);
+		sv.push_back(4);
+		sv.erase(sv.begin() + 1);
+		ft::test_assert(v.size(), sv.size(), "Erase incorrect", "Passed");
+		ft::test_assert(v.capacity(), sv.capacity(), "Erase incorrect", "Passed");
+		for (size_t i = 0; i < v.size(); i++)
+			ft::test_assert(v[i], sv[i], "Erase incorrect", "Passed");
 
+		// Test4: remove elements at middle of vector const iterator
+		v.insert(v.begin() + 1, 2);
+		pos = v.begin() + 1;
+		v.erase(pos);
+		sv.insert(sv.begin() + 1, 2);
+		pos2 = sv.begin() + 1;
+		sv.erase(pos2);
+		ft::test_assert(v.size(), sv.size(), "Erase incorrect", "Passed");
+		ft::test_assert(v.capacity(), sv.capacity(), "Erase incorrect", "Passed");
+		for (size_t i = 0; i < v.size(); i++)
+			ft::test_assert(v[i], sv[i], "Erase incorrect", "Passed");
+
+		// Test5: remove elements at end of vector non_const iterator
+		v.insert(v.begin() + 1, 2);
+		v.erase(v.end() - 1);
+		sv.insert(sv.begin() + 1, 2);
+		sv.erase(sv.end() - 1);
+		ft::test_assert(v.size(), sv.size(), "Erase incorrect", "Passed");
+		ft::test_assert(v.capacity(), sv.capacity(), "Erase incorrect", "Passed");
+		for (size_t i = 0; i < v.size(); i++)
+			ft::test_assert(v[i], sv[i], "Erase incorrect", "Passed");
+
+		// Test6: remove elements at end of vector const iterator
+		pos = v.end() - 1;
+		v.erase(pos);
+		pos2 = sv.end() - 1;
+		sv.erase(pos2);
+		ft::test_assert(v.size(), sv.size(), "Erase incorrect", "Passed");
+		ft::test_assert(v.capacity(), sv.capacity(), "Erase incorrect", "Passed");
+		for (size_t i = 0; i < v.size(); i++)
+			ft::test_assert(v[i], sv[i], "Erase incorrect", "Passed");
+
+		// Test7: test for range erase for non_const iterator
+		v.push_back(3);
+		v.push_back(4);
+		v.push_back(5);
+		sv.push_back(3);
+		sv.push_back(4);
+		sv.push_back(5);
+		v.erase(v.begin() + 2, v.end());
+		sv.erase(sv.begin() + 2, sv.end());
+		ft::test_assert(v.size(), sv.size(), "Erase incorrect", "Passed");
+		ft::test_assert(v.capacity(), sv.capacity(), "Erase incorrect", "Passed");
+		for (size_t i = 0; i < v.size(); i++)
+			ft::test_assert(v[i], sv[i], "Erase incorrect", "Passed");
+
+		// Test7: test for range erase for const iterator
+		v.push_back(3);
+		v.push_back(4);
+		v.push_back(5);
+		sv.push_back(3);
+		sv.push_back(4);
+		sv.push_back(5);
+		pos = v.begin() + 2;
+		v.erase(pos, v.end());
+		pos2 = sv.begin() + 2;
+		sv.erase(pos2, sv.end());
+		ft::test_assert(v.size(), sv.size(), "Erase incorrect", "Passed");
+		ft::test_assert(v.capacity(), sv.capacity(), "Erase incorrect", "Passed");
+		for (size_t i = 0; i < v.size(); i++)
+			ft::test_assert(v[i], sv[i], "Erase incorrect", "Passed");
+		// v.erase(v.begin(), v.end());
+		// assert(v.size() == 0);
+		// try
+		// {
+		// 	v.erase(v.end(), v.begin());
+		// 	assert(false);
+		// }
+		// catch (std::out_of_range& e)
+		// {
+		// 	assert(std::string(e.what()) == "Invalid iterator: Erase Range");
+		// }
 	}
 }
