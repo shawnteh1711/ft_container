@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/08 00:05:31 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/08 23:02:17 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,33 @@ namespace ft
 				void	swap(vector& other);
 	};
 	// Non-member functions
+	// template< class T, class Alloc >
+	// bool operator==( const ft::vector<T, Alloc>& lhs,
+	// 				const ft::vector<T, Alloc>& rhs );
+
+	// template< class T, class Alloc >
+	// bool operator!=( const ft::vector<T,Alloc>& lhs,
+	// 				const ft::vector<T,Alloc>& rhs );
+
+	// template< class T, class Alloc >
+	// bool operator<( const std::vector<T,Alloc>& lhs,
+	// 				const std::vector<T,Alloc>& rhs );
+
+	// template< class T, class Alloc >
+	// bool operator<=( const std::vector<T,Alloc>& lhs,
+	// 				const std::vector<T,Alloc>& rhs );
+
+	// template< class T, class Alloc >
+	// bool operator>( const std::vector<T,Alloc>& lhs,
+	// 				const std::vector<T,Alloc>& rhs );
+	
+	// template< class T, class Alloc >
+	// bool operator>=( const std::vector<T,Alloc>& lhs,
+	// 				const std::vector<T,Alloc>& rhs );
+
+	// template< class T, class Alloc >
+	// void swap( ft::vector<T,Alloc>& lhs,
+	// 		ft::vector<T,Alloc>& rhs );
 }
 
 #endif

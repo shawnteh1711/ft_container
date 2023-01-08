@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:13:41 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/08 20:19:17 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/09 00:23:33 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,7 +245,7 @@ void vector_test(void)
 		ft::vector<int> v(1, 2);
 		std::vector<int> sv(1, 2);
 
-		// Check that data() returns a pointer to te=he first element of the vector
+		// Check that data() returns a pointer to the first element of the vector
 		ft::test_assert(v.data(), &v[0], "Data incorrect", "Passed");
 		ft::test_assert(sv.data(), &sv[0], "Data incorrect", "Passed");
 
@@ -652,6 +652,8 @@ void vector_test(void)
 		// Test 1: const value
 		v.insert(v.begin(), 100);
 		sv.insert(sv.begin(), 100);
+		std::cout<<"v.capacity"<<v.capacity()<<std::endl;
+		std::cout<<"sv.capacity"<<sv.capacity()<<std::endl;
 		ft::test_assert(v.size(), sv.size(), "Insert incorrect", "Passed");
 		ft::test_assert(v.capacity(), sv.capacity(), "Insert incorrect", "Passed");
 		for (size_t i = 0; i < v.size(); i++)
@@ -661,6 +663,8 @@ void vector_test(void)
 		v.insert(v.begin() + 1, 200);
 		// ft::print_vector(v);
 		sv.insert(sv.begin() + 1, 200);
+		std::cout<<"v.capacity"<<v.capacity()<<std::endl;
+		std::cout<<"sv.capacity"<<sv.capacity()<<std::endl;
 		ft::test_assert(v.size(), sv.size(), "Insert incorrect", "Passed");
 		ft::test_assert(v.capacity(), sv.capacity(), "Insert incorrect", "Passed");
 		for (size_t i = 0; i < v.size(); i++)
@@ -670,6 +674,8 @@ void vector_test(void)
 		int	value = 400;
 		v.insert(v.end(), value);
 		sv.insert(sv.end(), value);
+		std::cout<<"v.capacity"<<v.capacity()<<std::endl;
+		std::cout<<"sv.capacity"<<sv.capacity()<<std::endl;
 		ft::test_assert(v.size(), sv.size(), "Insert incorrect", "Passed");
 		ft::test_assert(v.capacity(), sv.capacity(), "Insert incorrect", "Passed");
 		for (size_t i = 0; i < v.size(); i++)
@@ -678,6 +684,8 @@ void vector_test(void)
 		// Test 4: inserting multiple values at beginning vector
 		v.insert(v.begin(), 2, 50);
 		sv.insert(sv.begin(), 2, 50);
+		std::cout<<"v.capacity"<<v.capacity()<<std::endl;
+		std::cout<<"sv.capacity"<<sv.capacity()<<std::endl;
 		ft::test_assert(v.size(), sv.size(), "Insert incorrect", "Passed");
 		ft::test_assert(v.capacity(), sv.capacity(), "Insert incorrect", "Passed");
 		for (size_t i = 0; i < v.size(); i++)
@@ -686,6 +694,8 @@ void vector_test(void)
 		// Test 5: inserting multiple value at middle vector
 		v.insert(v.begin() + 2, 2, 70);
 		sv.insert(sv.begin() + 2, 2, 70);
+		std::cout<<"v.capacity"<<v.capacity()<<std::endl;
+		std::cout<<"sv.capacity"<<sv.capacity()<<std::endl;
 		ft::test_assert(v.size(), sv.size(), "Insert incorrect", "Passed");
 		ft::test_assert(v.capacity(), sv.capacity(), "Insert incorrect", "Passed");
 		for (size_t i = 0; i < v.size(); i++)
@@ -694,26 +704,37 @@ void vector_test(void)
 		// Test 6: inserting multiple value at end vector
 		v.insert(v.end(), 2, 500);
 		sv.insert(sv.end(), 2, 500);
+		std::cout<<"v2.capacity"<<v.capacity()<<std::endl;
+		std::cout<<"sv2.capacity"<<sv.capacity()<<std::endl;
 		ft::test_assert(v.size(), sv.size(), "Insert incorrect", "Passed");
 		ft::test_assert(v.capacity(), sv.capacity(), "Insert incorrect", "Passed");
 		for (size_t i = 0; i < v.size(); i++)
 			ft::test_assert(v[i], sv[i], "Insert incorrect", "Passed");
+
 		ft::vector<int>		v2;
 		std::vector<int>	sv2;
 		v2.insert(v2.begin(), v.begin(), v.end());
 		sv2.insert(sv2.begin(), sv.begin(), sv.end());
 		// capacity is not same as std growth strategy depends on size of vector,
 		// our reserve is fix with growth factor * 2
+		std::cout<<"v2.capacity"<<v2.capacity()<<std::endl;
+		std::cout<<"sv2.capacity"<<sv2.capacity()<<std::endl;
 		ft::test_assert(v2.size(), sv2.size(), "Insert incorrect", "Passed");
+		ft::test_assert(v2.capacity(), sv2.capacity(), "Insert incorrect", "Passed");
 		for (size_t i = 0; i < v.size(); i++)
 			ft::test_assert(v2[i], sv2[i], "Insert incorrect", "Passed");
 
-		// Test: Add the ranve at end
+		// Test: Add the range at end
 		ft::vector<int>		v3(2, 700);
 		std::vector<int>	sv3(2, 700);
+		std::cout<<"v2.capacity: "<<v2.capacity()<<std::endl;
+		std::cout<<"sv2.capacity: "<<sv2.capacity()<<std::endl;
 		v2.insert(v2.end(), v3.begin(), v3.end());
 		sv2.insert(sv2.end(), sv3.begin(), sv3.end());
+		std::cout<<"v2.capacity: "<<v2.capacity()<<std::endl;
+		std::cout<<"sv2.capacity: "<<sv2.capacity()<<std::endl;
 		ft::test_assert(v2.size(), sv2.size(), "Insert incorrect", "Passed");
+		ft::test_assert(v2.capacity(), sv2.capacity(), "Insert incorrect", "Passed");
 		for (size_t i = 0; i < v.size(); i++)
 			ft::test_assert(v2[i], sv2[i], "Insert incorrect", "Passed");
 
@@ -939,6 +960,7 @@ void vector_test(void)
 		v.resize(4);
 		sv.resize(4);
 		ft::test_assert(v.size(), sv.size(), "Resize incorrect", "Passed");
+		ft::test_assert(v.capacity(), sv.capacity(), "Resize incorrect", "Passed");
 		for (size_t i = 0; i < v.size(); i++)
 			ft::test_assert(v[i], sv[i], "Resize incorrect", "Passed");
 
@@ -946,6 +968,7 @@ void vector_test(void)
 		v.resize(6, 3);
 		sv.resize(6, 3);
 		ft::test_assert(v.size(), sv.size(), "Resize incorrect", "Passed");
+		ft::test_assert(v.capacity(), sv.capacity(), "Resize incorrect", "Passed");
 		for (size_t i = 0; i < v.size(); i++)
 			ft::test_assert(v[i], sv[i], "Resize incorrect", "Passed");
 
@@ -953,6 +976,7 @@ void vector_test(void)
 		v.resize(3);
 		sv.resize(3);
 		ft::test_assert(v.size(), sv.size(), "Resize incorrect", "Passed");
+		ft::test_assert(v.capacity(), sv.capacity(), "Resize incorrect", "Passed");
 		for (size_t i = 0; i < v.size(); i++)
 			ft::test_assert(v[i], sv[i], "Resize incorrect", "Passed");
 
@@ -960,6 +984,7 @@ void vector_test(void)
 		v.resize(3);
 		sv.resize(3);
 		ft::test_assert(v.size(), sv.size(), "Resize incorrect", "Passed");
+		ft::test_assert(v.capacity(), sv.capacity(), "Resize incorrect", "Passed");
 		for (size_t i = 0; i < v.size(); i++)
 			ft::test_assert(v[i], sv[i], "Resize incorrect", "Passed");
 
@@ -1034,7 +1059,9 @@ void vector_test(void)
 		v.swap(v2);
 		sv.swap(sv2);
 		ft::test_assert(v.size(), sv.size(), "Resize incorrect", "Passed");
+		ft::test_assert(v.capacity(), sv.capacity(), "Resize incorrect", "Passed");
 		ft::test_assert(v2.size(), sv2.size(), "Resize incorrect", "Passed");
+		ft::test_assert(v2.capacity(), sv2.capacity(), "Resize incorrect", "Passed");
 		for (size_t i = 0; i < v.size(); i++)
 			ft::test_assert(v[i], sv[i], "Resize incorrect", "Passed");
 		for (size_t i = 0; i < v2.size(); i++)
@@ -1065,10 +1092,41 @@ void vector_test(void)
 	}
 
 	{
+		ft::print_header("Non-member function");
+
+		ft::vector<int> v;
+		ft::vector<int> v2;
+		ft::vector<int> v3;
+
+		v.push_back(1);
+	
+		v2.push_back(1);
+		v2.push_back(2);
+
+		v3.push_back(1);
+		v3.push_back(2);
+		v3.push_back(3);
+
+		assert(!(v == v2));
+		assert(!(v2 == v3));
+		assert(v != v2);
+		assert(v2 != v3);
+		assert(v < v2);
+		assert(v2 < v3);
+		assert(v <= v2);
+		assert(v2 <= v3);
+		assert(v3 > v2);
+		assert(v2 > v);
+		assert(v3 >= v2);
+		assert(v2 >= v);
+	}
+
+	{
 		ft::print_header("Check Time Performance");
 
 		clock_t	start_time, end_time;
 		double	ft_vec_time, std_vec_time;
+		bool	rv;
 
 		start_time = clock();
 
@@ -1101,6 +1159,12 @@ void vector_test(void)
 		v.pop_back();
 		v.resize(42);
 		v.swap(v2);
+		rv = (v == v2);
+		rv = (v != v2);
+		rv = (v < v2);
+		rv = (v <= v2);
+		rv = (v > v2);
+		rv = (v >= v2);
 		
 		end_time = clock();
 		ft_vec_time = (start_time - end_time) / CLOCKS_PER_SEC;
@@ -1137,6 +1201,12 @@ void vector_test(void)
 		sv.pop_back();
 		sv.resize(42);
 		sv.swap(sv2);
+		rv = (sv == sv2);
+		rv = (sv != sv2);
+		rv = (sv < sv2);
+		rv = (sv <= sv2);
+		rv = (sv > sv2);
+		rv = (sv >= sv2);
 		
 		end_time = clock();
 		std_vec_time = (start_time - end_time) / CLOCKS_PER_SEC;
