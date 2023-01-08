@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:13:41 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/08 00:44:10 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/08 20:19:17 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <cassert>
 #include <iomanip> 
 #include "tester.hpp"
+#include <ctime> // for clock
 
 void vector_test(void)
 {
@@ -1060,6 +1061,87 @@ void vector_test(void)
 			ft::test_assert(v[i], sv[i], "Resize incorrect", "Passed");
 		for (size_t i = 0; i < v2.size(); i++)
 			ft::test_assert(v2[i], sv2[i], "Resize incorrect", "Passed");
+		// system("leaks ft_container");
+	}
+
+	{
+		ft::print_header("Check Time Performance");
+
+		clock_t	start_time, end_time;
+		double	ft_vec_time, std_vec_time;
+
+		start_time = clock();
+
+		ft::vector<int>		v;
+		ft::vector<int>		v2(42, 42);
+
+		v.assign(v2.begin(), v2.end());
+		v.get_allocator();
+		v.at(0);
+		v[0];
+		v.front();
+		v.back();
+		v.data();
+		v.begin();
+		v.end();
+		v.rbegin();
+		v.rend();
+		v.empty();
+		v.size();
+		v.max_size();
+		v.reserve(42);
+		v.capacity();
+		v.shrink_to_fit();
+		v.clear();
+		v.insert(v.begin(), -1);
+		v.insert(v.begin(), v2.begin(), v2.end());
+		v.erase(v.begin());
+		v.erase(v.begin(), v.end());
+		v.push_back(42);
+		v.pop_back();
+		v.resize(42);
+		v.swap(v2);
+		
+		end_time = clock();
+		ft_vec_time = (start_time - end_time) / CLOCKS_PER_SEC;
+		std::cout << "ft_vec_time: " << ft_vec_time << std::endl;
+
+		start_time = clock();
+
+		ft::vector<int>		sv;
+		ft::vector<int>		sv2(42, 42);
+
+		sv.assign(sv2.begin(), sv2.end());
+		sv.get_allocator();
+		sv.at(0);
+		sv[0];
+		sv.front();
+		sv.back();
+		sv.data();
+		sv.begin();
+		sv.end();
+		sv.rbegin();
+		sv.rend();
+		sv.empty();
+		sv.size();
+		sv.max_size();
+		sv.reserve(42);
+		sv.capacity();
+		sv.shrink_to_fit();
+		sv.clear();
+		sv.insert(sv.begin(), -1);
+		sv.insert(sv.begin(), sv2.begin(), sv2.end());
+		sv.erase(sv.begin());
+		sv.erase(sv.begin(), sv.end());
+		sv.push_back(42);
+		sv.pop_back();
+		sv.resize(42);
+		sv.swap(sv2);
+		
+		end_time = clock();
+		std_vec_time = (start_time - end_time) / CLOCKS_PER_SEC;
+		std::cout << "std vec time: " << std_vec_time << std::endl;
+		std::cout << "Performance ratio of ft container compared to std container is: " << ft_vec_time / std_vec_time << " times\n" << std::endl; 
 
 	}
 }
