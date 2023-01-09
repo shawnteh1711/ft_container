@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:13:41 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/09 17:12:28 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/09 23:38:59 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 #include <vector>
 #include <cassert>
 #include <iomanip> 
-#include "tester.hpp"
+// #include "tester.hpp"
+#include "../header/vector.hpp"
+#include "../header/vector.tpp"
 #include <ctime> // for clock
 
 void vector_test(void)
 {
 	{
-		std::cout << std::endl <<  "Default constructor" << std::endl;
+		ft::print_headers("Default constructor");
 		ft::vector<int> v;
 		std::vector<int> sv;
 		v.push_back(1);
@@ -29,14 +31,11 @@ void vector_test(void)
 		sv.push_back(1);
 		sv.push_back(2);
 		sv.push_back(3);
-		ft::test_assert(v.size(), sv.size(), "Size incorrect", "Passed");
-		ft::test_assert(v.capacity(), sv.capacity(), "Size incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Elements not same", "Passed");
+		ft::vector_check(v, sv);
 	}
 
 	{
-		std::cout << std::endl <<  "Constructer with the given allocator alloc" << std::endl;
+		ft::print_headers("Constructer with the given allocator alloc");
 		ft::vector<int> v((std::allocator<int>()));
 		std::vector<int> sv;
 		v.push_back(1);
@@ -45,109 +44,71 @@ void vector_test(void)
 		sv.push_back(1);
 		sv.push_back(2);
 		sv.push_back(3);
-		ft::test_assert(v.size(), sv.size(), "Size incorrect", "Passed");
-		ft::test_assert(v.capacity(), sv.capacity(), "Size incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Elements not same", "Passed");
+		ft::vector_check(v, sv);
 	}
 
 	{
-		std::cout << std::endl <<  "Count value constructor" << std::endl;
-
+		ft::print_headers("Count value constructor");
 		ft::vector<int> v(2, 100);
 		std::vector<int> sv(2, 100);
-
-		ft::test_assert(v.size(), sv.size(), "Size incorrect", "Passed");
-		ft::test_assert(v.capacity(), sv.capacity(), "Size incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Elements not same", "Passed");
+		ft::vector_check(v, sv);
 	}
 
 	{
-		std::cout << std::endl <<  "Range constructor" << std::endl;
+		ft::print_headers("Range constructor");
 
-		ft::vector<int>::iterator it;
-		ft::vector<int> v (4,100);
-		ft::vector<int> v2 (v.begin(), v.end());
-		// for (it = v2.begin(); it != v2.end(); ++it)
-		// {
-		// 	std::cout << "it: " << *it << std::endl;
-		// }
-		std::vector<int> sv (4,100); 
-		std::vector<int> sv2 (sv.begin(),sv.end());
-		ft::test_assert(v2.size(), sv2.size(), "Size incorrect", "Passed");
-		ft::test_assert(v2.capacity(), sv2.capacity(), "Size incorrect", "Passed");
-		for (size_t i = 0; i < v2.size(); i++)
-			ft::test_assert(v[i], sv[i], "Elements not same", "Passed");
+		ft::vector<int> v(4,100);
+		ft::vector<int> v2(v.begin(), v.end());
+		std::vector<int> sv(4,100); 
+		std::vector<int> sv2(sv.begin(),sv.end());
+		ft::vector_check(v2, sv2);
 	}
 	
 	{
-		std::cout << std::endl <<  "Copy constructor" << std::endl;
+		ft::print_headers("Copy constructor");
 
 		ft::vector<int> v (4, 200);
 		ft::vector<int> v2 (v);
 		std::vector<int> sv (4, 200);
 		std::vector<int> sv2 (sv);
-		ft::test_assert(v2.size(), sv2.size(), "Size incorrect", "Passed");
-		ft::test_assert(v2.capacity(), sv2.capacity(), "Size incorrect", "Passed");
-		for (size_t i = 0; i < v2.size(); i++)
-			ft::test_assert(v[i], sv[i], "Elements not same", "Passed");
+		ft::vector_check(v2, sv2);
 	}
 
 	{
-		std::cout << std::endl <<  "Assign function" << std::endl;
+		ft::print_headers("Assign function");
 
 		ft::vector<int> v;
 		std::vector<int> sv;
 
 		v.assign(5, 1);
 		sv.assign(5, 1);
-		ft::test_assert(v.size(), sv.size(), "Size incorrect", "Passed");
-		ft::test_assert(v.capacity(), sv.capacity(), "Size incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Elements not same", "Passed");
+		ft::vector_check(v, sv);
 
-		std::cout << std::endl <<  "Range assign function" << std::endl;
+		ft::print_headers("Range assign function");
 		const std::vector<int> extra(6, 2);
 		v.assign(extra.begin(), extra.end());
 		sv.assign(extra.begin(), extra.end());
-		ft::test_assert(v.size(), sv.size(), "Size incorrect", "Passed");
-		ft::test_assert(v.capacity(), sv.capacity(), "Size incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Elements not same", "Passed");
+		ft::vector_check(v, sv);
 	}
 
 	{
-		std::cout << std::endl <<  "Push_back function" << std::endl;
+		ft::print_headers("Push_back function");
 
 		ft::vector<int> v;
 		std::vector<int> sv;
-
 		v.push_back(2);
 		sv.push_back(2);
-		ft::test_assert(v.size(), (unsigned long)1, "Size incorrect", "Passed");
-		ft::test_assert(sv.size(), (unsigned long)1, "Size incorrect", "Passed");
-		ft::test_assert(v.back(), 2, "Back incorrect", "Passed");
-		ft::test_assert(sv.back(), 2, "Back incorrect", "Passed");
-		ft::test_assert(v.size(), sv.size(), "Size not same", "Passed");
-		ft::test_assert(v.back(), sv.back(), "Back not same", "Passed");
-
+		ft::vector_check(v, sv);
 		v.push_back(3);
 		sv.push_back(3);
-		ft::test_assert(v.size(), (unsigned long)2, "Size incorrect", "Passed");
-		ft::test_assert(sv.size(), (unsigned long)2, "Size incorrect", "Passed");
-		ft::test_assert(v.back(), 3, "Back incorrect", "Passed");
-		ft::test_assert(sv.back(), 3, "Back incorrect", "Passed");
-		ft::test_assert(v.size(), sv.size(), "Size not same", "Passed");
-		ft::test_assert(v.back(), sv.back(), "Back not same", "Passed");
+		ft::vector_check(v, sv);
 	}
 
 	{
-		std::cout << std::endl <<  "At function" << std::endl;
+		ft::print_headers("At function");
 
 		ft::vector<int> v(1, 2);
 		std::vector<int> sv(1, 2);
-
 		ft::test_assert(v.at(0), 2, "At incorrect", "Passed");
 		ft::test_assert(sv.at(0), 2, "At incorrect", "Passed");
 		ft::test_assert(v.at(0), sv.at(0), "At not same", "Passed");
@@ -159,6 +120,7 @@ void vector_test(void)
 		ft::test_assert(sv.at(0), 3, "At incorrect", "Passed");
 		ft::test_assert(v.at(0), sv.at(0), "At not same", "Passed");
 
+		// Test elements out_of_range
 		try
 		{
 			v.at(1) = 1;
@@ -175,10 +137,11 @@ void vector_test(void)
 		{
 			std::cerr << e.what() << '\n';
 		}
+		ft::vector_check(v, sv);
 	}
 
 	{
-		std::cout << std::endl <<  "operator[] function" << std::endl;
+		ft::print_headers("operator[] function");
 
 		ft::vector<int> v(1, 2);
 		std::vector<int> sv(1, 2);
@@ -193,14 +156,11 @@ void vector_test(void)
 		ft::test_assert(v[0], 3, "operator[] incorrect", "Passed");
 		ft::test_assert(sv[0], 3, "operator[] incorrect", "Passed");
 		ft::test_assert(v[0], sv[0], "operator[] not same", "Passed");
-
-		// show memory error if out of bound using fsanitize=address
-		// v[1] = 1;
-		// sv[1] = 1;
+		ft::vector_check(v, sv);
 	}
 
 	{
-		std::cout << std::endl <<  "Front function" << std::endl;
+		ft::print_headers("Front function");
 
 		ft::vector<int> v(1, 2);
 		std::vector<int> sv(1, 2);
@@ -217,10 +177,11 @@ void vector_test(void)
 		ft::test_assert(v.front(), 3, "Front incorrect", "Passed");
 		ft::test_assert(sv.front(), 3, "Front incorrect", "Passed");
 		ft::test_assert(v.front(), sv.front(), "Front not same", "Passed");
+		ft::vector_check(v, sv);
 	}
 
 	{
-		std::cout << std::endl <<  "Back function" << std::endl;
+		ft::print_headers("Back function");
 
 		ft::vector<int> v(1, 2);
 		std::vector<int> sv(1, 2);
@@ -237,10 +198,11 @@ void vector_test(void)
 		ft::test_assert(v.back(), 3, "Back incorrect", "Passed");
 		ft::test_assert(sv.back(), 3, "Back incorrect", "Passed");
 		ft::test_assert(v.back(), sv.back(), "Back not same", "Passed");
+		ft::vector_check(v, sv);
 	}
 
 	{
-		std::cout << std::endl <<  "Data function" << std::endl;
+		ft::print_headers("Data function");
 
 		ft::vector<int> v(1, 2);
 		std::vector<int> sv(1, 2);
@@ -254,10 +216,11 @@ void vector_test(void)
 		std::vector<int> empty2;
 		ft::test_assert(empty.data(), (int *)nullptr, "Data incorrect", "Passed");
 		ft::test_assert(empty2.data(), (int *)nullptr, "Data incorrect", "Passed");
+		ft::vector_check(v, sv);
 	}
 
 	{
-		std::cout << std::endl <<  "Begin function" << std::endl;
+		ft::print_headers("Begin function");
 
 		ft::vector<int> v(1, 2);
 		std::vector<int> sv(1, 2);
@@ -277,10 +240,13 @@ void vector_test(void)
 		std::vector<int> empty2;
 		ft::test_assert(empty.begin(), empty.end(), "Begin incorrect", "Passed");
 		ft::test_assert(empty2.begin(), empty2.end(), "Begin incorrect", "Passed");
+		ft::vector_check(v, sv);
+
+
 	}
 
 	{
-		std::cout << std::endl <<  "End function" << std::endl;
+		ft::print_headers("End function");
 
 		ft::vector<int> v(1, 2);
 		std::vector<int> sv(1, 2);
@@ -315,7 +281,7 @@ void vector_test(void)
 	}
 
 	{
-		std::cout << std::endl <<  "Rbegin function" << std::endl;
+		ft::print_headers("Rbegin function");
 
 		ft::vector<int> v(1, 2);
 		std::vector<int> sv(1, 2);
@@ -351,7 +317,7 @@ void vector_test(void)
 	}
 
 	{
-		std::cout << std::endl <<  "Rend function" << std::endl;
+		ft::print_headers("Rend function");
 
 		ft::vector<int> v(1, 42);
 		std::vector<int> sv(1, 42);
@@ -384,7 +350,7 @@ void vector_test(void)
 	}
 
 	{
-		std::cout << std::endl <<  "Empty function" << std::endl;
+		ft::print_headers("Empty function");
 
 		ft::vector<int> v;
 		std::vector<int> sv;
@@ -398,7 +364,7 @@ void vector_test(void)
 	}
 
 	{
-		std::cout << std::endl <<  "Size function" << std::endl;
+		ft::print_headers("Size function");
 
 		ft::vector<int> v;
 		std::vector<int> sv;
@@ -422,7 +388,7 @@ void vector_test(void)
 	}
 
 	{
-		std::cout << std::endl <<  "Max_size function" << std::endl;
+		ft::print_headers("Max_size function");
 
 		size_t		my_max_alloc_size;
 		size_t		std_max_alloc_size;
@@ -448,7 +414,7 @@ void vector_test(void)
 
 
 	{
-		std::cout << std::endl <<  "Reserve function" << std::endl;
+		ft::print_headers("Reserve function");
 
 		// Test the reserve() function for a std::vector object with an initial capacity of 0:
 		ft::vector<int> v;
@@ -510,7 +476,7 @@ void vector_test(void)
 	}
 
 	{
-		std::cout << std::endl <<  "Capacity function" << std::endl;
+		ft::print_headers("Capacity function");
 
 		// Test 1: Default capacity of vector
 		ft::vector<int> v;
@@ -556,30 +522,30 @@ void vector_test(void)
 		}
 		
 		std::cout << "\nFinal size: " << v2.size() << ", capacity: " << v2.capacity() << '\n';
-		// int	sz2 = 100;
+		int	sz2 = 100;
 
-		// std::cout << "\nFinal size: " << v2.size() << ", capacity: " << v2.capacity() << '\n';
+		std::cout << "\nFinal size: " << v2.size() << ", capacity: " << v2.capacity() << '\n';
 
-		// std::vector <int>	sv2;
-		// std::vector<int>::size_type	std_cap = sv2.capacity();
-		// std::cout << "Initial size: " << sv2.size() << ", capacity: " << std_cap << '\n';
-		// std::cout << "\nDemonstrate the capacity's growth policy." "\nSize:  Capacity:  Ratio:\n" << std::left;
-		// while (sz2-- > 0)
-		// {
-		// 	sv2.push_back(sz);
-		// 	if (cap != sv2.capacity())
-		// 	{
-		// 		std::cout << std::setw( 7) << sv2.size()
-		// 				<< std::setw(11) << sv2.capacity()
-		// 				<< std::setw(10) << static_cast<float>(sv2.capacity()) / static_cast<float>(std_cap) << '\n';
-		// 		std_cap = sv2.capacity();
-		// 	}
-		// }
-		// std::cout << "\nFinal size: " << sv2.size() << ", capacity: " << sv2.capacity() << '\n';
+		std::vector <int>	sv2;
+		std::vector<int>::size_type	std_cap = sv2.capacity();
+		std::cout << "Initial size: " << sv2.size() << ", capacity: " << std_cap << '\n';
+		std::cout << "\nDemonstrate the capacity's growth policy." "\nSize:  Capacity:  Ratio:\n" << std::left;
+		while (sz2-- > 0)
+		{
+			sv2.push_back(sz);
+			if (cap != sv2.capacity())
+			{
+				std::cout << std::setw( 7) << sv2.size()
+						<< std::setw(11) << sv2.capacity()
+						<< std::setw(10) << static_cast<float>(sv2.capacity()) / static_cast<float>(std_cap) << '\n';
+				std_cap = sv2.capacity();
+			}
+		}
+		std::cout << "\nFinal size: " << sv2.size() << ", capacity: " << sv2.capacity() << '\n';
 	}
 
 	{
-		std::cout << std::endl <<  "Shrink_to_fit function" << std::endl;
+		ft::print_headers("Shrink_to_fit function");
 
 		ft::vector<int> v(5);
 		std::vector<int> sv(5);
@@ -591,54 +557,28 @@ void vector_test(void)
 		ft::test_assert(sv.size(), (size_t)5, "Capacity incorrect", "Passed");
 		ft::test_assert(sv.size(), sv.capacity(), "Capacity incorrect", "Passed");
 		
-		// std::cout << "Default-constructed capacity is " << v.capacity() << '\n';
-		// // v.resize(100);
-		// std::cout << "Capacity of a 100-element vector is " << v.capacity() << '\n';
-		// // v.resize(50);
-		// std::cout << "Capacity after resize(50) is " << v.capacity() << '\n';
-		// v.shrink_to_fit();
-		// std::cout << "Capacity after shrink_to_fit() is " << v.capacity() << '\n';
-		// v.clear();
-		// std::cout << "Capacity after clear() is " << v.capacity() << '\n';
-		// v.shrink_to_fit();
-		// std::cout << "Capacity after shrink_to_fit() is " << v.capacity() << '\n';
-		// for (int i = 1000; i < 1300; ++i)
-		// 	v.push_back(i);
-		// std::cout << "Capacity after adding 300 elements is " << v.capacity() << '\n';
-		// v.shrink_to_fit();
-	
-		// std::vector<int> sv;
-		// std::cout << "Capacity after shrink_to_fit() is " << sv.capacity() << '\n';
-		// std::cout << "Default-constructed capacity is " << sv.capacity() << '\n';
-		// sv.resize(100);
-		// std::cout << "Capacity of a 100-element vector is " << sv.capacity() << '\n';
-		// sv.resize(50);
-		// std::cout << "Capacity after resize(50) is " << sv.capacity() << '\n';
-		// sv.shrink_to_fit();
-		// std::cout << "Capacity after shrink_to_fit() is " << sv.capacity() << '\n';
-		// sv.clear();
-		// std::cout << "Capacity after clear() is " << sv.capacity() << '\n';
-		// sv.shrink_to_fit();
-		// std::cout << "Capacity after shrink_to_fit() is " << sv.capacity() << '\n';
-		// for (int i = 1000; i < 1300; ++i)
-		// 	sv.push_back(i);
-		// std::cout << "Capacity after adding 300 elements is " << sv.capacity() << '\n';
-		// sv.shrink_to_fit();
-		// std::cout << "Capacity after shrink_to_fit() is " << sv.capacity() << '\n';
+		for (int i = 1000; i < 1300; ++i)
+		{
+			v.push_back(i);
+			sv.push_back(i);
+		}
+		std::cout << "Capacity after adding 300 elements is ft: " << v.capacity() << '\n';
+		std::cout << "Capacity after adding 300 elements is std: " << sv.capacity() << '\n';
+		v.shrink_to_fit();
+		sv.shrink_to_fit();
+		std::cout << "Capacity after shrink_to_fit() is ft: " << v.capacity() << '\n';
+		std::cout << "Capacity after shrink_to_fit() is ft: " << sv.capacity() << '\n';
+
 	}
 
 	{
-		std::cout << std::endl <<  "Clear function" << std::endl;
+		ft::print_headers("Clear function");
 
 		ft::vector<int> v(5, 1);
 		std::vector<int> sv(5, 1);
 
-		ft::print_vector(v);
 		v.clear();
-		ft::print_vector(v);
-		ft::print_vector(sv);
 		sv.clear();
-		ft::print_vector(sv);
 		ft::test_assert(v.size(), (size_t)0, "Clear incorrect", "Passed");
 		ft::test_assert(v.capacity(),  (size_t)5, "Clear incorrect", "Passed");
 		ft::test_assert(sv.size(), (size_t)0, "Clear incorrect", "Passed");
@@ -646,80 +586,55 @@ void vector_test(void)
 	}
 
 	{
-		std::cout << std::endl <<  "Insert function" << std::endl;
+		ft::print_headers("Insert function");
 		ft::vector<int> v(3, 300);
 		std::vector<int> sv(3, 300);
 
 		// Test 1: const value
 		v.insert(v.begin(), 100);
 		sv.insert(sv.begin(), 100);
-		ft::test_assert(v.size(), sv.size(), "Insert incorrect", "Passed");
-		ft::test_assert(v.capacity(), sv.capacity(), "Insert incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Insert incorrect", "Passed");
-	
+		ft::vector_check(v, sv);
+
 		// Test 2: const value and add into middle
 		v.insert(v.begin() + 1, 200);
 		// ft::print_vector(v);
 		sv.insert(sv.begin() + 1, 200);
-		ft::test_assert(v.size(), sv.size(), "Insert incorrect", "Passed");
-		ft::test_assert(v.capacity(), sv.capacity(), "Insert incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Insert incorrect", "Passed");
+		ft::vector_check(v, sv);
+
 
 		// Test 3: non_const value and end()
 		int	value = 400;
 		v.insert(v.end(), value);
 		sv.insert(sv.end(), value);
-		ft::test_assert(v.size(), sv.size(), "Insert incorrect", "Passed");
-		ft::test_assert(v.capacity(), sv.capacity(), "Insert incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Insert incorrect", "Passed");
+		ft::vector_check(v, sv);
 
 		// Test 4: inserting multiple values at beginning vector
 		v.insert(v.begin(), 2, 50);
 		sv.insert(sv.begin(), 2, 50);
-		ft::test_assert(v.size(), sv.size(), "Insert incorrect", "Passed");
-		ft::test_assert(v.capacity(), sv.capacity(), "Insert incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Insert incorrect", "Passed");
+		ft::vector_check(v, sv);
 
 		// Test 5: inserting multiple value at middle vector
 		v.insert(v.begin() + 2, 2, 70);
 		sv.insert(sv.begin() + 2, 2, 70);
-		ft::test_assert(v.size(), sv.size(), "Insert incorrect", "Passed");
-		ft::test_assert(v.capacity(), sv.capacity(), "Insert incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Insert incorrect", "Passed");
+		ft::vector_check(v, sv);
 		
 		// Test 6: inserting multiple value at end vector
 		v.insert(v.end(), 2, 500);
 		sv.insert(sv.end(), 2, 500);
-		ft::test_assert(v.size(), sv.size(), "Insert incorrect", "Passed");
-		ft::test_assert(v.capacity(), sv.capacity(), "Insert incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Insert incorrect", "Passed");
+		ft::vector_check(v, sv);
 
 		ft::vector<int>		v2;
 		std::vector<int>	sv2;
 		v2.insert(v2.begin(), v.begin(), v.end());
 		sv2.insert(sv2.begin(), sv.begin(), sv.end());
-		// capacity is not same as std growth strategy depends on size of vector,
-		// our reserve is fix with growth factor * 2
-		ft::test_assert(v2.size(), sv2.size(), "Insert incorrect", "Passed");
-		ft::test_assert(v2.capacity(), sv2.capacity(), "Insert incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v2[i], sv2[i], "Insert incorrect", "Passed");
+		ft::vector_check(v2, sv2);
 
 		// Test: Add the range at end
 		ft::vector<int>		v3(2, 700);
 		std::vector<int>	sv3(2, 700);
 		v2.insert(v2.end(), v3.begin(), v3.end());
 		sv2.insert(sv2.end(), sv3.begin(), sv3.end());
-		ft::test_assert(v2.size(), sv2.size(), "Insert incorrect", "Passed");
-		ft::test_assert(v2.capacity(), sv2.capacity(), "Insert incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v2[i], sv2[i], "Insert incorrect", "Passed");
+		ft::vector_check(v2, sv2);
 
 		// Test: Add the second element of vector at middle 
 		ft::vector<int>		v4(1, 250);
@@ -728,10 +643,8 @@ void vector_test(void)
 		sv4.push_back(270);
 		v2.insert(v2.begin() + 6, v4.begin() + 1, v4.end());
 		sv2.insert(sv2.begin() + 6, sv4.begin() + 1, sv4.end());
-		ft::test_assert(v2.size(), sv2.size(), "Insert incorrect", "Passed");
-		ft::test_assert(v2.capacity(), sv2.capacity(), "Insert incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v2[i], sv2[i], "Insert incorrect", "Passed");
+		ft::vector_check(v2, sv2);
+
 
 		// Test: Multiple position insert using const insert value type
 		v2.insert(v2.begin(), 20);
@@ -741,14 +654,12 @@ void vector_test(void)
 		v2.insert(v2.begin() + 4, 120);
 		sv2.insert(sv2.begin() + 4, 120);
 		v2.insert(v2.end(), 1000);
-		ft::test_assert(v2.size(), sv2.size(), "Insert incorrect", "Passed");
-		ft::test_assert(v2.capacity(), sv2.capacity(), "Insert incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v2[i], sv2[i], "Insert incorrect", "Passed");
+		sv2.insert(sv2.end(), 1000);
+		ft::vector_check(v2, sv2);
 	}
 
 	{
-		std::cout << std::endl <<  "Erase function" << std::endl;
+		ft::print_headers("Erase function");
 		ft::vector<int> v(1, 0);
 		std::vector<int> sv(1, 0);
 
@@ -758,10 +669,7 @@ void vector_test(void)
 		// Test1: remove elements at beginning of vector non_const
 		v.erase(v.begin());
 		sv.erase(sv.begin());
-		ft::test_assert(v.size(), sv.size(), "Erase incorrect", "Passed");
-		ft::test_assert(v.capacity(), sv.capacity(), "Erase incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Erase incorrect", "Passed");
+		ft::vector_check(v, sv);
 
 		// Test2: remove elements at beginning of vector const
 		v.insert(v.begin(), 0);
@@ -770,10 +678,8 @@ void vector_test(void)
 		std::vector<int>::const_iterator pos2 = sv.begin();
 		v.erase(pos);
 		sv.erase(pos2);
-		ft::test_assert(v.size(), sv.size(), "Erase incorrect", "Passed");
-		ft::test_assert(v.capacity(), sv.capacity(), "Erase incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Erase incorrect", "Passed");
+		ft::vector_check(v, sv);
+
 
 		
 		// Test3: remove elements at middle of vector non_const iterator
@@ -785,10 +691,8 @@ void vector_test(void)
 		sv.push_back(3);
 		sv.push_back(4);
 		sv.erase(sv.begin() + 1);
-		ft::test_assert(v.size(), sv.size(), "Erase incorrect", "Passed");
-		ft::test_assert(v.capacity(), sv.capacity(), "Erase incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Erase incorrect", "Passed");
+		ft::vector_check(v, sv);
+
 
 		// Test4: remove elements at middle of vector const iterator
 		v.insert(v.begin() + 1, 2);
@@ -797,30 +701,21 @@ void vector_test(void)
 		sv.insert(sv.begin() + 1, 2);
 		pos2 = sv.begin() + 1;
 		sv.erase(pos2);
-		ft::test_assert(v.size(), sv.size(), "Erase incorrect", "Passed");
-		ft::test_assert(v.capacity(), sv.capacity(), "Erase incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Erase incorrect", "Passed");
+		ft::vector_check(v, sv);
 
 		// Test5: remove elements at end of vector non_const iterator
 		v.insert(v.begin() + 1, 2);
 		v.erase(v.end() - 1);
 		sv.insert(sv.begin() + 1, 2);
 		sv.erase(sv.end() - 1);
-		ft::test_assert(v.size(), sv.size(), "Erase incorrect", "Passed");
-		ft::test_assert(v.capacity(), sv.capacity(), "Erase incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Erase incorrect", "Passed");
+		ft::vector_check(v, sv);
 
 		// Test6: remove elements at end of vector const iterator
 		pos = v.end() - 1;
 		v.erase(pos);
 		pos2 = sv.end() - 1;
 		sv.erase(pos2);
-		ft::test_assert(v.size(), sv.size(), "Erase incorrect", "Passed");
-		ft::test_assert(v.capacity(), sv.capacity(), "Erase incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Erase incorrect", "Passed");
+		ft::vector_check(v, sv);
 
 		// Test7: test for range erase for non_const iterator
 		v.push_back(3);
@@ -831,10 +726,8 @@ void vector_test(void)
 		sv.push_back(5);
 		v.erase(v.begin() + 2, v.end());
 		sv.erase(sv.begin() + 2, sv.end());
-		ft::test_assert(v.size(), sv.size(), "Erase incorrect", "Passed");
-		ft::test_assert(v.capacity(), sv.capacity(), "Erase incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Erase incorrect", "Passed");
+		ft::vector_check(v, sv);
+
 
 		// Test7: test for range erase for const iterator
 		v.push_back(3);
@@ -847,10 +740,8 @@ void vector_test(void)
 		v.erase(pos, v.end());
 		pos2 = sv.begin() + 2;
 		sv.erase(pos2, sv.end());
-		ft::test_assert(v.size(), sv.size(), "Erase incorrect", "Passed");
-		ft::test_assert(v.capacity(), sv.capacity(), "Erase incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Erase incorrect", "Passed");
+		ft::vector_check(v, sv);
+
 
 		// Test8: test for when first is greater than last in range erase
 		v.push_back(3);
@@ -861,12 +752,13 @@ void vector_test(void)
 		sv.push_back(5);
 		ft::vector<int>::const_iterator first = v.begin() + 3;
 		ft::vector<int>::const_iterator last = v.begin() + 1;
+		v.erase(first, last);
 		// std::vector<int>::const_iterator sfirst = sv.begin() + 1;
 		// std::vector<int>::const_iterator slast = sv.begin() + 3;
-		v.erase(first, last);
 		// standard vector do not handle first > last, throw segmentation fault
 		// sv.erase(sfirst, slast);
 		ft::test_assert(v.size(), size_t(5), "Erase incorrect", "Passed");
+
 		
 		// Test9: test erase all
 		v.erase(v.begin(), v.end());
@@ -875,7 +767,7 @@ void vector_test(void)
 	}
 
 	{
-		std::cout << std::endl <<  "Push_back function" << std::endl;
+		ft::print_headers("Push_back function");
 
 		// test1: push_back with int
 		ft::vector<int> v;
@@ -887,10 +779,7 @@ void vector_test(void)
 		sv.push_back(1);
 		sv.push_back(2);
 		sv.push_back(3);
-		ft::test_assert(v.size(), sv.size(), "Push_back incorrect", "Passed");
-		ft::test_assert(v.capacity(), sv.capacity(), "Push_back incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Push_back incorrect", "Passed");
+		ft::vector_check(v, sv);
 
 		// test2: push_back with char
 		ft::vector<char> v2;
@@ -902,14 +791,11 @@ void vector_test(void)
 		sv2.push_back('a');
 		sv2.push_back('b');
 		sv2.push_back('c');
-		ft::test_assert(v2.size(), sv2.size(), "Push_back incorrect", "Passed");
-		ft::test_assert(v2.capacity(), sv2.capacity(), "Push_back incorrect", "Passed");
-		for (size_t i = 0; i < v2.size(); i++)
-			ft::test_assert(v2[i], sv2[i], "Push_back incorrect", "Passed");
+		ft::vector_check(v, sv);
 	}
 
 	{
-		std::cout << std::endl <<  "Pop_back function" << std::endl;
+		ft::print_headers("Pop_back function");
 
 		ft::vector<int> v;
 		std::vector<int> sv;
@@ -922,17 +808,11 @@ void vector_test(void)
 
 		v.pop_back(); 
 		sv.pop_back();
-		ft::test_assert(v.size(), sv.size(), "Push_back incorrect", "Passed");
-		ft::test_assert(v.capacity(), sv.capacity(), "Push_back incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Push_back incorrect", "Passed");
+		ft::vector_check(v, sv);
 
 		v.pop_back();
 		sv.pop_back();
-		ft::test_assert(v.size(), sv.size(), "Push_back incorrect", "Passed");
-		ft::test_assert(v.capacity(), sv.capacity(), "Push_back incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Push_back incorrect", "Passed");
+		ft::vector_check(v, sv);
 	
 		v.pop_back(); 
 		sv.pop_back();
@@ -943,7 +823,7 @@ void vector_test(void)
 	}
 
 	{
-		ft::print_header("Resize function");
+		ft::print_headers("Resize function");
 		ft::vector<int>		v;
 		std::vector<int>	sv;
 
@@ -954,34 +834,22 @@ void vector_test(void)
 		sv.push_back(2);
 		v.resize(4);
 		sv.resize(4);
-		ft::test_assert(v.size(), sv.size(), "Resize incorrect", "Passed");
-		ft::test_assert(v.capacity(), sv.capacity(), "Resize incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Resize incorrect", "Passed");
+		ft::vector_check(v, sv);
 
 		// Test2: resizing a vector to a larger size, with a specified value:
 		v.resize(6, 3);
 		sv.resize(6, 3);
-		ft::test_assert(v.size(), sv.size(), "Resize incorrect", "Passed");
-		ft::test_assert(v.capacity(), sv.capacity(), "Resize incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Resize incorrect", "Passed");
+		ft::vector_check(v, sv);
 
 		// Test3: resizing a vector to smaller size
 		v.resize(3);
 		sv.resize(3);
-		ft::test_assert(v.size(), sv.size(), "Resize incorrect", "Passed");
-		ft::test_assert(v.capacity(), sv.capacity(), "Resize incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Resize incorrect", "Passed");
+		ft::vector_check(v, sv);
 
 		// Test4: resizing a vector to same size
 		v.resize(3);
 		sv.resize(3);
-		ft::test_assert(v.size(), sv.size(), "Resize incorrect", "Passed");
-		ft::test_assert(v.capacity(), sv.capacity(), "Resize incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Resize incorrect", "Passed");
+		ft::vector_check(v, sv);
 
 		// Test5: resizing a vector to a size larger than its maximum size
 		try
@@ -1003,7 +871,7 @@ void vector_test(void)
 	}
 
 	{
-		ft::print_header("Swap function");
+		ft::print_headers("Swap function");
 
 		ft::vector<int>		v;
 		ft::vector<int>		v2;
@@ -1027,12 +895,8 @@ void vector_test(void)
 		sv2.push_back(7);
 		v.swap(v2);
 		sv.swap(sv2);
-		ft::test_assert(v.size(), sv.size(), "Resize incorrect", "Passed");
-		ft::test_assert(v2.size(), sv2.size(), "Resize incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Resize incorrect", "Passed");
-		for (size_t i = 0; i < v2.size(); i++)
-			ft::test_assert(v2[i], sv2[i], "Resize incorrect", "Passed");
+		ft::vector_check(v, sv);
+		ft::vector_check(v2, sv2);
 		v.clear();
 		v2.clear();
 		sv.clear();
@@ -1053,14 +917,8 @@ void vector_test(void)
 		sv2.push_back(6);
 		v.swap(v2);
 		sv.swap(sv2);
-		ft::test_assert(v.size(), sv.size(), "Resize incorrect", "Passed");
-		ft::test_assert(v.capacity(), sv.capacity(), "Resize incorrect", "Passed");
-		ft::test_assert(v2.size(), sv2.size(), "Resize incorrect", "Passed");
-		ft::test_assert(v2.capacity(), sv2.capacity(), "Resize incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Resize incorrect", "Passed");
-		for (size_t i = 0; i < v2.size(); i++)
-			ft::test_assert(v2[i], sv2[i], "Resize incorrect", "Passed");
+		ft::vector_check(v, sv);
+		ft::vector_check(v2, sv2);
 		v.clear();
 		v2.clear();
 		sv.clear();
@@ -1077,17 +935,12 @@ void vector_test(void)
 		sv.swap(sv2);
 		ft::test_assert(v.empty(), true, "Resize incorrect", "Passed");
 		ft::test_assert(sv.empty(), true, "Resize incorrect", "Passed");
-		ft::test_assert(v2.size(), size_t(3), "Resize incorrect", "Passed");
-		ft::test_assert(sv2.size(), size_t(3), "Resize incorrect", "Passed");
-		for (size_t i = 0; i < v.size(); i++)
-			ft::test_assert(v[i], sv[i], "Resize incorrect", "Passed");
-		for (size_t i = 0; i < v2.size(); i++)
-			ft::test_assert(v2[i], sv2[i], "Resize incorrect", "Passed");
-		// system("leaks ft_container");
+		ft::vector_check(v, sv);
+		ft::vector_check(v2, sv2);
 	}
 
 	{
-		ft::print_header("Non-member function");
+		ft::print_headers("Non-member function");
 
 		ft::vector<int> v;
 		ft::vector<int> v2;
@@ -1114,10 +967,11 @@ void vector_test(void)
 		assert(v2 > v);
 		assert(v3 >= v2);
 		assert(v2 >= v);
+		std::cout << "All Non-member functions pass" << std::endl;
 	}
 
 	{
-		ft::print_header("Check Time Performance");
+		ft::print_headers("Check Time Performance");
 
 		clock_t	start_time, end_time;
 		double	ft_vec_time, std_vec_time;
@@ -1206,7 +1060,7 @@ void vector_test(void)
 		end_time = clock();
 		std_vec_time = (start_time - end_time) / CLOCKS_PER_SEC;
 		std::cout << "std vec time: " << std_vec_time << std::endl;
-		std::cout << "Performance ratio of ft container compared to std container is: " << ft_vec_time / std_vec_time << " times\n" << std::endl; 
-
+		std::cout << "Performance ratio of ft container compared to std container is: " << ft_vec_time / std_vec_time << " times\n" << std::endl;
+		// system("leaks ft_container");
 	}
 }

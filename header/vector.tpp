@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/09 17:11:43 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/09 22:54:41 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,24 +60,8 @@ template<typename T, typename Alloc>
 template <class InputIt>
 ft::vector<T, Alloc>::vector(InputIt first, InputIt last, const allocator_type& alloc, typename ft::enable_if<!ft::is_integral<InputIt>::value, void>::type*) : _data(NULL)
 {
-	// size_type	count;
-	
-	// count = ft::distance(first, last);
-	// _size = count;
-	// _capacity = count;
-	// _alloc = alloc;
-	// for (; first != last; ++first)
-	// 	push_back(*first);
-	// const size_t size = ft::distance(first, last);
-	// reserve(size);
-	// _alloc = alloc;
-	// clear();
-	// for (; first != last; ++first)
-	// 	push_back(*first);
-
-
 	const size_type size = ft::distance(first, last);
-	if (size < 0)
+	if (size == 0 || size > this->max_size())
 		return ;
 	_alloc = alloc;
 	_data = _alloc.allocate(size);
@@ -90,6 +74,7 @@ ft::vector<T, Alloc>::vector(InputIt first, InputIt last, const allocator_type& 
 		_alloc.construct(_start, *it);
 		++_start;
 	}
+	_start = _data;
 }
 
 // Copy constructor

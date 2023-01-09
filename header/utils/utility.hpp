@@ -6,15 +6,18 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 07:19:58 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/08 00:07:32 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/09 23:43:39 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILITY_HPP
 # define UTILITY_HPP
 #include <iostream>
+#include <string>
 #include "../vector.hpp"
+# define RED "\033[0;31m"
 # define GRN "\033[0;32m"
+# define BLU "\033[1;34m"
 # define RST "\033[0m"
 
 namespace ft
@@ -54,7 +57,7 @@ namespace ft
 	{
 		if (value != expected)
 		{
-			std::cerr << error_msg << std::endl;
+			std::cerr << RED << error_msg << std::endl;
 			assert(false);
 		}
 		std::cout << GRN << success << RST << std::endl;
@@ -100,10 +103,39 @@ namespace ft
 		return (static_cast<T>(value));
 	}
 
-	template<typename T>
-	void	print_header(T msg)
+	
+
+	template <typename T>
+	void	vector_check(ft::vector<T> const &v, std::vector<T> const &sv)
 	{
-		std::cout << std::endl << msg << std::endl;
+		std::cout << "After operation" << std::endl;
+		std::cout << "My vector: ";
+		ft::print_vector(v);
+		std::cout << "Std vector: ";
+		ft::print_vector(sv);
+		// ft::test_assert(*v.begin(), *sv.begin(), "Begin incorrect", "Begin Passed");
+		// ft::test_assert(*(v.end() - 1), *(sv.end() - 1), "End incorrect", "End Passed");
+		ft::test_assert(v.size(), sv.size(), "Size incorrect", "Size Passed");
+		ft::test_assert(v.capacity(), sv.capacity(), "Capacity incorrect", "Capacity Passed");
+		for (size_t i = 0; i < v.size(); i++)
+			assert(v[i] == sv[i]);
+		std::cout << GRN << "All Elements passed" << RST << std::endl;
+		std::cout << std::endl;
+	}
+
+	void	print_headers(std::string msg)
+	{
+		int	len;
+		int num_dashes;
+
+		len = msg.length();
+		num_dashes = (80 - len) / 2;
+		for (int i = 0; i < num_dashes; i++)
+			std::cout << BLU << "-";
+		std::cout << " " << msg;
+		for (int i = 0; i < num_dashes; i++)
+			std::cout << BLU << "-" << RST;
+		std::cout << "\n";
 	}
 }
 
