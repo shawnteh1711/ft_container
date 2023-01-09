@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/09 00:44:13 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/09 17:11:43 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -419,7 +419,6 @@ typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_itera
 	size_type	index;
 
 	index = 0;
-	std::cout<<"const value"<<std::endl;
 	for (iterator it = begin(); it != pos; ++it)
 		++index;
 	if (_size == capacity())
@@ -429,10 +428,6 @@ typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_itera
 		else
 			reserve(capacity() * 2);
 	}
-	// if (_capacity == 0)
-	// 	reserve(1);
-	// else if (_size == _capacity)
-	// 	reserve(std::min(size() + 1, this->capacity() * 2));
 	pointer new_element = _alloc.allocate(1);
 	_alloc.construct(new_element, value);
 	for (size_type i = _size; i > index; --i)
@@ -455,27 +450,15 @@ typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_itera
 	index = 0;
 	for (iterator it = begin(); it != pos; ++it)
 		++index;
-	// if (_size == capacity())
-	// {
-	// 	std::cout<<"size"<<_size<<std::endl;
-	// 	std::cout<<"capacity"<<_capacity<<std::endl;
-	// 	if (_size == 0 && _capacity == 0)
-	// 		reserve(1);
-	// 	else
-	// 		reserve(capacity() * 2);
-	// }
-
-
-	std::cout<<"size: "<<_size<<std::endl;
-	std::cout<<"capacity: "<<_capacity<<std::endl;
 	if (_capacity == 0)
 		reserve(1);
 	else if (_size == _capacity)
-		reserve(std::min(size() + 1, this->capacity() * 2));
-	// else if (this->_size + 1 > this->_capacity)
-	// 	this->resize(std::max(this->_capacity + 1, this->_capacity * 2));
-	std::cout<<"size: "<<_size<<std::endl;
-	std::cout<<"capacity: "<<_capacity<<std::endl;
+	{
+		if (_capacity >= 12)
+			reserve(_capacity * 2);
+		else
+			reserve(std::min(size() + 1, this->capacity() * 2));
+	}
 	for (size_type i = _size; i > index; --i)
 		_data[i] = _data[i - 1];
 	_data[index] = value;
@@ -516,13 +499,11 @@ typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_itera
 	if (pos < begin() || pos > end())
 		throw (std::out_of_range("Invalid iterator: Insert"));
 	index = ft::distance<const_iterator>(this->begin(), pos);
-	std::cout<<"before capacity"<<_capacity<<std::endl;
 	for (InputIt it = first; it != last; ++it)
 	{
 		this->insert(begin() + index, *it);
 		++index;
 	}
-	std::cout<<"after capacity"<<_capacity<<std::endl;
 	return iterator(begin() + index);
 }
 // Modifiers: erase
