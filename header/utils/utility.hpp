@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 07:19:58 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/10 20:49:10 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/10 22:37:24 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ namespace ft
 		// ft::test_assert(*(v.end() - 1), *(sv.end() - 1), "End incorrect", "End Passed");
 		ft::test_assert(v.size(), sv.size(), "Size incorrect", "Size Passed");
 		ft::test_assert(v.capacity(), sv.capacity(), "Capacity incorrect", "Capacity Passed");
+		ft::test_assert(v.empty(), sv.empty(), "Empty incorrect", "Empty Passed");
 		for (size_t i = 0; i < v.size(); i++)
 			assert(v[i] == sv[i]);
 		std::cout << GRN << "All Elements passed" << RST << std::endl;
@@ -162,8 +163,9 @@ namespace ft
 		std::cout << "Std container: ";
 		ft::print_stack(sv);
 		ft::test_assert(v.size(), sv.size(), "Size incorrect", "Size Passed");
-		ft::test_assert(v.top(), sv.top(), "Top incorrect", "Top Passed");
 		ft::test_assert(v.empty(), sv.empty(), "Empty incorrect", "Empty Passed");
+		if (!v.empty())
+			ft::test_assert(v.top(), sv.top(), "Top incorrect", "Top Passed");
 		ft::stack<T> temp_v = v;
 		std::stack<T> temp_sv = sv;
 		while (!temp_v.empty())

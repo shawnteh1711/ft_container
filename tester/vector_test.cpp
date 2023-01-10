@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:13:41 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/10 19:40:53 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/10 22:19:46 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,6 @@ int main(void)
 		ft::print_headers("Default constructor");
 		ft::vector<int> v;
 		std::vector<int> sv;
-		v.push_back(1);
-		v.push_back(2);
-		v.push_back(3);
-		sv.push_back(1);
-		sv.push_back(2);
-		sv.push_back(3);
 		ft::vector_check(v, sv);
 	}
 

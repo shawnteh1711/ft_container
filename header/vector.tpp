@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/10 20:28:39 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/10 22:30:41 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ ft::vector<T, Alloc>::vector(InputIt first, InputIt last, const allocator_type& 
 
 // Copy constructor
 template<typename T, typename Alloc>
-ft::vector<T, Alloc>::vector(const vector& x) : _alloc(x._alloc), _size(x._size), _capacity(x._capacity)
+ft::vector<T, Alloc>::vector(const vector& x) : _alloc(x._alloc), _size(x._size), _capacity(x._capacity), _start(NULL), _end(NULL)
 {
 	if (_capacity == 0)
 		return ;
