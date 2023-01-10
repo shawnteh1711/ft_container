@@ -6,7 +6,7 @@
 #    By: steh <steh@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/18 17:07:14 by steh              #+#    #+#              #
-#    Updated: 2023/01/09 22:34:41 by steh             ###   ########.fr        #
+#    Updated: 2023/01/10 16:22:43 by steh             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,8 +33,16 @@ $(OBJ_DIR)/%.o	:	$(SRCS_DIR)/%.cpp Makefile
 					mkdir -p $(dir $@)
 					$(CXX) $(CXXFLAGS) -I$(HEAD_DIR) -MMD -MP -c $< -o $@
 
+test			:
+					$(CXX) $(CXXFLAGS) tester/pair_test.cpp tester/algorithms_test.cpp tester/integral_test.cpp tester/main_test.cpp -o $(NAME)
+					./$(NAME)
+
 vector			:
-					$(CXX) $(CXXFLAGS) tester/*.cpp -o $(NAME)
+					$(CXX) $(CXXFLAGS) tester/vector_test.cpp -o $(NAME)
+					./$(NAME)
+
+stack			:
+					$(CXX) $(CXXFLAGS) tester/stack_test.cpp -o $(NAME)
 					./$(NAME)
 
 clean			:

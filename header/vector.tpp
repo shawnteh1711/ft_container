@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/09 22:54:41 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/10 20:28:39 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,14 @@ ft::vector<T, Alloc>::vector(const vector& x) : _alloc(x._alloc), _size(x._size)
 template<typename T, typename Alloc>
 ft::vector<T, Alloc>::~vector()
 {
-	for (size_type i = 0; i < this->_size; i++)
-	{
-		_alloc.destroy(_data + i);
-	}
-	if (_data)
-	{
-		_alloc.deallocate(_data, _capacity);
-	}
+	// for (size_type i = 0; i < this->_size; i++)
+	// {
+	// 	_alloc.destroy(_data + i);
+	// }
+	// if (_data)
+	// {
+	// 	_alloc.deallocate(_data, _capacity);
+	// }
 	clear();
 }
 
@@ -113,12 +113,13 @@ ft::vector<T, Alloc>& ft::vector<T, Alloc>::operator=(const vector &other)
 {
 	if (this != &other)
 	{
-		_alloc.deallocate(_start, _capacity);
-		_size = other._size;
+		if (_capacity != 0)
+			_alloc.deallocate(_data, _capacity);
 		_capacity = other._capacity;
+		_size = other._size;
 		_data = _alloc.allocate(_capacity);
 		_start = _data;
-		_end = _start + _capacity;
+		_end = _start + _size;
 		for (size_type i = 0; i < this->size(); i++)
 			_alloc.construct(&(_data[i]), other[i]);
 	}
@@ -335,9 +336,11 @@ void ft::vector<T, Alloc>::reserve(size_type new_cap)
 	{
 		new_data = _alloc.allocate(new_cap);
 		p = new_data;
-		for (pointer q = _start; q != _end; ++q)
-			*p++ = *q;
-		_alloc.deallocate(_data, _capacity);
+		// for (pointer q = _start; q != _end; ++q)
+		// 	*p++ = *q;
+		ft::uninitialized_copy(_data, _data + _size, new_data);
+		if (_capacity != 0)
+			_alloc.deallocate(_data, _capacity);
 		_data = new_data;
 		_capacity = new_cap;
 		_start = new_data;

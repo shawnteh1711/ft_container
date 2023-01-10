@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:13:41 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/09 23:38:59 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/10 19:40:53 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include "../header/vector.tpp"
 #include <ctime> // for clock
 
-void vector_test(void)
+int main(void)
 {
 	{
 		ft::print_headers("Default constructor");
@@ -88,6 +88,21 @@ void vector_test(void)
 		const std::vector<int> extra(6, 2);
 		v.assign(extra.begin(), extra.end());
 		sv.assign(extra.begin(), extra.end());
+		ft::vector_check(v, sv);
+	}
+
+	{
+		ft::print_headers("Operator=");
+
+		ft::vector<int> v;
+		ft::vector<int> v2;
+		std::vector<int> sv;
+		std::vector<int> sv2;
+
+		v.assign(5, 1);
+		sv.assign(5, 1);
+		v2 = v;
+		sv2 = sv;
 		ft::vector_check(v, sv);
 	}
 
@@ -1063,4 +1078,5 @@ void vector_test(void)
 		std::cout << "Performance ratio of ft container compared to std container is: " << ft_vec_time / std_vec_time << " times\n" << std::endl;
 		// system("leaks ft_container");
 	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 07:19:58 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/09 23:43:39 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/10 20:49:10 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 # define UTILITY_HPP
 #include <iostream>
 #include <string>
+#include <stack>
 #include "../vector.hpp"
+#include "../stack.hpp"
 # define RED "\033[0;31m"
 # define GRN "\033[0;32m"
 # define BLU "\033[1;34m"
@@ -86,6 +88,34 @@ namespace ft
 		std::cout << " ]" << std::endl;
 	}
 
+	// for ft::stack
+	template<typename T>
+	void print_stack(const ft::stack<T>& v)
+	{
+		ft::stack<T> temp(v); // create a copy of the input stack
+		std::cout << "[ ";
+		while (!temp.empty())
+		{
+			std::cout << temp.top() << " ";
+			temp.pop();
+		}
+		std::cout << " ]" << std::endl;
+	}
+
+	// for ft::stack
+	template<typename T>
+	void print_stack(const std::stack<T>& v)
+	{
+		std::stack<T> temp(v); // create a copy of the input stack
+		std::cout << "[ ";
+		while (!temp.empty())
+		{
+			std::cout << temp.top() << " ";
+			temp.pop();
+		}
+		std::cout << " ]" << std::endl;
+	}
+
 	// for std::vector
 	template<typename T>
 	void print_vector(const std::vector<T>& v)
@@ -109,9 +139,9 @@ namespace ft
 	void	vector_check(ft::vector<T> const &v, std::vector<T> const &sv)
 	{
 		std::cout << "After operation" << std::endl;
-		std::cout << "My vector: ";
+		std::cout << "My container: ";
 		ft::print_vector(v);
-		std::cout << "Std vector: ";
+		std::cout << "Std container: ";
 		ft::print_vector(sv);
 		// ft::test_assert(*v.begin(), *sv.begin(), "Begin incorrect", "Begin Passed");
 		// ft::test_assert(*(v.end() - 1), *(sv.end() - 1), "End incorrect", "End Passed");
@@ -119,6 +149,31 @@ namespace ft
 		ft::test_assert(v.capacity(), sv.capacity(), "Capacity incorrect", "Capacity Passed");
 		for (size_t i = 0; i < v.size(); i++)
 			assert(v[i] == sv[i]);
+		std::cout << GRN << "All Elements passed" << RST << std::endl;
+		std::cout << std::endl;
+	}
+
+	template <typename T>
+	void	stack_check(ft::stack<T> const &v, std::stack<T> const &sv)
+	{
+		std::cout << "After operation" << std::endl;
+		std::cout << "My container: ";
+		ft::print_stack(v);
+		std::cout << "Std container: ";
+		ft::print_stack(sv);
+		ft::test_assert(v.size(), sv.size(), "Size incorrect", "Size Passed");
+		ft::test_assert(v.top(), sv.top(), "Top incorrect", "Top Passed");
+		ft::test_assert(v.empty(), sv.empty(), "Empty incorrect", "Empty Passed");
+		ft::stack<T> temp_v = v;
+		std::stack<T> temp_sv = sv;
+		while (!temp_v.empty())
+		{
+			T my_val = temp_v.top();
+			temp_v.pop();
+			T std_val = temp_sv.top();
+			temp_sv.pop();
+			assert(my_val == std_val);
+		}
 		std::cout << GRN << "All Elements passed" << RST << std::endl;
 		std::cout << std::endl;
 	}
@@ -136,6 +191,17 @@ namespace ft
 		for (int i = 0; i < num_dashes; i++)
 			std::cout << BLU << "-" << RST;
 		std::cout << "\n";
+	}
+
+	template <typename InputIterator, typename ForwardIterator>
+	ForwardIterator uninitialized_copy(InputIterator first, InputIterator last, ForwardIterator dest)
+	{
+		ForwardIterator current = dest;
+
+		for (; first != last; ++first, ++current) {
+			*current = *first;
+		}
+		return (current);
 	}
 }
 
