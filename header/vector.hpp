@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/10 23:58:11 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/11 16:11:59 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,17 +207,24 @@ namespace ft
 				void	swap(vector& other);
 	};
 	// Non-member functions
-	// template< class T, class Alloc >
-	// bool operator==( const ft::vector<T, Alloc>& lhs,
-	// 				const ft::vector<T, Alloc>& rhs );
+	template< class T, class Alloc >
+	bool operator==( const ft::vector<T, Alloc>& lhs,
+					const ft::vector<T, Alloc>& rhs )
+	{
+		return (lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+	}
+
 
 	// template< class T, class Alloc >
 	// bool operator!=( const ft::vector<T,Alloc>& lhs,
 	// 				const ft::vector<T,Alloc>& rhs );
 
-	// template< class T, class Alloc >
-	// bool operator<( const std::vector<T,Alloc>& lhs,
-	// 				const std::vector<T,Alloc>& rhs );
+	template< class T, class Alloc >
+	bool operator<( const ft::vector<T,Alloc>& lhs,
+					const ft::vector<T,Alloc>& rhs )
+	{
+		return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+	}
 
 	// template< class T, class Alloc >
 	// bool operator<=( const std::vector<T,Alloc>& lhs,

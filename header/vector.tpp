@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/10 22:30:41 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/11 16:11:46 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 # include "./utils/type_traits.hpp"
 # include "./utils/algorithm.hpp"
 # include "./utils/utility.hpp"
+# include "./utils/pair.hpp"
+
 # include <vector>
 
 // Member Function: Constructor
@@ -618,12 +620,12 @@ void	ft::vector<T, Alloc>::swap(vector& other)
 }
 
 // Non-member funcitons
-template< class T, class Alloc >
-bool operator==( const ft::vector<T, Alloc>& lhs,
-				const ft::vector<T, Alloc>& rhs )
-{
-	return (lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
-}
+// template< class T, class Alloc >
+// bool operator==( const ft::vector<T, Alloc>& lhs,
+// 				const ft::vector<T, Alloc>& rhs )
+// {
+// 	return (lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+// }
 
 template< class T, class Alloc >
 bool operator!=( const ft::vector<T,Alloc>& lhs,
@@ -632,12 +634,12 @@ bool operator!=( const ft::vector<T,Alloc>& lhs,
 	return (!(lhs == rhs));
 }
 
-template< class T, class Alloc >
-bool operator<( const ft::vector<T,Alloc>& lhs,
-				const ft::vector<T,Alloc>& rhs )
-{
-	return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
-}
+// template< class T, class Alloc >
+// bool operator<( const ft::vector<T,Alloc>& lhs,
+// 				const ft::vector<T,Alloc>& rhs )
+// {
+// 	return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+// }
 
 template< class T, class Alloc >
 bool operator<=( const ft::vector<T,Alloc>& lhs,
