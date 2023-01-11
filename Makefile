@@ -6,7 +6,7 @@
 #    By: steh <steh@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/18 17:07:14 by steh              #+#    #+#              #
-#    Updated: 2023/01/10 16:22:43 by steh             ###   ########.fr        #
+#    Updated: 2023/01/11 20:52:24 by steh             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,10 @@ vector			:
 
 stack			:
 					$(CXX) $(CXXFLAGS) tester/stack_test.cpp -o $(NAME)
+					./$(NAME)
+
+map			:
+					$(CXX) $(CXXFLAGS) tester/map_test.cpp -o $(NAME)
 					./$(NAME)
 
 clean			:

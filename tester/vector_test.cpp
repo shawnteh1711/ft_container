@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:13:41 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/10 22:19:46 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/11 20:36:59 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1030,8 +1030,8 @@ int main(void)
 
 		start_time = clock();
 
-		ft::vector<int>		sv;
-		ft::vector<int>		sv2(42, 42);
+		std::vector<int>		sv;
+		std::vector<int>		sv2(42, 42);
 
 		sv.assign(sv2.begin(), sv2.end());
 		sv.get_allocator();
