@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:13:41 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/10 16:21:20 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/12 22:19:19 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 int main(void)
 {
-	is_integral_test();
-	pair_test();
-	algorithms_test();
+	// is_integral_test();
+	// pair_test();
+	// algorithms_test();
+	rbtree_test();
 }
