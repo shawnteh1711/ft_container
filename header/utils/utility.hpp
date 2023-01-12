@@ -6,13 +6,14 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 07:19:58 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/10 22:37:24 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/12 19:23:16 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILITY_HPP
 # define UTILITY_HPP
 #include <iostream>
+#include <memory>
 #include <string>
 #include <stack>
 #include "../vector.hpp"
@@ -92,7 +93,8 @@ namespace ft
 	template<typename T>
 	void print_stack(const ft::stack<T>& v)
 	{
-		ft::stack<T> temp(v); // create a copy of the input stack
+		ft::stack<T>	temp(v); // create a copy of the input stack
+	
 		std::cout << "[ ";
 		while (!temp.empty())
 		{
@@ -104,9 +106,9 @@ namespace ft
 
 	// for ft::stack
 	template<typename T>
-	void print_stack(const std::stack<T>& v)
+	void print_stack(const std::stack<T>& sv)
 	{
-		std::stack<T> temp(v); // create a copy of the input stack
+		std::stack<T> temp(sv); // create a copy of the input stack
 		std::cout << "[ ";
 		while (!temp.empty())
 		{
@@ -157,6 +159,8 @@ namespace ft
 	template <typename T>
 	void	stack_check(ft::stack<T> const &v, std::stack<T> const &sv)
 	{
+		(void)v;
+		(void)sv;
 		std::cout << "After operation" << std::endl;
 		std::cout << "My container: ";
 		ft::print_stack(v);

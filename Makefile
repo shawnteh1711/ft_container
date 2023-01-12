@@ -6,7 +6,7 @@
 #    By: steh <steh@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/18 17:07:14 by steh              #+#    #+#              #
-#    Updated: 2023/01/11 20:52:24 by steh             ###   ########.fr        #
+#    Updated: 2023/01/12 16:50:44 by steh             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ OBJ_DIR			=	obj
 HEAD_DIR		=	header
 DEPENDS 		=	$(patsubst $(SRCS_DIR)/%.cpp, $(OBJ_DIR)/%.d, $(SRCS))
 OBJS			=	$(patsubst $(SRCS_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRCS))
-CXXFLAGS		=	-Wall -Wextra -Werror -std=c++98 -pedantic -g -fsanitize=address
+CXXFLAGS		=	-Wall -Wextra -Werror -std=c++98 -pedantic -g #-fsanitize=address
 CXX				=	c++ 
 
 all				:	$(NAME)

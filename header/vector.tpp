@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/11 16:11:46 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/12 19:22:32 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,15 +81,19 @@ ft::vector<T, Alloc>::vector(InputIt first, InputIt last, const allocator_type& 
 
 // Copy constructor
 template<typename T, typename Alloc>
-ft::vector<T, Alloc>::vector(const vector& x) : _alloc(x._alloc), _size(x._size), _capacity(x._capacity), _start(NULL), _end(NULL)
+ft::vector<T, Alloc>::vector(const vector& x) : _alloc(x._alloc), _size(x._size), _capacity(x._capacity), _data(NULL), _start(x._start), _end(x._end)
 {
+	pointer	new_data;
 	if (_capacity == 0)
 		return ;
-	_data = this->_alloc.allocate(this->_capacity);
-	// for (pointer q = x._start; q != x._end; ++q)
-	// 	push_back(*q);
-	for (size_type i = 0; i < this->size(); i++)
-		_alloc.construct(&(_data[i]), x[i]);
+	new_data = this->_alloc.allocate(_capacity);
+	for (size_type i = 0; i < _size; i++)
+		_alloc.construct(&(new_data[i]), x[i]);
+	for (pointer p = _start; p != _end; ++p)
+		_alloc.destroy(p);
+	if (_data || _capacity)
+		_alloc.deallocate(_data, _capacity);
+	_data = new_data;
 	_start = _data;
 	_end = _data + _size;
 }
@@ -98,15 +102,16 @@ ft::vector<T, Alloc>::vector(const vector& x) : _alloc(x._alloc), _size(x._size)
 template<typename T, typename Alloc>
 ft::vector<T, Alloc>::~vector()
 {
-	// for (size_type i = 0; i < this->_size; i++)
-	// {
-	// 	_alloc.destroy(_data + i);
-	// }
-	// if (_data)
-	// {
-	// 	_alloc.deallocate(_data, _capacity);
-	// }
+	for (size_type i = 0; i < this->_size; i++)
+	{
+		_alloc.destroy(_data + i);
+	}
+	if (_data)
+	{
+		_alloc.deallocate(_data, _capacity);
+	}
 	clear();
+	return ;
 }
 
 // Member Function: Operator=
@@ -341,7 +346,7 @@ void ft::vector<T, Alloc>::reserve(size_type new_cap)
 		// for (pointer q = _start; q != _end; ++q)
 		// 	*p++ = *q;
 		ft::uninitialized_copy(_data, _data + _size, new_data);
-		if (_capacity != 0)
+		if (_capacity || _data)
 			_alloc.deallocate(_data, _capacity);
 		_data = new_data;
 		_capacity = new_cap;
@@ -391,7 +396,8 @@ void ft::vector<T, Alloc>::clear()
 		return ;
 	for (size_type i = 0; i < _size; i++)
 		_alloc.destroy(&(_data[i]));
-	// this->_alloc.deallocate(_data, _capacity);
+	// if (_data || _capacity)
+	// 	this->_alloc.deallocate(_data, _capacity);
 	// this->_data = nullptr;
 	// this->_start = nullptr;
 	// this->_end = nullptr;
