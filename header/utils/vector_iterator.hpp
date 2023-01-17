@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:43:01 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/03 19:55:30 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/17 19:39:49 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,7 @@ namespace ft
 		};
 
 		protected:
-			Iter	_iter;
-	
+			Iter	_iter; // this is for vector iterator
 	};
 
 	template <class Iterator1, class Iterator2, class Container>
