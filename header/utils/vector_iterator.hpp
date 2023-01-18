@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:43:01 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/17 19:39:49 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/18 15:06:50 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ namespace ft
 
 		// template type constructor
 		
-		template <class It> vector_iterator(const vector_iterator<It, typename ft::enable_if<std::is_same<It, typename Container::pointer>::value, Container>::type>& iter) : _iter(iter.base()) {
+		template <class It>
+		vector_iterator(const vector_iterator<It, typename ft::enable_if<std::is_same<It, typename Container::pointer>::value, Container>::type>& iter) : _iter(iter.base()) {
 		};
 
 		~vector_iterator() {};
