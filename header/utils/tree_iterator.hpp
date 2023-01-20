@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 20:05:24 by steh              #+#    #+#             */
-/*   Updated: 2023/01/19 22:44:14 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/20 22:00:23 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ namespace ft
 			// it should print the msg here?
 			tree_iterator() : _current_node(nullptr)
 			{
-				std::cout<<"default constructro"<<std::endl;
+				std::cout<<"default tree iter constructor"<<std::endl;
 			};
 
 			tree_iterator(node_pointer node) : _current_node(node)

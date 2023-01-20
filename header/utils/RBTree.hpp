@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 19:59:48 by steh              #+#    #+#             */
-/*   Updated: 2023/01/20 14:31:19 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/20 21:58:57 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,12 @@ namespace ft
 	{
 		bool operator()(const T& x, const T& y) const
 		{
-			return (x < y);
+			if (x < y)
+				return true;
+			else if (y < x)
+				return false;
+			else
+				return false;
 		}
 	};
 
@@ -64,11 +69,11 @@ namespace ft
 			typedef KeyofValue									key_of_value;
 			typedef Compare										value_compare;
 			typedef T											value_type;
-			typedef Compare										key_type_compare;
 			typedef Alloc										allocator_type;
 			typedef Node<T>										Node;
 			typedef tree_iterator<value_type>					iterator;
 			typedef tree_iterator<const value_type>				const_iterator;
+			typedef typename allocator_type::template rebind<Node>::other	node_allocator;
 			//typedef typename tree_iterator<key_type, mapped_type>::node_pointer						iterator;
 			// typedef typename tree_iterator<const key_type, const mapped_type>::node_pointer			const_iterator;
 			
@@ -84,11 +89,11 @@ namespace ft
 			void	insert_fix(Node* current_node);
 
 			// your map's iterator need to point to this root
-			Node			*_root;
-			Node			*_TNULL;
-			KeyofValue		_keyofvalue;
-			Compare			_comp;
-			Alloc			_alloc;
+			Node				*_root;
+			Node				*_TNULL;
+			key_of_value		_keyofvalue;
+			value_compare		_comp;
+			Alloc				_alloc;
 
 		public:
 			RBTree(const value_compare& comp = value_compare(), const Alloc& alloc = allocator_type());
