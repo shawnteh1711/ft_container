@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 11:06:25 by steh              #+#    #+#             */
-/*   Updated: 2023/01/20 22:55:41 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/20 23:08:36 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -427,28 +427,29 @@ void ft::RBTree<T, KeyofValue, Compare, Alloc>::print_helper(Node* root, std::st
 	}
 }
 
-// template <class T, class KeyofValue, class Compare, class Alloc>
-// void ft::RBTree<T, KeyofValue, Compare, Alloc>::print_helper(Node* root, std::string indent, bool last, typename ft::enable_if<std::is_same<T, ft::pair<typename T::first_type, typename T::second_type> >::value, T>::type* = nullptr>)
-// {
-// 	if (root != nullptr)
-// 	{
-// 		std::cout << indent;
-// 		if (last)
-// 		{
-// 			std::cout << "R----";
-// 			indent += "   ";
-// 		}
-// 		else
-// 		{
-// 			std:: cout << "L----";
-// 			indent += "|  ";
-// 		}
-// 		string sColor = root->color ? RED "red" RST : "black";
-// 		std::cout << root->data.first << ":" << root->data.second << " (" << sColor << ")" << std::endl;
-// 		print_helper(root->left, indent, false);
-// 		print_helper(root->right, indent, true);
-// 	}
-// }
+template <class T, class KeyofValue, class Compare, class Alloc>
+template <class U>
+void ft::RBTree<T, KeyofValue, Compare, Alloc>::print_helper(Node* root, std::string indent, bool last, typename ft::enable_if<std::is_same<U, ft::pair<typename U::first_type, typename U::second_type> >::value, U>::type*>)
+{
+	if (root != nullptr)
+	{
+		std::cout << indent;
+		if (last)
+		{
+			std::cout << "R----";
+			indent += "   ";
+		}
+		else
+		{
+			std:: cout << "L----";
+			indent += "|  ";
+		}
+		string sColor = root->color ? RED "red" RST : "black";
+		std::cout << root->data.first << ":" << root->data.second << " (" << sColor << ")" << std::endl;
+		print_helper(root->left, indent, false);
+		print_helper(root->right, indent, true);
+	}
+}
 
 template <class T, class KeyofValue, class Compare, class Alloc >
 typename ft::RBTree<T, KeyofValue, Compare, Alloc>::Node*	ft::RBTree<T, KeyofValue, Compare, Alloc>::search_tree(T value)
