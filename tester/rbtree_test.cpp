@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 22:17:04 by steh              #+#    #+#             */
-/*   Updated: 2023/01/20 22:01:45 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/20 22:35:19 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	rbtree_test()
 	tree2.insert(data);
 	tree2.insert(data2);
 	tree2.insert(data3);
-	tree2.print_tree();
+	// tree2.print_tree();
 	// ft::pair<int, std::string> data1(8, "h");
 	// tree.insert(9);
 	// tree.insert(data1.first, data1.second);

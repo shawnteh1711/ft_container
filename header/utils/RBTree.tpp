@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 11:06:25 by steh              #+#    #+#             */
-/*   Updated: 2023/01/20 22:04:40 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/20 22:55:41 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -411,18 +411,44 @@ void ft::RBTree<T, KeyofValue, Compare, Alloc>::print_helper(Node* root, std::st
 		string sColor = root->color ? RED "red" RST : "black";
 		// if (is_pair<T>::value)
 		// if (std::is_same<T, ft::pair<typename T::first_type, typename T::second_type> >::value)
-		if (is_pair<T>::value)
-		{
-			std::cout << root->data.first << ":" << root->data.second << " (" << sColor << ")" << std::endl;
-		}
-		else
-			std::cout << root->data <<":" << " (" << sColor << ")" << std::endl;
-		// std::cout << root->data <<  "(" << sColor << ")" << std::endl;
+		// {
+		// 	std::cout<<"1"<<std::endl;
+		// 	std::cout << root->data.first << ":" << root->data.second << " (" << sColor << ")" << std::endl;
+		// }
+		// else
+		// {
+		// 	std::cout<<"2"<<std::endl;
+		// 	std::cout << root->data <<":" << " (" << sColor << ")" << std::endl;
+		// }
+		std::cout << root->data <<  "(" << sColor << ")" << std::endl;
 		// std::cout << root->data.first << ":" << root->data.second << " (" << sColor << ")" << std::endl;
 		print_helper(root->left, indent, false);
 		print_helper(root->right, indent, true);
 	}
 }
+
+// template <class T, class KeyofValue, class Compare, class Alloc>
+// void ft::RBTree<T, KeyofValue, Compare, Alloc>::print_helper(Node* root, std::string indent, bool last, typename ft::enable_if<std::is_same<T, ft::pair<typename T::first_type, typename T::second_type> >::value, T>::type* = nullptr>)
+// {
+// 	if (root != nullptr)
+// 	{
+// 		std::cout << indent;
+// 		if (last)
+// 		{
+// 			std::cout << "R----";
+// 			indent += "   ";
+// 		}
+// 		else
+// 		{
+// 			std:: cout << "L----";
+// 			indent += "|  ";
+// 		}
+// 		string sColor = root->color ? RED "red" RST : "black";
+// 		std::cout << root->data.first << ":" << root->data.second << " (" << sColor << ")" << std::endl;
+// 		print_helper(root->left, indent, false);
+// 		print_helper(root->right, indent, true);
+// 	}
+// }
 
 template <class T, class KeyofValue, class Compare, class Alloc >
 typename ft::RBTree<T, KeyofValue, Compare, Alloc>::Node*	ft::RBTree<T, KeyofValue, Compare, Alloc>::search_tree(T value)
@@ -686,6 +712,23 @@ typename ft::RBTree<T, KeyofValue, Compare, Alloc>::Node* ft::RBTree<T, KeyofVal
 	}
 	return (parent_node);
 }
+
+// template <class T, class KeyofValue, class Compare, class Alloc >
+// typename ft::RBTree<T, KeyofValue, Compare, Alloc>::iterator ft::RBTree<T, KeyofValue, Compare, Alloc>::successor(Node* current_node)
+// {
+// 	// check if input node is null or largest value in tree
+// 	if (current_node == nullptr || current_node->right == _TNULL)
+// 		return (this->end());
+
+// 	Node* parent_node = current_node->parent;
+// 	while (parent_node != _TNULL && current_node == parent_node->right)
+// 	{
+// 		current_node = parent_node;
+// 		parent_node = parent_node->parent;
+// 	}
+// 	return (iterator(parent_node));
+// }
+
 
 template <class T, class KeyofValue, class Compare, class Alloc >
 typename ft::RBTree<T, KeyofValue, Compare, Alloc>::Node* ft::RBTree<T, KeyofValue, Compare, Alloc>::predecessor(Node* current_node)

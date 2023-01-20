@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 19:59:48 by steh              #+#    #+#             */
-/*   Updated: 2023/01/20 21:58:57 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/20 22:55:59 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ namespace ft
 			void	post_order_helper(Node* node);
 			Node*	search_tree_helper(Node* node, T value);
 			void	print_helper(Node* _root, std::string indent, bool last);
+			// void	print_helper(Node* _root, std::string indent, bool last, typename ft::enable_if<std::is_same<T, ft::pair<typename T::first_type, typename T::second_type> >::value, T>::type* = nullptr>);
+		
 			void	delete_node_helper(Node* node, T value);
 			void	delete_fix(Node* current_node);
 			void	rb_transplant(Node* node_to_replace, Node* replacement_node);
@@ -111,6 +113,7 @@ namespace ft
 			Node*	minimum(Node* node);
 			Node*	maximum(Node* node);
 			Node*	successor(Node* current_node);
+			// iterator	successor(Node* current_node);
 			Node*	predecessor(Node* current_node);
 			void	post_order_traversal(Node *_root);
 			void	print_tree_by_level();
