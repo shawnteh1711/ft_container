@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 21:45:52 by steh              #+#    #+#             */
-/*   Updated: 2022/12/30 17:57:37 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/26 18:24:26 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,11 @@ namespace ft
 	// template <> struct is_integral_type<unsigned long long int>		: public true_type {};
 	
 	template <class T> struct is_integral : public is_integral_type<T>::type {};
+
+	template <class T, class U>	struct is_same : public false_type {};
+	template <class T>			struct is_same<T, T> : public true_type {};
+
+	
 }
 
 #endif

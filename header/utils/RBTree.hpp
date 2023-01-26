@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 19:59:48 by steh              #+#    #+#             */
-/*   Updated: 2023/01/20 23:08:38 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/26 21:08:30 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ namespace ft
 			void	post_order_helper(Node* node);
 			Node*	search_tree_helper(Node* node, T value);
 			void	print_helper(Node* _root, std::string indent, bool last);
-			template <class U>
-			void	print_helper(Node* _root, std::string indent, bool last, typename ft::enable_if<std::is_same<U, ft::pair<typename U::first_type, typename U::second_type> >::value, U>::type* = nullptr>);
+			// template <class U>
+			// void	print_helper(Node* _root, std::string indent, bool last, typename ft::enable_if<std::is_same<U, ft::pair<typename U::first_type, typename U::second_type> >::value, U>::type* = nullptr);
 		
 			void	delete_node_helper(Node* node, T value);
 			void	delete_fix(Node* current_node);
