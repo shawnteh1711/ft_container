@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 11:06:25 by steh              #+#    #+#             */
-/*   Updated: 2023/01/26 21:26:19 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/27 22:25:41 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,14 @@ using namespace std;
 // struct is_pair<std::pair<T1, T2> > : std::true_type {};
 
 template <typename T>
-bool is_pair(T& x) {
+bool is_pair(const T& x) {
 	(void)x;
     return false;
 }
-template <typename T, typename U>
-bool is_pair(ft::pair<T, U>& x) {
+
+// template <typename T, typename U>
+template <typename K, typename V >
+bool is_pair(const ft::pair<K, V>& x) {
 	(void)x;
     return true;
 }
@@ -404,7 +406,7 @@ void ft::RBTree<T, KeyofValue, Compare, Alloc>::print_tree()
 	}
 }
 
-template <class T, class KeyofValue, class Compare, class Alloc >
+template <class T, class KeyofValue, class Compare, class Alloc>
 void ft::RBTree<T, KeyofValue, Compare, Alloc>::print_helper(Node* root, std::string indent, bool last)
 {
 	if (root != nullptr)
@@ -434,20 +436,21 @@ void ft::RBTree<T, KeyofValue, Compare, Alloc>::print_helper(Node* root, std::st
 		// }
 		// std::cout << root->data <<  "(" << sColor << ")" << std::endl;
 		// std::cout << root->data.first << ":" << root->data.second << " (" << sColor << ")" << std::endl;
+		// if (std::is_base_of<std::pair<typename T::first_type, typename T::second_type>, T>::value)
 		if(is_pair(root->data))
         {
-			std::cout<<"1"<<std::endl;
-			std::cout<<"is pair: "<<is_pair(root->data)<<std::endl;
-            std::cout << root->data.first << " " << root->data.second;
+			// std::cout<<"1"<<std::endl;
+			// std::cout<<"is pair: "<<is_pair(root->data)<<std::endl;
+			std::cout << root->data.first << ":" << root->data.second << " (" << sColor << ")" << std::endl;
         }
         else
         {
-			std::cout<<"2"<<std::endl;
-			std::cout<<"is pair: "<<is_pair(root->data)<<std::endl;
+			// std::cout<<"2"<<std::endl;
+			// std::cout<<"is pair: "<<is_pair(root->data)<<std::endl;
 
-            // std::cout << root->data;
+            std::cout << root->data;
         }
-		std::cout<<"3"<<std::endl;
+		// std::cout<<"3"<<std::endl;
 		print_helper(root->left, indent, false);
 		print_helper(root->right, indent, true);
 	}
