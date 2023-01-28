@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 20:05:24 by steh              #+#    #+#             */
-/*   Updated: 2023/01/20 22:00:23 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/28 22:03:09 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 namespace ft
 {
-	template<class T> // because if neither Key or T is a node, u cannot typedef one of two as pointer...
+	template<typename T>
 	class tree_iterator
 	{
 		public:
@@ -29,30 +29,27 @@ namespace ft
 			typedef Node<value_type>							node;
 			typedef Node<value_type>*							node_pointer;
 			typedef Node<value_type>&							reference;
+			// typedef ft::RBTree<T, KeyofValue>					tree;
 			// typedef value_type*										pointer;
 			// what is T? value of key, where is template parameter for the node?
 			//	typedef value_type*										pointer;
-			// normally when we create an iterator, an iterator should has value_type is same as map's value_type
-			// actually map's value type is not a node but a ft::pair.
-			// your iterator can have node but when using operator->(), have to return the ft::pair pointer, not node.
-
+		
 			// constructor
 
-			// it should print the msg here?
 			tree_iterator() : _current_node(nullptr)
 			{
-				std::cout<<"default tree iter constructor"<<std::endl;
+				// std::cout<<"default tree iter constructor"<<std::endl;
 			};
 
 			tree_iterator(node_pointer node) : _current_node(node)
 			{ 
-				std::cout<<"node constructro"<<std::endl;
+				// std::cout<<"node constructro"<<std::endl;
 			};
 
 			template <class It> 
 			tree_iterator(const tree_iterator<It>& iter) : _current_node(iter._current_node)
 			{
-				std::cout<<"template constructor"<<std::endl;
+				// std::cout<<"template constructor"<<std::endl;
 			};
 
 

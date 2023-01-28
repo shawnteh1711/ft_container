@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 11:06:25 by steh              #+#    #+#             */
-/*   Updated: 2023/01/27 22:25:41 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/28 20:54:51 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,122 +171,6 @@ void	ft::RBTree<T, KeyofValue, Compare, Alloc>::insert_fix(Node* current_node)
 	_root->color = black;
 }
 
-// template <class T, class KeyofValue, class Compare, class Alloc >
-// void	ft::RBTree<T, KeyofValue, Compare, Alloc>::insert(const K&  key, const V& value)
-// {
-// 	Node* new_node = new Node(key, value);
-// 	// new_node->data = ft::pair<K, V>(key, value);f
-// 	new_node->parent = nullptr;
-// 	new_node->key = key;
-// 	new_node->left = _TNULL;
-// 	new_node->right = _TNULL;
-// 	new_node->color = red;
-
-// 	Node* parent_node = nullptr;
-// 	Node* curren_node = this->_root;
-
-// 	while (curren_node != _TNULL)
-// 	{
-// 		parent_node = curren_node;
-// 		if (new_node->key < curren_node->key)
-// 			curren_node = curren_node->left;
-// 		else
-// 			curren_node = curren_node->right;
-// 	}
-// 	new_node->parent = parent_node;
-// 	if (parent_node == nullptr)
-// 		_root = new_node;
-// 	else if (new_node->key < parent_node->key)
-// 		parent_node->left = new_node;
-// 	else
-// 		parent_node->right = new_node;
-
-// 	if (new_node->parent == nullptr)
-// 	{
-// 		new_node->color = black;
-// 		return ;
-// 	}
-// 	if (new_node->parent->parent == nullptr)
-// 		return ;
-// 	insert_fix(new_node);
-// }
-
-// template <class K, class V, class KeyofValue, class Compare, class Alloc>
-// void ft::RBTree<T, KeyofValue, Compare, Alloc>::insert(const ft::pair<K, V>& key_value)
-// {
-// 	Node* new_node = new Node(key_value.first, key_value.second);
-// 	new_node->left = _TNULL;
-// 	new_node->right = _TNULL;
-
-// 	// find the appropriate place to insert the new node
-// 	Node* current_node = _root;
-// 	Node* parent_node = nullptr;
-// 	while (current_node != _TNULL)
-// 	{
-// 		parent_node = current_node;
-// 		if (_comp(new_node->key, current_node->key))
-// 			current_node = current_node->left;
-// 		else
-// 			current_node = current_node->right;
-// 	}
-// 	new_node->parent = parent_node;
-// 	if (parent_node == nullptr)
-// 		_root = new_node;
-// 	else if (_comp(new_node->key, parent_node->key))
-// 		parent_node->left = new_node;
-// 	else
-// 		parent_node->right = new_node;
-
-// 	if (new_node->parent == nullptr)
-// 	{
-// 		new_node->color = black;
-// 		return ;
-// 	}
-// 	if (new_node->parent->parent == nullptr)
-// 		return ;
-// 	// fix any violations of the red-black tree properties
-// 	insert_fix(new_node);
-// }
-
-
-// template <class T, class KeyofValue, class Compare, class Alloc >
-// void	ft::RBTree<T, KeyofValue, Compare, Alloc>::insert(const T&  value)
-// {
-// 	Node* new_node = new Node(value);
-// 	new_node->parent = nullptr;
-// 	new_node->data = value;
-// 	new_node->left = _TNULL;
-// 	new_node->right = _TNULL;
-// 	new_node->color = red;
-
-// 	Node* parent_node = _TNULL;
-// 	Node* curren_node = this->_root;
-
-// 	while (curren_node != _TNULL)
-// 	{
-// 		parent_node = curren_node;
-// 		if (new_node->data < curren_node->data)
-// 			curren_node = curren_node->left;
-// 		else
-// 			curren_node = curren_node->right;
-// 	}
-// 	new_node->parent = parent_node;
-// 	if (parent_node == nullptr)
-// 		_root = new_node;
-// 	else if (new_node->data < parent_node->data)
-// 		parent_node->left = new_node;
-// 	else
-// 		parent_node->right = new_node;
-
-// 	if (new_node->parent == nullptr)
-// 	{
-// 		new_node->color = black;
-// 		return ;
-// 	}
-// 	if (new_node->parent->parent == nullptr)
-// 		return ;
-// 	insert_fix(new_node);
-// }
 
 template <class T, class KeyofValue, class Compare, class Alloc>
 ft::pair<typename ft::RBTree<T, KeyofValue, Compare, Alloc>::iterator, bool>
@@ -329,44 +213,6 @@ ft::RBTree<T, KeyofValue, Compare, Alloc>::insert(const T& value)
 	return (ft::pair<iterator, bool>(iterator(new_node), true));
 }
 
-
-// template <class K, class V, class KeyofValue, class Compare, class Alloc>
-// void ft::RBTree<T, KeyofValue, Compare, Alloc>::insert(const ft::pair<K, V>& key_value)
-// {
-// 	Node* new_node = new Node(key_value.first, key_value.second);
-// 	new_node->left = _TNULL;
-// 	new_node->right = _TNULL;
-
-// 	// find the appropriate place to insert the new node
-// 	Node* current_node = _root;
-// 	Node* parent_node = nullptr;
-// 	while (current_node != _TNULL)
-// 	{
-// 		parent_node = current_node;
-// 		if (_comp(new_node->key, current_node->key))
-// 			current_node = current_node->left;
-// 		else
-// 			current_node = current_node->right;
-// 	}
-// 	new_node->parent = parent_node;
-// 	if (parent_node == nullptr)
-// 		_root = new_node;
-// 	else if (_comp(new_node->key, parent_node->key))
-// 		parent_node->left = new_node;
-// 	else
-// 		parent_node->right = new_node;
-
-// 	if (new_node->parent == nullptr)
-// 	{
-// 		new_node->color = black;
-// 		return ;
-// 	}
-// 	if (new_node->parent->parent == nullptr)
-// 		return ;
-// 	// fix any violations of the red-black tree properties
-// 	insert_fix(new_node);
-// }
-
 template <class T, class KeyofValue, class Compare, class Alloc >
 void ft::RBTree<T, KeyofValue, Compare, Alloc>::print_tree_by_level()
 {
@@ -407,7 +253,7 @@ void ft::RBTree<T, KeyofValue, Compare, Alloc>::print_tree()
 }
 
 template <class T, class KeyofValue, class Compare, class Alloc>
-void ft::RBTree<T, KeyofValue, Compare, Alloc>::print_helper(Node* root, std::string indent, bool last)
+void ft::RBTree<T, KeyofValue, Compare, Alloc>:: print_helper(Node* root, std::string indent, bool last)
 {
 	if (root != nullptr)
 	{
@@ -423,62 +269,68 @@ void ft::RBTree<T, KeyofValue, Compare, Alloc>::print_helper(Node* root, std::st
 			indent += "|  ";
 		}
 		string sColor = root->color ? RED "red" RST : "black";
-		// // if (is_pair<T>::value)
-		// if (std::is_same<T, ft::pair<typename T::first_type, typename T::second_type> >::value)
-		// {
-		// 	std::cout<<"1"<<std::endl;
-		// 	std::cout << root->data.first << ":" << root->data.second << " (" << sColor << ")" << std::endl;
-		// }
-		// else
-		// {
-		// 	std::cout<<"2"<<std::endl;
-		// 	std::cout << root->data <<":" << " (" << sColor << ")" << std::endl;
-		// }
-		// std::cout << root->data <<  "(" << sColor << ")" << std::endl;
-		// std::cout << root->data.first << ":" << root->data.second << " (" << sColor << ")" << std::endl;
-		// if (std::is_base_of<std::pair<typename T::first_type, typename T::second_type>, T>::value)
-		if(is_pair(root->data))
-        {
-			// std::cout<<"1"<<std::endl;
-			// std::cout<<"is pair: "<<is_pair(root->data)<<std::endl;
-			std::cout << root->data.first << ":" << root->data.second << " (" << sColor << ")" << std::endl;
-        }
-        else
-        {
-			// std::cout<<"2"<<std::endl;
-			// std::cout<<"is pair: "<<is_pair(root->data)<<std::endl;
-
-            std::cout << root->data;
-        }
-		// std::cout<<"3"<<std::endl;
+		try
+		{
+			std::cout << root->data <<  "(" << sColor << ")" << std::endl;
+		}
+		catch (...)
+		{
+			std::cout << "An error occured while trying to access root->data." << std::endl;
+		}
 		print_helper(root->left, indent, false);
 		print_helper(root->right, indent, true);
 	}
 }
 
-// template <class T, class KeyofValue, class Compare, class Alloc>
-// template <class U>
-// void ft::RBTree<T, KeyofValue, Compare, Alloc>::print_helper(Node* root, std::string indent, bool last, typename ft::enable_if<std::is_same<U, ft::pair<typename U::first_type, typename U::second_type> >::value, U>::type*)
+// template <class T, class KeyofValue, class Compare, class Alloc >
+// template <typename P, typename ft::enable_if<std::is_same<P, ft::pair<typename P::first_type, typename P::second_type> >::value> >
+// void ft::RBTree<T, KeyofValue, Compare, Alloc>::print_tree()
 // {
-// 	if (root != nullptr)
+// 	if (_root)
 // 	{
-// 		std::cout << indent;
-// 		if (last)
-// 		{
-// 			std::cout << "R----";
-// 			indent += "   ";
-// 		}
-// 		else
-// 		{
-// 			std:: cout << "L----";
-// 			indent += "|  ";
-// 		}
-// 		string sColor = root->color ? RED "red" RST : "black";
-// 		std::cout << root->data.first << ":" << root->data.second << " (" << sColor << ")" << std::endl;
-// 		print_helper(root->left, indent, false);
-// 		print_helper(root->right, indent, true);
+// 		print_tree_pair(this->_root, "", true);
 // 	}
 // }
+
+template <class T, class KeyofValue, class Compare, class Alloc >
+void ft::RBTree<T, KeyofValue, Compare, Alloc>::print_tree_pair()
+{
+	if (_root)
+	{
+		print_helper_pair(this->_root, "", true);
+	}
+}
+
+template <class T, class KeyofValue, class Compare, class Alloc>
+void ft::RBTree<T, KeyofValue, Compare, Alloc>:: print_helper_pair(Node* root, std::string indent, bool last)
+{
+	if (root != nullptr)
+	{
+		std::cout << indent;
+		if (last)
+		{
+			std::cout << "R----";
+			indent += "   ";
+		}
+		else
+		{
+			std::cout << "L----";
+			indent += "|  ";
+		}
+		string sColor = root->color ? RED "red" RST : "black";
+		try
+		{
+			std::cout << root->data.first << ":" << root->data.second << " (" << sColor << ")" << std::endl;
+		}
+		catch (...)
+		{
+			std::cout << "An error occured while trying to access root->data.first and second." << std::endl;
+		}
+		print_helper_pair(root->left, indent, false);
+		print_helper_pair(root->right, indent, true);
+	}
+}
+
 
 template <class T, class KeyofValue, class Compare, class Alloc >
 typename ft::RBTree<T, KeyofValue, Compare, Alloc>::Node*	ft::RBTree<T, KeyofValue, Compare, Alloc>::search_tree(T value)
@@ -735,29 +587,13 @@ typename ft::RBTree<T, KeyofValue, Compare, Alloc>::Node* ft::RBTree<T, KeyofVal
 	if (current_node->right != _TNULL)
 		return (minimum(current_node->right));
 	parent_node = current_node->parent;
-	while (parent_node != _TNULL && current_node == parent_node->right)
+	while (parent_node != nullptr && current_node == parent_node->right)
 	{
 		current_node = parent_node;
 		parent_node = parent_node->parent;
 	}
 	return (parent_node);
 }
-
-// template <class T, class KeyofValue, class Compare, class Alloc >
-// typename ft::RBTree<T, KeyofValue, Compare, Alloc>::iterator ft::RBTree<T, KeyofValue, Compare, Alloc>::successor(Node* current_node)
-// {
-// 	// check if input node is null or largest value in tree
-// 	if (current_node == nullptr || current_node->right == _TNULL)
-// 		return (this->end());
-
-// 	Node* parent_node = current_node->parent;
-// 	while (parent_node != _TNULL && current_node == parent_node->right)
-// 	{
-// 		current_node = parent_node;
-// 		parent_node = parent_node->parent;
-// 	}
-// 	return (iterator(parent_node));
-// }
 
 
 template <class T, class KeyofValue, class Compare, class Alloc >
@@ -770,10 +606,16 @@ typename ft::RBTree<T, KeyofValue, Compare, Alloc>::Node* ft::RBTree<T, KeyofVal
 	if (current_node->left != _TNULL)
 		return (maximum(current_node->left));
 	parent_node = current_node->parent;
-	while (parent_node != _TNULL && current_node == parent_node->left)
+	while (parent_node != nullptr && current_node == parent_node->left)
 	{
 		current_node = parent_node;
 		parent_node = parent_node->parent;
 	}
 	return (parent_node);
+}
+
+template <class T, class KeyofValue, class Compare, class Alloc >
+typename ft::RBTree<T, KeyofValue, Compare, Alloc>::Node* ft::RBTree<T, KeyofValue, Compare, Alloc>::get_tnull()
+{
+	return (_TNULL);
 }
