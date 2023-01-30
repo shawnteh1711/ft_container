@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 19:59:48 by steh              #+#    #+#             */
-/*   Updated: 2023/01/30 17:04:23 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/30 21:25:13 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ namespace ft
 		public:
 			typedef KeyofValue												key_of_value;
 			typedef Compare													value_compare;
+			typedef std::size_t												size_type;
 			typedef T														value_type;
 			typedef Alloc													allocator_type;
 			typedef typename allocator_type::pointer						pointer;
@@ -90,6 +91,7 @@ namespace ft
 			void	delete_fix(Node* current_node);
 			void	rb_transplant(Node* node_to_replace, Node* replacement_node);
 			void	insert_fix(Node* current_node);
+			void	destroy(Node* node);
 
 			Node				*_root;
 			Node				*_TNULL;
@@ -102,13 +104,13 @@ namespace ft
 		public:
 			RBTree(const value_compare& comp = value_compare(), const Alloc& alloc = allocator_type());
 			~RBTree();
+			allocator_type get_allocator() const;
 			void	pre_order();
 			void	in_order();
 			void	post_order();
 			ft::pair<iterator, bool> insert(const T& value);
 			void	delete_node(T value);
 			Node* 	search_tree(T value);
-			Node*	get_root();
 			Node*	minimum(Node* node);
 			Node*	maximum(Node* node);
 			Node*	successor(Node* current_node);
@@ -119,23 +121,27 @@ namespace ft
 			void	print_tree();
 			template <typename P, typename ft::enable_if<std::is_same<P, ft::pair<typename P::first_type, typename P::second_type> >::value> >
 			void	print_tree();
-
 			void	print_tree_pair();
 			Node*	search_tree(Node* node, T value);
 			void	left_rotate(Node* current_node);
 			void	right_rotate(Node* current_node);
+			Node*	get_root();
 			Node*	get_tnull();
+			Node*	create_nil_node();
 			
-
-
 			iterator	begin()
 			{
-				return (iterator(minimum(_root), _TNULL)); // why have two
+				return (iterator(minimum(_root), _TNULL));
 			}
 
 			iterator	end()
 			{
 				return (iterator(_TNULL, _TNULL));
+			}
+
+			pointer		end_node()
+			{
+				return (_TNULL);
 			}
 	};
 

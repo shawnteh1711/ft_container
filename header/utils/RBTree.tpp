@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 11:06:25 by steh              #+#    #+#             */
-/*   Updated: 2023/01/30 16:27:00 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/30 22:09:24 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,7 @@ bool is_pair(const ft::pair<K, V>& x) {
 template <class T, class KeyofValue, class Compare, class Alloc >
 ft::RBTree<T, KeyofValue, Compare, Alloc>::RBTree(const value_compare& comp, const Alloc& alloc) : _keyofvalue(), _comp(comp), _alloc(alloc)
 {
-	_TNULL = new Node(T());
-	_TNULL->color = black;
-	_TNULL->left = nullptr;
-	_TNULL->right = nullptr;
+	_TNULL = create_nil_node();
 	_root = _TNULL;
 	_node_alloc = node_allocator();
 	_value_alloc = allocator_type();
@@ -54,10 +51,35 @@ ft::RBTree<T, KeyofValue, Compare, Alloc>::RBTree(const value_compare& comp, con
 }
 
 template <class T, class KeyofValue, class Compare, class Alloc >
+typename ft::RBTree<T, KeyofValue, Compare, Alloc>::Node* ft::RBTree<T, KeyofValue, Compare, Alloc>::create_nil_node()
+{
+	Node*				new_node;
+	// pointer				val_ptr;
+
+	new_node = _node_alloc.allocate(1);
+	_node_alloc.construct(new_node, value_type());
+	// val_ptr = _value_alloc.allocate(1);
+	// _value_alloc.construct(val_ptr,  value_type());
+	new_node->color = black;
+	new_node->left = nullptr;
+	new_node->right = nullptr;
+	return (new_node);
+}
+
+template <class T, class KeyofValue, class Compare, class Alloc >
 ft::RBTree<T, KeyofValue, Compare, Alloc>::~RBTree() 
 {
+	this->destroy(this->get_root());
 	return ;
 }
+
+
+template <class T, class KeyofValue, class Compare, class Alloc >
+typename ft::RBTree<T, KeyofValue, Compare, Alloc>::allocator_type ft::RBTree<T, KeyofValue, Compare, Alloc>::get_allocator() const
+{
+	return (_value_alloc);
+}
+
 
 template <class T, class KeyofValue, class Compare, class Alloc >
 void	ft::RBTree<T, KeyofValue, Compare, Alloc>::pre_order_helper(Node* node)
@@ -179,15 +201,15 @@ ft::pair<typename ft::RBTree<T, KeyofValue, Compare, Alloc>::iterator, bool>
 ft::RBTree<T, KeyofValue, Compare, Alloc>::insert(const T& value)
 {
 	Node*				new_node;
-	pointer				val_ptr;
+	// pointer				val_ptr;
 
 
 	const T& key = _keyofvalue(value);
 	// new_node = new Node(value);
 	new_node = _node_alloc.allocate(1);
 	_node_alloc.construct(new_node, value);
-	val_ptr = _value_alloc.allocate(1);
-	_value_alloc.construct(val_ptr, value);
+	// val_ptr = _value_alloc.allocate(1);
+	// _value_alloc.construct(val_ptr, value);
 	new_node->left = _TNULL;
 	new_node->right = _TNULL;
 
@@ -421,7 +443,6 @@ void	ft::RBTree<T, KeyofValue, Compare, Alloc>::delete_node_helper(Node* node, T
 		successor_of_deleted_node->left->parent = successor_of_deleted_node;
 		successor_of_deleted_node->color = node_to_delete->color;
 	}
-	delete node_to_delete;
 	if (original_color_of_successor == black)
 		delete_fix(child_of_deleted_node);
 }
@@ -626,4 +647,17 @@ template <class T, class KeyofValue, class Compare, class Alloc >
 typename ft::RBTree<T, KeyofValue, Compare, Alloc>::Node* ft::RBTree<T, KeyofValue, Compare, Alloc>::get_tnull()
 {
 	return (_TNULL);
+}
+
+template <class T, class KeyofValue, class Compare, class Alloc >
+void ft::RBTree<T, KeyofValue, Compare, Alloc>::destroy(Node* node)
+{
+	if (node == _TNULL)
+		return ;
+	destroy(node->left);
+	destroy(node->right);
+	_value_alloc.destroy(&node->data);
+	// _value_alloc.deallocate(&node->data, 1); // here cause memory issue . maybe no need value_alloc
+	_node_alloc.destroy(node);
+	_node_alloc.deallocate(node, 1);
 }
