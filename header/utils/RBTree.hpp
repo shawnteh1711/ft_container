@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 19:59:48 by steh              #+#    #+#             */
-/*   Updated: 2023/01/28 21:42:47 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/30 17:04:23 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,35 +48,38 @@ namespace ft
 		}
 	};
 
-	template <typename T>
-	struct Compare
-	{
-		bool operator()(const T& x, const T& y) const
-		{
-			if (x < y)
-				return true;
-			else if (y < x)
-				return false;
-			else
-				return false;
-		}
-	};
+	// template <typename T>
+	// struct Compare
+	// {
+	// 	bool operator()(const T& x, const T& y) const
+	// 	{
+	// 		if (x < y)
+	// 			return true;
+	// 		else if (y < x)
+	// 			return false;
+	// 		else
+	// 			return false;
+	// 	}
+	// };
 
 
-	template <class T, class KeyofValue = ft::KeyofValue<T>, class Compare = ft::Compare<T>, class Alloc = std::allocator<T> >
+	template <class T, class KeyofValue = ft::KeyofValue<T>, class Compare = std::less<T>, class Alloc = std::allocator<T> >
 	class RBTree
 	{
 		public:
-			typedef KeyofValue									key_of_value;
-			typedef Compare										value_compare;
-			typedef T											value_type;
-			typedef Alloc										allocator_type;
-			typedef Node<T>										Node;
-			typedef tree_iterator<value_type>					iterator;
-			typedef tree_iterator<const value_type>				const_iterator;
+			typedef KeyofValue												key_of_value;
+			typedef Compare													value_compare;
+			typedef T														value_type;
+			typedef Alloc													allocator_type;
+			typedef typename allocator_type::pointer						pointer;
+			typedef typename allocator_type::const_pointer					const_pointer;
+			typedef Node<T>													Node;
+			typedef tree_iterator<value_type>								iterator;
+			typedef tree_iterator<const value_type>							const_iterator;
 			typedef typename allocator_type::template rebind<Node>::other	node_allocator;
 			
 		private:
+		
 			void	pre_order_helper(Node* node);
 			void	in_order_helper(Node* node);
 			void	post_order_helper(Node* node);
@@ -93,6 +96,8 @@ namespace ft
 			key_of_value		_keyofvalue;
 			value_compare		_comp;
 			Alloc				_alloc;
+			node_allocator		_node_alloc;
+			allocator_type		_value_alloc;
 
 		public:
 			RBTree(const value_compare& comp = value_compare(), const Alloc& alloc = allocator_type());
@@ -125,31 +130,12 @@ namespace ft
 
 			iterator	begin()
 			{
-				return (iterator(minimum(_root)));
+				return (iterator(minimum(_root), _TNULL)); // why have two
 			}
 
 			iterator	end()
 			{
-				return (iterator(maximum(_root)));
-			}
-
-			Node* in_order_successor2(Node* node) 
-			{
-				Node* parent;
-				if (node->right != _TNULL)
-				{
-					node = node->right;
-					while (node->left != _TNULL)
-						node = node->left;
-					return (node);
-				}
-				parent = node->parent;
-				while (parent && parent->right == node)
-				{
-					node = parent;
-					parent = parent->parent;
-				}
-				return (parent);
+				return (iterator(_TNULL, _TNULL));
 			}
 	};
 

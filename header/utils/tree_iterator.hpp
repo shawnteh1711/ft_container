@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 20:05:24 by steh              #+#    #+#             */
-/*   Updated: 2023/01/28 22:03:09 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/30 16:43:20 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 namespace ft
 {
-	template<typename T>
+	template<typename T> // here accept t Oonly
 	class tree_iterator
 	{
 		public:
@@ -28,6 +28,7 @@ namespace ft
 			typedef std::ptrdiff_t								difference_type;
 			typedef Node<value_type>							node;
 			typedef Node<value_type>*							node_pointer;
+			typedef Node<value_type>*							tnull_pointer;
 			typedef Node<value_type>&							reference;
 			// typedef ft::RBTree<T, KeyofValue>					tree;
 			// typedef value_type*										pointer;
@@ -36,18 +37,19 @@ namespace ft
 		
 			// constructor
 
-			tree_iterator() : _current_node(nullptr)
+			tree_iterator() : _current_node(nullptr) , _TNULL(nullptr)
 			{
 				// std::cout<<"default tree iter constructor"<<std::endl;
 			};
 
-			tree_iterator(node_pointer node) : _current_node(node)
+			tree_iterator(node_pointer node, tnull_pointer tnull) : _current_node(node), _TNULL(tnull) // this constructor takes two parameter inputs
 			{ 
 				// std::cout<<"node constructro"<<std::endl;
 			};
 
+			// This is copy constructor
 			template <class It> 
-			tree_iterator(const tree_iterator<It>& iter) : _current_node(iter._current_node)
+			tree_iterator(const tree_iterator<It>& iter) : _current_node(iter._current_node), _TNULL(iter._TNULL)
 			{
 				// std::cout<<"template constructor"<<std::endl;
 			};
@@ -58,7 +60,10 @@ namespace ft
 			tree_iterator& operator=(const tree_iterator& other)
 			{
 				if (_current_node != other._current_node)
+				{
 					_current_node = other._current_node;
+					_TNULL = other._TNULL;
+				}
 				return (*this);
 			};
 
@@ -129,10 +134,10 @@ namespace ft
 			node_pointer in_order_successor(node_pointer node) 
 			{
 				node_pointer parent;
-				if (node->right != nullptr)
+				if (node->right != _TNULL)
 				{
 					node = node->right;
-					while (node->left != nullptr)
+					while (node->left != _TNULL)
 						node = node->left;
 					return (node);
 				}
@@ -148,10 +153,10 @@ namespace ft
 			node_pointer in_order_predecessor(node_pointer node) 
 			{
 				node_pointer parent;
-				if (node->left != nullptr)
+				if (node->left != _TNULL)
 				{
 					node = node->left;
-					while (node->right != nullptr)
+					while (node->right != _TNULL)
 						node = node->right;
 					return (node);
 				}
@@ -166,6 +171,7 @@ namespace ft
 
 		protected:
 			node_pointer		_current_node;
+			tnull_pointer		_TNULL;
 
 
 	};

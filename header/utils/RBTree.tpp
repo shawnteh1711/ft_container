@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 11:06:25 by steh              #+#    #+#             */
-/*   Updated: 2023/01/28 20:54:51 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/30 16:27:00 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ ft::RBTree<T, KeyofValue, Compare, Alloc>::RBTree(const value_compare& comp, con
 	_TNULL->left = nullptr;
 	_TNULL->right = nullptr;
 	_root = _TNULL;
+	_node_alloc = node_allocator();
+	_value_alloc = allocator_type();
 	return ;
 }
 
@@ -176,10 +178,16 @@ template <class T, class KeyofValue, class Compare, class Alloc>
 ft::pair<typename ft::RBTree<T, KeyofValue, Compare, Alloc>::iterator, bool>
 ft::RBTree<T, KeyofValue, Compare, Alloc>::insert(const T& value)
 {
-	Node* new_node;
+	Node*				new_node;
+	pointer				val_ptr;
 
-	const T& key = _keyofvalue(value);;
-	new_node = new Node(value);
+
+	const T& key = _keyofvalue(value);
+	// new_node = new Node(value);
+	new_node = _node_alloc.allocate(1);
+	_node_alloc.construct(new_node, value);
+	val_ptr = _value_alloc.allocate(1);
+	_value_alloc.construct(val_ptr, value);
 	new_node->left = _TNULL;
 	new_node->right = _TNULL;
 
@@ -193,7 +201,7 @@ ft::RBTree<T, KeyofValue, Compare, Alloc>::insert(const T& value)
 		else if (_comp(_keyofvalue(current->data), key))
 			current = current->right;
 		else
-			return (ft::pair<iterator, bool>(iterator(current), false));
+			return (ft::pair<iterator, bool>(iterator(current, _TNULL), false)); /// so need pass, tnull
 	}
 	new_node->parent = parent;
 	if (parent == nullptr)
@@ -205,12 +213,12 @@ ft::RBTree<T, KeyofValue, Compare, Alloc>::insert(const T& value)
 	if (new_node->parent == nullptr)
 	{
 		new_node->color = black;
-		return (ft::pair<iterator, bool>(iterator(new_node), true));
+		return (ft::pair<iterator, bool>(iterator(new_node, _TNULL), true));
 	}
 	if (new_node->parent->parent == nullptr || new_node->parent->parent == _TNULL)
-		return (ft::pair<iterator, bool>(iterator(new_node), false));
+		return (ft::pair<iterator, bool>(iterator(new_node, _TNULL), false));
 	insert_fix(new_node);
-	return (ft::pair<iterator, bool>(iterator(new_node), true));
+	return (ft::pair<iterator, bool>(iterator(new_node, _TNULL), true));
 }
 
 template <class T, class KeyofValue, class Compare, class Alloc >

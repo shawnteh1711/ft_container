@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 22:17:04 by steh              #+#    #+#             */
-/*   Updated: 2023/01/28 21:34:06 by steh             ###   ########.fr       */
+/*   Updated: 2023/01/30 17:10:15 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,8 @@ void	rbtree_test()
 {
 	std::cout<<"rbtree"<<std::endl;
 
-	ft::RBTree<int>				tree;
+	ft::RBTree<int>										tree;
 	ft::pair<ft::RBTree<int>::iterator, bool>			result;
-	ft::RBTree<int>::iterator	it;
 
 	result = tree.insert(1);
 	result = tree.insert(2);
@@ -34,7 +33,10 @@ void	rbtree_test()
 	tree2.insert(ft::make_pair(4, "d"));
 	tree2.print_tree_pair();
 	// tree2.print_tree();
-	std::cout<<"end: "<< (*tree.end()).data <<std::endl;
+
+
+	// std::cout<<"end: "<< (*tree.end()).data <<std::endl;
+	ft::RBTree<int>::iterator							it;
 	for (it = tree.begin(); it != tree.end(); it++)
 	{
 		std::cout << (*it).data << std::endl;
