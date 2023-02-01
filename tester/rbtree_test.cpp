@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 22:17:04 by steh              #+#    #+#             */
-/*   Updated: 2023/01/30 22:09:51 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/01 22:44:25 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,27 @@ void	rbtree_test()
 		result = tree.insert(3);
 		tree.print_tree();
 
-		ft::RBTree<ft::pair<int, std::string> >				tree2;
-		tree2.insert(ft::make_pair(2, "a"));
-		tree2.insert(ft::make_pair(3, "b"));
-		tree2.insert(ft::make_pair(4, "d"));
-		tree2.print_tree_pair();
+		// ft::RBTree<ft::pair<int, std::string> >				tree2;
+		// tree2.insert(ft::make_pair(2, "a"));
+		// tree2.insert(ft::make_pair(3, "b"));
+		// tree2.insert(ft::make_pair(4, "d"));
+		// tree2.print_tree_pair();
 		// tree2.print_tree();
 
 
+		// std::cout<<"begin: "<< (*tree.begin()).data <<std::endl;
 		// std::cout<<"end: "<< (*tree.end()).data <<std::endl;
 		// ft::RBTree<int>::iterator							it;
+		// std::cout<<"size:"<<tree.size()<<std::endl;
 		// for (it = tree.begin(); it != tree.end(); ++it)
 		// {
 		// 	std::cout << (*it).data << std::endl;
 		// }
+		// for (it = --tree.end(); it != tree.begin(); --it)
+		// {
+		// 	std::cout << (*it).data << std::endl;
+		// }
+
 		// tree.pre_order();
 		// std::cout << std::endl;
 		// tree.in_order();
@@ -56,8 +63,8 @@ void	rbtree_test()
 		// if (tree.successor(tree.search_tree(3)) == nullptr)
 		// 	std::cout << "successot of 3 is null" << std::endl;
 		// std::cout << "predecessor of 3 is " << tree.predecessor(tree.search_tree(3))->data <<std::endl;
-		tree.delete_node(1);
-		tree.print_tree();
+		// tree.delete_node(1);
+		// tree.print_tree();
 	}
 	// system("leaks ft_container");
 }

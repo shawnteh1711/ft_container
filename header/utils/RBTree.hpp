@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 19:59:48 by steh              #+#    #+#             */
-/*   Updated: 2023/01/30 21:25:13 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/01 21:48:45 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,68 +81,64 @@ namespace ft
 			
 		private:
 		
-			void	pre_order_helper(Node* node);
-			void	in_order_helper(Node* node);
-			void	post_order_helper(Node* node);
-			Node*	search_tree_helper(Node* node, T value);
-			void	print_helper(Node* _root, std::string indent, bool last);
-			void	print_helper_pair(Node* _root, std::string indent, bool last);
-			void	delete_node_helper(Node* node, T value);
-			void	delete_fix(Node* current_node);
-			void	rb_transplant(Node* node_to_replace, Node* replacement_node);
-			void	insert_fix(Node* current_node);
-			void	destroy(Node* node);
+			// void						pre_order_helper(Node* node);
+			// void						in_order_helper(Node* node);
+			// void						post_order_helper(Node* node);
+			// Node*					search_tree_helper(Node* node, T value);
+			// void						print_helper(Node* _root, std::string indent, bool last);
+			// void						print_helper_pair(Node* _root, std::string indent, bool last);
+			// void						delete_node_helper(Node* node, T value);
+			// void						delete_fix(Node* current_node);
+			// void						rb_transplant(Node* node_to_replace, Node* replacement_node);
+			// void						insert_fix(Node* current_node);
+			// Node*					minimum(Node* node);
+			// Node*					maximum(Node* node);
+			// Node*					successor(Node* current_node);
+			// Node*					predecessor(Node* current_node);
+			// void						left_rotate(Node* current_node);
+			// void						right_rotate(Node* current_node);
 
-			Node				*_root;
-			Node				*_TNULL;
+			Node*				_root;
+			Node*				_TNULL;
+			size_type			_size;
 			key_of_value		_keyofvalue;
 			value_compare		_comp;
-			Alloc				_alloc;
 			node_allocator		_node_alloc;
 			allocator_type		_value_alloc;
 
 		public:
+
+			// tree algorithms
 			RBTree(const value_compare& comp = value_compare(), const Alloc& alloc = allocator_type());
+			RBTree(const RBTree& other);
+			RBTree& operator=(const RBTree& other);
 			~RBTree();
-			allocator_type get_allocator() const;
-			void	pre_order();
-			void	in_order();
-			void	post_order();
-			ft::pair<iterator, bool> insert(const T& value);
-			void	delete_node(T value);
-			Node* 	search_tree(T value);
-			Node*	minimum(Node* node);
-			Node*	maximum(Node* node);
-			Node*	successor(Node* current_node);
-			// iterator	successor(Node* current_node);
-			Node*	predecessor(Node* current_node);
-			void	post_order_traversal(Node *_root);
-			void	print_tree_by_level();
-			void	print_tree();
+			void						destroy(Node* node);
+			allocator_type				get_allocator() const;
+			void						pre_order();
+			void						in_order();
+			void						post_order();
+			ft::pair<iterator, bool> 	insert(const T& value);
+			void						delete_node(T value);
+			Node* 						search_tree(T value);
+			void						post_order_traversal(Node *_root);
+			void						print_tree();
+
+
 			template <typename P, typename ft::enable_if<std::is_same<P, ft::pair<typename P::first_type, typename P::second_type> >::value> >
-			void	print_tree();
-			void	print_tree_pair();
-			Node*	search_tree(Node* node, T value);
-			void	left_rotate(Node* current_node);
-			void	right_rotate(Node* current_node);
-			Node*	get_root();
-			Node*	get_tnull();
-			Node*	create_nil_node();
-			
-			iterator	begin()
-			{
-				return (iterator(minimum(_root), _TNULL));
-			}
+			void						print_tree();
+			void						print_tree_pair();
+			Node*						search_tree(Node* node, T value);
+			Node*						get_root();
+			Node*						get_tnull();
+			Node*						create_nil_node();
 
-			iterator	end()
-			{
-				return (iterator(_TNULL, _TNULL));
-			}
-
-			pointer		end_node()
-			{
-				return (_TNULL);
-			}
+			// member function
+			iterator		begin();
+			const_iterator	begin() const;
+			iterator		end();
+			const_iterator	end() const;
+			size_type		size() const;
 	};
 
 	// template <typename K, typename V>

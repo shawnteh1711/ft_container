@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 20:05:24 by steh              #+#    #+#             */
-/*   Updated: 2023/01/30 16:43:20 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/01 20:22:10 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 namespace ft
 {
-	template<typename T> // here accept t Oonly
+	template<typename T> // here accept t only
 	class tree_iterator
 	{
 		public:
@@ -91,6 +91,7 @@ namespace ft
 			tree_iterator& operator++()
 			{
 				_current_node = in_order_successor(_current_node);
+				// _current_node = successor(_current_node);
 				return (*this);
 			};
 
@@ -104,6 +105,7 @@ namespace ft
 			tree_iterator& operator--()
 			{
 				_current_node = in_order_predecessor(_current_node);
+				// _current_node = predecessor(_current_node);
 				return (*this);
 			};
 
@@ -134,6 +136,9 @@ namespace ft
 			node_pointer in_order_successor(node_pointer node) 
 			{
 				node_pointer parent;
+
+				if (node == _TNULL)
+					return (_TNULL);
 				if (node->right != _TNULL)
 				{
 					node = node->right;
@@ -147,12 +152,19 @@ namespace ft
 					node = parent;
 					parent = parent->parent;
 				}
+				if (!parent)
+					return (_TNULL);
 				return (parent);
 			}
 
 			node_pointer in_order_predecessor(node_pointer node) 
 			{
 				node_pointer parent;
+				// if (node == _TNULL)
+				// 	return (_TNULL);
+				std::cout<<"data:"<<node->data<<std::endl;
+				std::cout<<"left:"<<node->left<<std::endl;
+				std::cout<<"right:"<<node->right<<std::endl;
 				if (node->left != _TNULL)
 				{
 					node = node->left;
@@ -166,6 +178,8 @@ namespace ft
 					node = parent;
 					parent = parent->parent;
 				}
+				if (!parent)
+					return (_TNULL);
 				return (parent);
 			}
 
