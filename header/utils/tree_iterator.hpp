@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 20:05:24 by steh              #+#    #+#             */
-/*   Updated: 2023/02/01 20:22:10 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/02 21:02:39 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,40 +16,44 @@
 # include "RBTree.hpp"
 # include "node.hpp"
 # include "type_traits.hpp"
+# include "RBTree.algorithms.hpp"
 
+# define RED "\033[0;31m"
+# define GRN "\033[0;32m"
+# define BLU "\033[1;34m"
+# define RST "\033[0m"
+// yes, good luck. so i need to put algo in typedef retree class
+// without typedef still work. typedef is just like renaming 
+// how can i use algo function in rbtree, so i need class or struct 
 namespace ft
 {
 	template<typename T> // here accept t only
 	class tree_iterator
 	{
 		public:
-			typedef std::bidirectional_iterator_tag				iterator_category;
-			typedef T											value_type; 
-			typedef std::ptrdiff_t								difference_type;
-			typedef Node<value_type>							node;
-			typedef Node<value_type>*							node_pointer;
-			typedef Node<value_type>*							tnull_pointer;
-			typedef Node<value_type>&							reference;
-			// typedef ft::RBTree<T, KeyofValue>					tree;
-			// typedef value_type*										pointer;
-			// what is T? value of key, where is template parameter for the node?
-			//	typedef value_type*										pointer;
+			typedef std::bidirectional_iterator_tag					iterator_category;
+			typedef T												value_type; 
+			typedef std::ptrdiff_t									difference_type;
+			typedef Node<value_type>								node;
+			typedef Node<value_type>*								node_pointer;
+			typedef Node<value_type>*								tnull_pointer;
+			typedef Node<value_type>&								reference;
 		
 			// constructor
 
-			tree_iterator() : _current_node(nullptr) , _TNULL(nullptr)
+			tree_iterator() : _current_node(nullptr)
 			{
 				// std::cout<<"default tree iter constructor"<<std::endl;
 			};
 
-			tree_iterator(node_pointer node, tnull_pointer tnull) : _current_node(node), _TNULL(tnull) // this constructor takes two parameter inputs
+			tree_iterator(node_pointer node) : _current_node(node)
 			{ 
 				// std::cout<<"node constructro"<<std::endl;
 			};
 
 			// This is copy constructor
 			template <class It> 
-			tree_iterator(const tree_iterator<It>& iter) : _current_node(iter._current_node), _TNULL(iter._TNULL)
+			tree_iterator(const tree_iterator<It>& iter) : _current_node(iter._current_node)
 			{
 				// std::cout<<"template constructor"<<std::endl;
 			};
@@ -62,7 +66,6 @@ namespace ft
 				if (_current_node != other._current_node)
 				{
 					_current_node = other._current_node;
-					_TNULL = other._TNULL;
 				}
 				return (*this);
 			};
@@ -90,8 +93,7 @@ namespace ft
 
 			tree_iterator& operator++()
 			{
-				_current_node = in_order_successor(_current_node);
-				// _current_node = successor(_current_node);
+				_current_node = _current_node->successor(_current_node);
 				return (*this);
 			};
 
@@ -104,8 +106,7 @@ namespace ft
 
 			tree_iterator& operator--()
 			{
-				_current_node = in_order_predecessor(_current_node);
-				// _current_node = predecessor(_current_node);
+				_current_node = _current_node->predecessor(_current_node);;
 				return (*this);
 			};
 
@@ -131,61 +132,59 @@ namespace ft
 				return (_current_node);
 			};
 
-		private:
+			// node_pointer in_order_successor(node_pointer node) 
+			// {
+			// 	node_pointer parent;
 
-			node_pointer in_order_successor(node_pointer node) 
-			{
-				node_pointer parent;
+			// 	if (node == _TNULL)
+			// 		return (_TNULL);
+			// 	if (node->right != _TNULL)
+			// 	{
+			// 		node = node->right;
+			// 		while (node->left != _TNULL)
+			// 			node = node->left;
+			// 		return (node);
+			// 	}
+			// 	parent = node->parent;
+			// 	while (parent && parent->right == node)
+			// 	{
+			// 		node = parent;
+			// 		parent = parent->parent;
+			// 	}
+			// 	if (!parent)
+			// 		return (_TNULL);
+			// 	return (parent);
+			// }
 
-				if (node == _TNULL)
-					return (_TNULL);
-				if (node->right != _TNULL)
-				{
-					node = node->right;
-					while (node->left != _TNULL)
-						node = node->left;
-					return (node);
-				}
-				parent = node->parent;
-				while (parent && parent->right == node)
-				{
-					node = parent;
-					parent = parent->parent;
-				}
-				if (!parent)
-					return (_TNULL);
-				return (parent);
-			}
-
-			node_pointer in_order_predecessor(node_pointer node) 
-			{
-				node_pointer parent;
-				// if (node == _TNULL)
-				// 	return (_TNULL);
-				std::cout<<"data:"<<node->data<<std::endl;
-				std::cout<<"left:"<<node->left<<std::endl;
-				std::cout<<"right:"<<node->right<<std::endl;
-				if (node->left != _TNULL)
-				{
-					node = node->left;
-					while (node->right != _TNULL)
-						node = node->right;
-					return (node);
-				}
-				parent = node->parent;
-				while (parent && parent->left == node)
-				{
-					node = parent;
-					parent = parent->parent;
-				}
-				if (!parent)
-					return (_TNULL);
-				return (parent);
-			}
+			// node_pointer in_order_predecessor(node_pointer node) 
+			// {
+			// 	node_pointer parent;
+			// 	// if (node == _TNULL)
+			// 	// 	return (_TNULL);
+			// 	std::cout<<"data:"<<node->data<<std::endl;
+			// 	std::cout<<"left:"<<node->left<<std::endl;
+			// 	std::cout<<"right:"<<node->right<<std::endl;
+			// 	if (node->left != _TNULL)
+			// 	{
+			// 		node = node->left;
+			// 		while (node->right != _TNULL)
+			// 			node = node->right;
+			// 		return (node);
+			// 	}
+			// 	parent = node->parent;
+			// 	while (parent && parent->left == node)
+			// 	{
+			// 		node = parent;
+			// 		parent = parent->parent;
+			// 	}
+			// 	if (!parent)
+			// 		return (_TNULL);
+			// 	return (parent);
+			// }
 
 		protected:
 			node_pointer		_current_node;
-			tnull_pointer		_TNULL;
+			// tnull_pointer		_TNULL;
 
 
 	};

@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 19:48:49 by steh              #+#    #+#             */
-/*   Updated: 2023/02/01 22:52:09 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/02 16:34:31 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,21 @@
 # define RBTREE_ALGO_HPP
 
 #include <iostream>
+#include "RBTree.hpp"
 # define RED "\033[0;31m"
 # define GRN "\033[0;32m"
 # define BLU "\033[1;34m"
 # define RST "\033[0m"
 
+// in same namespace ft...
 namespace ft
 {
-	template <class Node, class T, class KeyofValue, class Compare = std::less<T>, class Alloc = std::allocator<T> >
-	struct algo : public RBTree<T, KeyofValue, Compare, Alloc>
+	template <class T, class Node = ft::Node<T> >
+	struct Algo
 	{
-			// void		print_helper(Node* _root, std::string indent, bool last);
+		Node*	_root;
+		Node*	_TNULL;
+		// void		print_helper(Node* _root, std::string indent, bool last);
 		// void		print_helper_pair(Node* _root, std::string indent, bool last);
 		// Node*	search_tree_helper(Node* node, T value);
 		// void		rb_transplant(Node* node_to_replace, Node* replacement_node);
@@ -43,21 +47,18 @@ namespace ft
 
 		// https://www.programiz.com/dsa/red-black-tree
 
-		// template <class T, class KeyofValue, class Compare, class Alloc, class Node >
-		// Node* _root = RBTree<T, KeyofValue, Compare, Alloc>::get_root();
-		
-		// template <class T, class KeyofValue, class Compare, class Alloc, class Node >
-		// Node* _TNULL = RBTree<T, KeyofValue, Compare, Alloc>::get_tnull();
+		Algo()
+		{
+			std::cout<<"default constructor"<<std::endl;
+			return ;
+		};
 
-		// template <class T, class KeyofValue, class Compare, class Alloc, class Node >
-		// Node*	get_tree_tnull()
-		// {
-		// 	RBTree<T, KeyofValue, Compare, Alloc>	tree;
-		// 	Node*	_TNULL = tree.get_tnull();
-		// 	return (_TNULL);
-		// }
+		Algo(Node* _root, Node* _TNULL): _root(_root), _TNULL(_TNULL)
+		{
+			std::cout<<"algo constructor"<<std::endl;
+		};
 
-		static void print_helper(Node* root, std::string indent, bool last)
+		void print_helper(Node* root, std::string indent, bool last)
 		{
 			if (root != nullptr)
 			{
@@ -293,11 +294,13 @@ namespace ft
 			
 			right_child_of_current_node = current_node->right;
 			current_node->right = right_child_of_current_node->left;
+			// if (right_child_of_current_node->left != this->get_tnull())
 			if (right_child_of_current_node->left != this->_TNULL)
 				right_child_of_current_node->left->parent = current_node;
 			right_child_of_current_node->parent = current_node->parent;
 			if (current_node->parent == nullptr)
 				this->_root = right_child_of_current_node;
+				// this->set_root(right_child_of_current_node);
 			else if (current_node == current_node->parent->left)
 				current_node->parent->left = right_child_of_current_node;
 			else
@@ -305,18 +308,22 @@ namespace ft
 			right_child_of_current_node->left = current_node;
 			current_node->parent = right_child_of_current_node;
 		}
-
+		// if u successfully make class iterator for class RBT,
+		// u can make class algo like class iterator
+		// follow how u code the class iterator
 		void	right_rotate(Node* current_node)
 		{
 			Node* left_child_of_current_node;
-			
+
 			left_child_of_current_node = current_node->left;
 			current_node->left = left_child_of_current_node->right;
+			// if (left_child_of_current_node->right != this->get_tnull())
 			if (left_child_of_current_node->right != this->_TNULL)
 				left_child_of_current_node->right->parent = current_node;
 			left_child_of_current_node->parent = current_node->parent;
 			if (current_node->parent == nullptr)
 				this->_root = left_child_of_current_node;
+				// this->set_root(left_child_of_current_node);
 			else if (current_node == current_node->parent->right)
 				current_node->parent->right = left_child_of_current_node;
 			else
@@ -325,21 +332,27 @@ namespace ft
 			current_node->parent = left_child_of_current_node;
 		}
 
-		// Node*	successor(Node* current_node)
-		// {
-		// 	Node*	parent_node;
-		// 	if (current_node == nullptr)
-		// 		return (nullptr);
-		// 	if (current_node->right != _TNULL)
-		// 		return (minimum(current_node->right));
-		// 	parent_node = current_node->parent;
-		// 	while (parent_node != nullptr && current_node == parent_node->right)
-		// 	{
-		// 		current_node = parent_node;
-		// 		parent_node = parent_node->parent;
-		// 	}
-		// 	return (parent_node);
-		// }
+		// this inseet fix one, u need to check & study the source u used for ur insert fix.
+		// my case, i refer to programiz website for insert and modifty once understand how it works.
+		// is the same as previously from website, but once move here it not working
+		// try move it back?
+
+
+		Node*	successor(Node* current_node)
+		{
+			Node*	parent_node;
+			if (current_node == nullptr)
+				return (nullptr);
+			if (current_node->right != _TNULL)
+				return (minimum(current_node->right));
+			parent_node = current_node->parent;
+			while (parent_node != nullptr && current_node == parent_node->right)
+			{
+				current_node = parent_node;
+				parent_node = parent_node->parent;
+			}
+			return (parent_node);
+		}
 		
 		// Node* predecessor(Node* current_node)
 		// {
@@ -358,15 +371,15 @@ namespace ft
 		// 	return (parent_node);
 		// }
 
-		// void	pre_order_helper(Node* node)
-		// {
-		// 	if (node != _TNULL)
-		// 	{
-		// 		std::cout << node->data << " ";
-		// 		pre_order_helper(node->left);
-		// 		pre_order_helper(node->right);
-		// 	}
-		// }
+		void	pre_order_helper(Node* node)
+		{
+			if (node != _TNULL)
+			{
+				std::cout << node->data << " ";
+				pre_order_helper(node->left);
+				pre_order_helper(node->right);
+			}
+		}
 
 		// void	in_order_helper(Node* node)
 		// {
@@ -388,9 +401,13 @@ namespace ft
 		// 	}
 		// }
 
-		static void	insert_fix(Node* current_node)
+		// this is inside struct algo 
+		// the function same as the one inside rbtree
+		void	insert_fix(Node* current_node)
 		{
 			Node*	uncle_node;
+
+			std::cout<<"current_node:"<<current_node->data<<std::endl;
 			while (current_node->parent->color == red)
 			{
 				// check if new node parent os right or left child of its grandparent.

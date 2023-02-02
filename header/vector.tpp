@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/12 19:22:32 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/02 14:14:49 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -670,8 +670,7 @@ bool operator>=( const ft::vector<T,Alloc>& lhs,
 
 
 template< class T, class Alloc >
-void swap( ft::vector<T,Alloc>& lhs,
-		ft::vector<T,Alloc>& rhs )
+void swap( ft::vector<T,Alloc>& lhs, ft::vector<T,Alloc>& rhs )
 {
 	lhs.swap(rhs);
 }

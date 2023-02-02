@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 19:59:48 by steh              #+#    #+#             */
-/*   Updated: 2023/02/01 21:48:45 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/02 21:24:10 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,24 @@
 
 // Test your implementation by creating sample map objects and performing different map operations. You should make sure that the map behaves correctly and that the red-black tree is properly balanced.
 
+// and actually if u did git push & save commit from time to time
+// if u want to back to the pervious coding which work than now, can git reset to back the commit history, it is easier & quicker
+// example when one time u managed to make insert work well, need to git commit it before move on work later.
+// i mean i want to move the the insert fix to another class or file. because the rbtree too many function
+// insert fix move to another class or file, u mean u want insert fix function to not a member of the rbtree class?
+// u may need to pass the rbtree class into insertfix function or inheritance 
+// like void insertfix(RBTree x) for example
 #ifndef RBTREE_HPP
 # define RBTREE_HPP
 
-#include <iostream>
-#include <queue>
-#include "pair.hpp"
-#include "tree_iterator.hpp"
-#include "node.hpp"
+# include <iostream>
+# include <queue>
+# include "pair.hpp"
+# include "tree_iterator.hpp"
+# include "node.hpp"
+# include "RBTree.algorithms.hpp"
+# include "iterator.hpp"
+
 
 namespace ft
 {
@@ -72,31 +82,32 @@ namespace ft
 			typedef std::size_t												size_type;
 			typedef T														value_type;
 			typedef Alloc													allocator_type;
+			typedef typename allocator_type::difference_type				difference_type;
 			typedef typename allocator_type::pointer						pointer;
 			typedef typename allocator_type::const_pointer					const_pointer;
 			typedef Node<T>													Node;
 			typedef tree_iterator<value_type>								iterator;
 			typedef tree_iterator<const value_type>							const_iterator;
 			typedef typename allocator_type::template rebind<Node>::other	node_allocator;
+			typedef ft::reverse_iterator<iterator>							reverse_iterator;
 			
-		private:
+		protected:
 		
-			// void						pre_order_helper(Node* node);
-			// void						in_order_helper(Node* node);
-			// void						post_order_helper(Node* node);
-			// Node*					search_tree_helper(Node* node, T value);
-			// void						print_helper(Node* _root, std::string indent, bool last);
-			// void						print_helper_pair(Node* _root, std::string indent, bool last);
-			// void						delete_node_helper(Node* node, T value);
-			// void						delete_fix(Node* current_node);
-			// void						rb_transplant(Node* node_to_replace, Node* replacement_node);
-			// void						insert_fix(Node* current_node);
-			// Node*					minimum(Node* node);
-			// Node*					maximum(Node* node);
-			// Node*					successor(Node* current_node);
-			// Node*					predecessor(Node* current_node);
-			// void						left_rotate(Node* current_node);
-			// void						right_rotate(Node* current_node);
+			// helper function
+			void				pre_order_helper(Node* node);
+			void				in_order_helper(Node* node);
+			void				post_order_helper(Node* node);
+			Node*				search_tree_helper(Node* node, T value);
+			void				print_helper(Node* _root, std::string indent, bool last);
+			void				print_helper_pair(Node* _root, std::string indent, bool last);
+			void				delete_node_helper(Node* node, T value);
+			void				delete_fix(Node* current_node);
+			void				rb_transplant(Node* node_to_replace, Node* replacement_node);
+			void				insert_fix(Node* current_node);
+			Node*				successor(Node* current_node);
+			Node*				predecessor(Node* current_node);
+			void				left_rotate(Node* current_node);
+			void				right_rotate(Node* current_node);
 
 			Node*				_root;
 			Node*				_TNULL;
@@ -108,7 +119,7 @@ namespace ft
 
 		public:
 
-			// tree algorithms
+			// tree algorithms	
 			RBTree(const value_compare& comp = value_compare(), const Alloc& alloc = allocator_type());
 			RBTree(const RBTree& other);
 			RBTree& operator=(const RBTree& other);
@@ -121,8 +132,9 @@ namespace ft
 			ft::pair<iterator, bool> 	insert(const T& value);
 			void						delete_node(T value);
 			Node* 						search_tree(T value);
-			void						post_order_traversal(Node *_root);
 			void						print_tree();
+			Node*						minimum(Node* node);
+			Node*						maximum(Node* node);
 
 
 			template <typename P, typename ft::enable_if<std::is_same<P, ft::pair<typename P::first_type, typename P::second_type> >::value> >
@@ -130,15 +142,22 @@ namespace ft
 			void						print_tree_pair();
 			Node*						search_tree(Node* node, T value);
 			Node*						get_root();
+			void						set_root(Node* new_root);
 			Node*						get_tnull();
 			Node*						create_nil_node();
+			Node*						create_node(const T &value);
 
 			// member function
 			iterator		begin();
 			const_iterator	begin() const;
 			iterator		end();
 			const_iterator	end() const;
+			bool			empty() const;
 			size_type		size() const;
+			size_type		max_size() const;
+
+			// Modifiers
+			void			clear();
 	};
 
 	// template <typename K, typename V>
