@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 11:06:25 by steh              #+#    #+#             */
-/*   Updated: 2023/02/02 21:22:21 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/03 16:39:38 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typename ft::RBTree<T, KeyofValue, Compare, Alloc>::Node* ft::RBTree<T, KeyofVal
 }
 
 template <class T, class KeyofValue, class Compare, class Alloc >
-typename ft::RBTree<T, KeyofValue, Compare, Alloc>::Node* ft::RBTree<T, KeyofValue, Compare, Alloc>::create_node(const T &value)
+typename ft::RBTree<T, KeyofValue, Compare, Alloc>::Node* ft::RBTree<T, KeyofValue, Compare, Alloc>::create_node(const value_type &value)
 {
 	Node*				new_node;
 	// pointer				val_ptr;
@@ -218,51 +218,6 @@ void	ft::RBTree<T, KeyofValue, Compare, Alloc>::insert_fix(Node* current_node)
 	_root->color = black;
 }
 
-
-template <class T, class KeyofValue, class Compare, class Alloc>
-ft::pair<typename ft::RBTree<T, KeyofValue, Compare, Alloc>::iterator, bool>
-ft::RBTree<T, KeyofValue, Compare, Alloc>::insert(const T& value)
-{
-	Node*				new_node;
-
-	const T& key = _keyofvalue(value);
-	new_node = create_node(value);
-
-	Node* current = _root;
-	Node* parent = nullptr;
-	while (current != _TNULL)
-	{
-		parent = current;
-		if (_comp(key, _keyofvalue(current->data)))
-			current = current->left;
-		else if (_comp(_keyofvalue(current->data), key))
-			current = current->right;
-		else
-			return (ft::make_pair(iterator(current), false)); /// so need pass, tnull
-	}
-	new_node->parent = parent;
-	if (parent == nullptr)
-		_root = new_node;
-	else if (_comp(key, _keyofvalue(parent->data)))
-		parent->left = new_node;
-	else
-		parent->right = new_node;
-	// std::cout<<"_root"<<_root->data<<std::endl;
-	// std::cout<<"_left"<<_root->left->data<<std::endl;
-	// std::cout<<"_right"<<_root->right->data<<std::endl;
-	_size++;
-	if (new_node->parent == nullptr)
-	{
-		new_node->color = black;
-		return (ft::make_pair(iterator(new_node), true));
-	}
-	if (new_node->parent->parent == nullptr || new_node->parent->parent == _TNULL)
-		return (ft::make_pair(iterator(new_node), false));
-	insert_fix(new_node);
-	_TNULL->parent = _root;
-	return (ft::make_pair(iterator(new_node), true));
-}
-
 template <class T, class KeyofValue, class Compare, class Alloc >
 void ft::RBTree<T, KeyofValue, Compare, Alloc>::print_tree()
 {
@@ -270,6 +225,17 @@ void ft::RBTree<T, KeyofValue, Compare, Alloc>::print_tree()
 	{
 		// _myalgo.print_helper(this->_root, "", true);
 		this->print_helper(this->_root, "", true);
+	}
+}
+
+template <class T, class KeyofValue, class Compare, class Alloc >
+template <class P>
+// void ft::RBTree<T, KeyofValue, Compare, Alloc>::print_tree(typename ft::enable_if<std::is_same<P, ft::pair<typename P::first_type, typename P::second_type> >::value>)
+void ft::RBTree<T, KeyofValue, Compare, Alloc>::print_tree(typename ft::enable_if<!ft::is_integral<P>::value, void>::type*)
+{
+	if (_root)
+	{
+		this->print_helper_pair(this->_root, "", true);
 	}
 }
 
@@ -345,7 +311,7 @@ void ft::RBTree<T, KeyofValue, Compare, Alloc>:: print_helper_pair(Node* root, s
 
 
 template <class T, class KeyofValue, class Compare, class Alloc >
-typename ft::RBTree<T, KeyofValue, Compare, Alloc>::Node*	ft::RBTree<T, KeyofValue, Compare, Alloc>::search_tree(T value)
+typename ft::RBTree<T, KeyofValue, Compare, Alloc>::Node*	ft::RBTree<T, KeyofValue, Compare, Alloc>::search_tree(value_type value)
 {
 	return (search_tree_helper(_root, value));
 }
@@ -508,7 +474,7 @@ void	ft::RBTree<T, KeyofValue, Compare, Alloc>::delete_fix(Node* current_node)
 }
 
 template <class T, class KeyofValue, class Compare, class Alloc >
-void ft::RBTree<T, KeyofValue, Compare, Alloc>::delete_node(T value)
+void ft::RBTree<T, KeyofValue, Compare, Alloc>::delete_node(value_type value)
 {
 	delete_node_helper(this->_root, value);
 }
@@ -651,25 +617,29 @@ void ft::RBTree<T, KeyofValue, Compare, Alloc>::destroy(Node* node)
 }
 
 template <class T, class KeyofValue, class Compare, class Alloc >
-typename ft::RBTree<T, KeyofValue, Compare, Alloc>::iterator	ft::RBTree<T, KeyofValue, Compare, Alloc>::begin()
+typename ft::RBTree<T, KeyofValue, Compare, Alloc>::iterator	
+ft::RBTree<T, KeyofValue, Compare, Alloc>::begin()
 {
 	return (iterator(minimum(_root)));
 }
 
 template <class T, class KeyofValue, class Compare, class Alloc >
-typename ft::RBTree<T, KeyofValue, Compare, Alloc>::const_iterator	ft::RBTree<T, KeyofValue, Compare, Alloc>::begin() const
+typename ft::RBTree<T, KeyofValue, Compare, Alloc>::const_iterator	
+ft::RBTree<T, KeyofValue, Compare, Alloc>::begin() const
 {
 	return (const_iterator(minimum(_root)));
 }
 
 template <class T, class KeyofValue, class Compare, class Alloc >
-typename ft::RBTree<T, KeyofValue, Compare, Alloc>::iterator	ft::RBTree<T, KeyofValue, Compare, Alloc>::end()
+typename ft::RBTree<T, KeyofValue, Compare, Alloc>::iterator	
+ft::RBTree<T, KeyofValue, Compare, Alloc>::end()
 {
 	return (iterator(_TNULL));
 }
 
 template <class T, class KeyofValue, class Compare, class Alloc >
-typename ft::RBTree<T, KeyofValue, Compare, Alloc>::const_iterator	ft::RBTree<T, KeyofValue, Compare, Alloc>::end() const
+typename ft::RBTree<T, KeyofValue, Compare, Alloc>::const_iterator	
+ft::RBTree<T, KeyofValue, Compare, Alloc>::end() const
 {
 	return (const_iterator(_TNULL));
 }
@@ -682,13 +652,15 @@ bool		ft::RBTree<T, KeyofValue, Compare, Alloc>::empty() const
 }
 
 template <class T, class KeyofValue, class Compare, class Alloc >
-typename ft::RBTree<T, KeyofValue, Compare, Alloc>::size_type		ft::RBTree<T, KeyofValue, Compare, Alloc>::size() const
+typename ft::RBTree<T, KeyofValue, Compare, Alloc>::size_type	
+ft::RBTree<T, KeyofValue, Compare, Alloc>::size() const
 {
 	return (_size);
 }
 
 template <class T, class KeyofValue, class Compare, class Alloc >
-typename ft::RBTree<T, KeyofValue, Compare, Alloc>::size_type		ft::RBTree<T, KeyofValue, Compare, Alloc>::max_size() const
+typename ft::RBTree<T, KeyofValue, Compare, Alloc>::size_type	
+ft::RBTree<T, KeyofValue, Compare, Alloc>::max_size() const
 {
 	size_type		max_alloc_size;
 	difference_type	max_diff_type;
@@ -697,3 +669,84 @@ typename ft::RBTree<T, KeyofValue, Compare, Alloc>::size_type		ft::RBTree<T, Key
 	max_diff_type = std::numeric_limits<difference_type>::max();
 	return (std::min(max_alloc_size, static_cast<size_type>(max_diff_type)));
 }
+
+template <class T, class KeyofValue, class Compare, class Alloc >
+void	ft::RBTree<T, KeyofValue, Compare, Alloc>::clear()
+{
+	_size = 0;
+	this->destroy(this->_root);
+	_root = _TNULL;
+}
+
+
+template <class T, class KeyofValue, class Compare, class Alloc>
+ft::pair<typename ft::RBTree<T, KeyofValue, Compare, Alloc>::iterator, bool>
+ft::RBTree<T, KeyofValue, Compare, Alloc>::insert(const value_type& value)
+{
+	Node*				new_node;
+
+	const T& key = _keyofvalue(value);
+	new_node = create_node(value);
+
+	Node* current = _root;
+	Node* parent = nullptr;
+	while (current != _TNULL)
+	{
+		parent = current;
+		if (_comp(key, _keyofvalue(current->data)))
+			current = current->left;
+		else if (_comp(_keyofvalue(current->data), key))
+			current = current->right;
+		else
+			return (ft::make_pair(iterator(current), false)); /// so need pass, tnull
+	}
+	new_node->parent = parent;
+	if (parent == nullptr)
+		_root = new_node;
+	else if (_comp(key, _keyofvalue(parent->data)))
+		parent->left = new_node;
+	else
+		parent->right = new_node;
+	_size++;
+	if (new_node->parent == nullptr)
+	{
+		new_node->color = black;
+		return (ft::make_pair(iterator(new_node), true));
+	}
+	if (new_node->parent->parent == nullptr || new_node->parent->parent == _TNULL)
+		return (ft::make_pair(iterator(new_node), false));
+	insert_fix(new_node);
+	_TNULL->parent = _root;
+	return (ft::make_pair(iterator(new_node), true));
+}
+
+
+template <class T, class KeyofValue, class Compare, class Alloc>
+typename ft::RBTree<T, KeyofValue, Compare, Alloc>::iterator	
+ft::RBTree<T, KeyofValue, Compare, Alloc>::insert(iterator pos, const value_type& value)
+{
+	(void)pos;
+	return (insert(value).first);
+}
+
+template <class T, class KeyofValue, class Compare, class Alloc>
+template <class InputIt>
+void	ft::RBTree<T, KeyofValue, Compare, Alloc>::insert(InputIt first, InputIt last, typename ft::enable_if<!std::is_integral<InputIt>::value, InputIt>::type*)
+{
+	for (InputIt tmp = first; tmp != last; tmp++)
+	{
+		insert((*tmp).data);
+	}
+}
+
+template <class T, class KeyofValue, class Compare, class Alloc>
+typename ft::RBTree<T, KeyofValue, Compare, Alloc>::iterator	
+ft::RBTree<T, KeyofValue, Compare, Alloc>::erase(iterator pos)
+{
+	
+}
+// iterator					erase(iterator pos);
+// iterator					erase(const_iterator pos);
+// iterator					erase(iterator first, iterator last);
+// iterator					erase(const_iterator first, const_iterator last);
+// size_type					erase(const Key &key);

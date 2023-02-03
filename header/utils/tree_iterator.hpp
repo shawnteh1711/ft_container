@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 20:05:24 by steh              #+#    #+#             */
-/*   Updated: 2023/02/02 21:02:39 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/03 16:23:09 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@
 # define GRN "\033[0;32m"
 # define BLU "\033[1;34m"
 # define RST "\033[0m"
-// yes, good luck. so i need to put algo in typedef retree class
-// without typedef still work. typedef is just like renaming 
-// how can i use algo function in rbtree, so i need class or struct 
+
 namespace ft
 {
-	template<typename T> // here accept t only
+	template<typename T>
+	class const_tree_iterator;
+	template<typename T>
 	class tree_iterator
 	{
 		public:
@@ -127,6 +127,13 @@ namespace ft
 				return (_current_node != other._current_node);
 			};
 
+			bool operator>=(const tree_iterator &other) const
+			{
+				if (!_current_node)
+					return (false);
+				return (_current_node >= other._current_node);
+			};
+
 			node_pointer get_node_pointer() const
 			{
 				return (_current_node);
@@ -184,7 +191,121 @@ namespace ft
 
 		protected:
 			node_pointer		_current_node;
-			// tnull_pointer		_TNULL;
+	};
+
+	template<typename T>
+	class const_tree_iterator
+	{
+		public:
+			typedef std::bidirectional_iterator_tag					iterator_category;
+			typedef T												value_type; 
+			typedef std::ptrdiff_t									difference_type;
+			typedef Node<value_type>								node;
+			typedef const Node<value_type>*							node_pointer;
+			typedef const Node<value_type>&							reference;
+		
+			// constructor
+
+			const_tree_iterator() : _current_node(nullptr)
+			{
+				// std::cout<<"default tree iter constructor"<<std::endl;
+			};
+
+			const_tree_iterator(const node_pointer node) : _current_node(node)
+			{ 
+				// std::cout<<"node constructro"<<std::endl;
+			};
+
+			// This is copy constructor
+			template <class It> 
+			const_tree_iterator(const const_tree_iterator<It>& iter) : _current_node(iter._current_node)
+			{
+				// std::cout<<"template constructor"<<std::endl;
+			};
+
+
+			~const_tree_iterator() {}
+
+			const_tree_iterator& operator=(const const_tree_iterator& other)
+			{
+				if (_current_node != other._current_node)
+				{
+					_current_node = other._current_node;
+				}
+				return (*this);
+			};
+
+			// const_tree_iterator(pointer ptr) : _current_node(static_cast<node_pointer>(ptr))
+			// {
+			// 	std::cout<<"pointer constructor"<<std::endl;
+			// };
+
+			const node_pointer& base() const
+			{
+				return (_current_node);
+			};
+
+			// dereference operator
+			reference & operator*() const
+			{
+				return (*_current_node);
+			};
+
+			node_pointer operator->() const
+			{
+				return (_current_node);
+			};
+
+			const_tree_iterator& operator++()
+			{
+				_current_node = _current_node->successor(_current_node);
+				return (*this);
+			};
+
+			const_tree_iterator operator++(int)
+			{
+				const_tree_iterator tmp = *this;
+				++(*this);
+				return (tmp);
+			};
+
+			const_tree_iterator& operator--()
+			{
+				_current_node = _current_node->predecessor(_current_node);;
+				return (*this);
+			};
+
+			const_tree_iterator operator--(int)
+			{
+				const_tree_iterator tmp = *this;
+				--(*this);
+				return (tmp);
+			};
+
+			bool operator==(const const_tree_iterator &other) const
+			{
+				return (_current_node == other._current_node);
+			};
+
+			bool operator!=(const const_tree_iterator &other) const
+			{
+				return (_current_node != other._current_node);
+			};
+
+			bool operator>=(const const_tree_iterator &other) const
+			{
+				if (!_current_node)
+					return (false);
+				return (_current_node >= other._current_node);
+			};
+
+			node_pointer get_node_pointer() const
+			{
+				return (_current_node);
+			};
+
+		protected:
+			node_pointer		_current_node;
 
 
 	};

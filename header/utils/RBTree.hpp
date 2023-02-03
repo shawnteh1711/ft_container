@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 19:59:48 by steh              #+#    #+#             */
-/*   Updated: 2023/02/02 21:24:10 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/03 16:38:55 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ namespace ft
 			typedef typename allocator_type::const_pointer					const_pointer;
 			typedef Node<T>													Node;
 			typedef tree_iterator<value_type>								iterator;
-			typedef tree_iterator<const value_type>							const_iterator;
+			typedef const_tree_iterator<value_type>							const_iterator;
 			typedef typename allocator_type::template rebind<Node>::other	node_allocator;
-			typedef ft::reverse_iterator<iterator>							reverse_iterator;
+			// typedef ft::reverse_iterator<iterator>							reverse_iterator;
 			
 		protected:
 		
@@ -129,23 +129,23 @@ namespace ft
 			void						pre_order();
 			void						in_order();
 			void						post_order();
-			ft::pair<iterator, bool> 	insert(const T& value);
-			void						delete_node(T value);
-			Node* 						search_tree(T value);
+			void						delete_node(value_type value);
+			Node* 						search_tree(value_type value);
 			void						print_tree();
 			Node*						minimum(Node* node);
 			Node*						maximum(Node* node);
 
 
-			template <typename P, typename ft::enable_if<std::is_same<P, ft::pair<typename P::first_type, typename P::second_type> >::value> >
-			void						print_tree();
+			template <class P>
+			void						print_tree(typename ft::enable_if<!ft::is_integral<P>::value, void>::type* = NULL);
+			// void						print_tree(typename ft::enable_if<std::is_same<P, ft::pair<typename P::first_type, typename P::second_type> >::value>);
 			void						print_tree_pair();
-			Node*						search_tree(Node* node, T value);
+			Node*						search_tree(Node* node, value_type value);
 			Node*						get_root();
 			void						set_root(Node* new_root);
 			Node*						get_tnull();
 			Node*						create_nil_node();
-			Node*						create_node(const T &value);
+			Node*						create_node(const value_type &value);
 
 			// member function
 			iterator		begin();
@@ -157,7 +157,17 @@ namespace ft
 			size_type		max_size() const;
 
 			// Modifiers
-			void			clear();
+			void						clear();
+			ft::pair<iterator, bool> 	insert(const value_type& value);
+			iterator					insert(iterator pos, const value_type& value);
+			template <class InputIt>
+			void						insert(InputIt first, InputIt last, typename ft::enable_if<!std::is_integral<InputIt>::value, InputIt>::type* = NULL);
+			iterator					erase(iterator pos);
+			iterator					erase(iterator pos);
+			iterator					erase(const_iterator pos);
+			iterator					erase(iterator first, iterator last);
+			iterator					erase(const_iterator first, const_iterator last);
+			size_type					erase(const Key &key);
 	};
 
 	// template <typename K, typename V>
