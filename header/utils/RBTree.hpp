@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 19:59:48 by steh              #+#    #+#             */
-/*   Updated: 2023/02/03 16:38:55 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/03 22:16:12 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ namespace ft
 			void				in_order_helper(Node* node);
 			void				post_order_helper(Node* node);
 			Node*				search_tree_helper(Node* node, T value);
+			Node*				search_tree_helper_const(Node* node, const T& value) const;
 			void				print_helper(Node* _root, std::string indent, bool last);
 			void				print_helper_pair(Node* _root, std::string indent, bool last);
 			void				delete_node_helper(Node* node, T value);
@@ -131,16 +132,18 @@ namespace ft
 			void						post_order();
 			void						delete_node(value_type value);
 			Node* 						search_tree(value_type value);
+			Node* 						search_tree_const(const value_type& value) const;
 			void						print_tree();
-			Node*						minimum(Node* node);
-			Node*						maximum(Node* node);
+			Node*						minimum(Node* node) const;
+			Node*						tree_minimum() const;
+			Node*						maximum(Node* node) const;
+			Node*						tree_maximum() const;
 
 
 			template <class P>
 			void						print_tree(typename ft::enable_if<!ft::is_integral<P>::value, void>::type* = NULL);
 			// void						print_tree(typename ft::enable_if<std::is_same<P, ft::pair<typename P::first_type, typename P::second_type> >::value>);
 			void						print_tree_pair();
-			Node*						search_tree(Node* node, value_type value);
 			Node*						get_root();
 			void						set_root(Node* new_root);
 			Node*						get_tnull();
@@ -154,6 +157,7 @@ namespace ft
 			const_iterator	end() const;
 			bool			empty() const;
 			size_type		size() const;
+			size_type		size_helper(Node* node) const;
 			size_type		max_size() const;
 
 			// Modifiers
@@ -163,11 +167,26 @@ namespace ft
 			template <class InputIt>
 			void						insert(InputIt first, InputIt last, typename ft::enable_if<!std::is_integral<InputIt>::value, InputIt>::type* = NULL);
 			iterator					erase(iterator pos);
-			iterator					erase(iterator pos);
-			iterator					erase(const_iterator pos);
 			iterator					erase(iterator first, iterator last);
-			iterator					erase(const_iterator first, const_iterator last);
+			template <class Key>
 			size_type					erase(const Key &key);
+			void						swap(RBTree &other);
+
+			// Lookup
+			template <class Key>
+			size_type					count(const Key& key) const;
+	
+			template <class Key>
+			iterator					find(const Key& key);
+
+			template <class Key>
+			const_iterator				find(const Key& key) const;
+
+			template <class Key>
+			iterator					lower_bound( const Key& key );
+
+			template <class Key>
+			const_iterator				lower_bound( const Key& key ) const;
 	};
 
 	// template <typename K, typename V>

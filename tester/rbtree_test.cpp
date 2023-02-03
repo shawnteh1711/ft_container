@@ -6,13 +6,14 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 22:17:04 by steh              #+#    #+#             */
-/*   Updated: 2023/02/03 16:35:14 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/03 22:18:36 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/utils/RBTree.tpp"
 #include <iostream>
 #include <map>
+#include <iterator>
 
 
 
@@ -27,13 +28,14 @@ void	rbtree_test()
 		result = tree.insert(1);
 		result = tree.insert(2);
 		result = tree.insert(3);
-		tree.print_tree();
+		result = tree.insert(1);
+		// tree.print_tree();
 
 		ft::RBTree<ft::pair<int, std::string> >				tree2;
 		tree2.insert(ft::make_pair(2, "a"));
 		tree2.insert(ft::make_pair(3, "b"));
 		tree2.insert(ft::make_pair(4, "d"));
-		tree2.print_tree_pair();
+		// tree2.print_tree_pair();
 		// tree2.print_tree();
 
 		std::cout<<"begin: "<< (*tree.begin()).data <<std::endl;
@@ -65,11 +67,35 @@ void	rbtree_test()
 		tree.insert(tree.begin(), 5);
 		// tree.clear();
 		std::cout << "empty: "<< (tree.empty() ? "true" : "false") << std::endl;
-		tree.print_tree();
+		// tree.print_tree();
 
 		ft::RBTree<int>										tree3;
 		tree3.insert(tree.begin(), tree.end());
+		// tree3.print_tree();
+
+		it = tree3.begin();
+
+		// erase
+		tree3.erase(it);
+		tree3.erase(tree3.begin(), tree3.end());
 		tree3.print_tree();
+		std::cout<<"size:" << tree3.size() << std::endl;
+		std::cout << "empty: "<< (tree3.empty() ? "true" : "false") << std::endl;
+
+		tree3 = tree;
+		tree3.print_tree();
+		tree3.erase(3);
+		tree3.print_tree();
+		std::cout << "count: "<< (tree3.count(3) ? "1" : "0") << std::endl;
+		std::cout << "count: "<< (tree3.count(1) ? "1" : "0") << std::endl;
+		std::cout << "find: "<< (!(tree3.find(3))->is_nil ? "true" : "false") << std::endl;
+		std::cout << "find: "<< (!(tree3.find(1))->is_nil ? "true" : "false") << std::endl;
+		std::cout << "lower bound: "<< (tree3.lower_bound(5)->data) << std::endl;
+		std::cout << "lower bound: "<< (tree3.lower_bound(6)->data) << std::endl;
+
+		// const find
+
+
 	}
 	// system("leaks ft_container");
 }
