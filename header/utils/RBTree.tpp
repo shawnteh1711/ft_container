@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 11:06:25 by steh              #+#    #+#             */
-/*   Updated: 2023/02/03 22:17:16 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/04 23:11:59 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -859,20 +859,95 @@ ft::RBTree<T, KeyofValue, Compare, Alloc>::lower_bound( const Key& key )
 {
 	iterator	it;
 	
-	it = tree_minimum();
-	for (; it != _TNULL; it++)
+	if (_root == _TNULL)
+		return (this->end());
+	for (it = tree_minimum(); it != _TNULL; it++)
 	{
 		if (!_comp(it->data, key))
 			break ;
 	}
 	return (iterator(it));
-	
 }
 
-// template <class T, class KeyofValue, class Compare, class Alloc>
-// template <class Key>
-// typename ft::RBTree<T, KeyofValue, Compare, Alloc>::const_iterator	
-// ft::RBTree<T, KeyofValue, Compare, Alloc>::lower_bound( const Key& key ) const
-// {
+template <class T, class KeyofValue, class Compare, class Alloc>
+template <class Key>
+typename ft::RBTree<T, KeyofValue, Compare, Alloc>::const_iterator	
+ft::RBTree<T, KeyofValue, Compare, Alloc>::lower_bound( const Key& key ) const
+{
+	const_iterator	cit;
+	
+	if (_root == _TNULL)
+		return (this->end());
+	for (cit = tree_minimum(); cit != _TNULL; cit++)
+	{
+		if (!_comp(cit->data, key))
+			break ;
+	}
+	return (const_iterator(cit));
+}
 
-// }
+template <class T, class KeyofValue, class Compare, class Alloc>
+template <class Key>
+typename ft::RBTree<T, KeyofValue, Compare, Alloc>::iterator	
+ft::RBTree<T, KeyofValue, Compare, Alloc>::upper_bound( const Key& key )
+{
+	iterator	it;
+	
+	if (_root == _TNULL)
+		return (this->end());
+	for (it = tree_minimum(); it != _TNULL; it++)
+	{
+		if (!_comp(it->data, key) && _comp(key, it->data))
+			break ;
+	}
+	return (iterator(it));
+}
+
+template <class T, class KeyofValue, class Compare, class Alloc>
+template <class Key>
+typename ft::RBTree<T, KeyofValue, Compare, Alloc>::const_iterator	
+ft::RBTree<T, KeyofValue, Compare, Alloc>::upper_bound( const Key& key ) const
+{
+	const_iterator	cit;
+	
+	if (_root == _TNULL)
+		return (this->end());
+	for (cit = tree_minimum(); cit != _TNULL; cit++)
+	{
+		if (!_comp(cit->data, key) && _comp(key, cit->data))
+			break ;
+	}
+	return (const_iterator(cit));
+}
+
+template <class T, class KeyofValue, class Compare, class Alloc>
+template <class Key>
+ft::pair<typename ft::RBTree<T, KeyofValue, Compare, Alloc>::iterator, 
+typename ft::RBTree<T, KeyofValue, Compare, Alloc>::iterator>	
+ft::RBTree<T, KeyofValue, Compare, Alloc>::equal_range( const Key& key )
+{
+	return (ft::make_pair(lower_bound(key), upper_bound(key)));
+}
+
+template <class T, class KeyofValue, class Compare, class Alloc>
+template <class Key>
+ft::pair<typename ft::RBTree<T, KeyofValue, Compare, Alloc>::const_iterator, 
+typename ft::RBTree<T, KeyofValue, Compare, Alloc>::const_iterator>	
+ft::RBTree<T, KeyofValue, Compare, Alloc>::equal_range( const Key& key ) const
+{
+	return (ft::make_pair(lower_bound(key), upper_bound(key)));
+}
+
+template <class T, class KeyofValue, class Compare, class Alloc>
+typename ft::RBTree<T, KeyofValue, Compare, Alloc>::key_of_value	
+ft::RBTree<T, KeyofValue, Compare, Alloc>::key_comp() const
+{
+	return (_keyofvalue);
+}
+
+template <class T, class KeyofValue, class Compare, class Alloc>
+typename ft::RBTree<T, KeyofValue, Compare, Alloc>::value_compare	
+ft::RBTree<T, KeyofValue, Compare, Alloc>::value_comp() const
+{
+	return (_comp);
+}

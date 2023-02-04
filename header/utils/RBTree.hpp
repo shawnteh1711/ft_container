@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 19:59:48 by steh              #+#    #+#             */
-/*   Updated: 2023/02/03 22:16:12 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/04 23:26:27 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,12 +187,30 @@ namespace ft
 
 			template <class Key>
 			const_iterator				lower_bound( const Key& key ) const;
+
+			template <class Key>
+			iterator					upper_bound( const Key& key );
+
+			template <class Key>
+			const_iterator				upper_bound( const Key& key ) const;
+
+			template <class Key>
+			ft::pair<iterator, iterator>				equal_range( const Key& key );
+
+			template <class Key>
+			ft::pair<const_iterator, const_iterator>	equal_range( const Key& key ) const;
+
+			// Observer
+			key_of_value	key_comp() const;
+			value_compare	value_comp() const;
+			
+
 	};
 
 	// template <typename K, typename V>
 	// std::ostream & operator<<(std::ostream & os, const ft::pair<K, V>& p)
 	// {
-	// 	os << "(" << p.first << ", " << p.second << ")";
+	// 	os << "(" << (*p.first).data << ", " << (*p.second).data << ")";
 	// 	return os;
 	// }
 }

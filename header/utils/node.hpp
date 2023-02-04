@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 20:44:44 by steh              #+#    #+#             */
-/*   Updated: 2023/02/02 20:39:32 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/04 21:05:37 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ namespace ft
 				return (*this);
 			}
 			
-			bool	check_nil(Node* node)
+			bool	check_nil(const Node* node) const
 			{
 				if (node == nullptr)
 					return (true);
@@ -82,7 +82,64 @@ namespace ft
 				return (parent_node);
 			}
 
+			const Node* successor(const Node* node) const
+			{
+				const Node*	parent_node;
+
+				if (node == nullptr)
+					return (nullptr);
+				if (!check_nil(node->right))
+				{
+					// return (minimum(node->right));
+					node = node->right;
+					while (!check_nil(node->left))
+						node = node->left;
+					return (node);
+				}
+				parent_node = node->parent;
+				while (parent_node != nullptr && node == parent_node->right)
+				{
+					node = parent_node;
+					parent_node = parent_node->parent;
+				}
+				if (!parent_node)
+					return (this->right);
+				return (parent_node);
+			}
+
 			Node* predecessor(Node* node)
+			{
+				Node*	parent_node;
+
+				if (node == nullptr)
+					return (nullptr);
+				if (node->is_nil && node->parent)
+				{
+					parent_node = node->parent;
+					while (!check_nil(parent_node->right))
+						parent_node = parent_node->right;
+					return (parent_node);
+				}
+				if (!check_nil(node->left))
+				{
+					parent_node = node->left;
+					while (!check_nil(parent_node->right))
+						parent_node = parent_node->right;
+					return (parent_node);
+				}
+				// return (maximum(node->left));
+				parent_node = node->parent;
+				while (parent_node != nullptr && node == parent_node->left)
+				{
+					node = parent_node;
+					parent_node = parent_node->parent;
+				}
+				if (!parent_node)
+					return (nullptr);
+				return (parent_node);
+			}
+
+			Node* predecessor(Node* node) const
 			{
 				Node*	parent_node;
 
