@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 11:06:25 by steh              #+#    #+#             */
-/*   Updated: 2023/02/04 23:11:59 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/05 23:53:51 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,15 @@ typename ft::RBTree<T, KeyofValue, Compare, Alloc>::Node* ft::RBTree<T, KeyofVal
 	new_node = _node_alloc.allocate(1);
 	// _node_alloc.construct(new_node, value_type());
 	// val_ptr = _value_alloc.allocate(1);
+	// new_node->data = *_value_alloc.allocate(1);
+	_value_alloc.construct(&new_node->data,  value_type());
 	// _value_alloc.construct(val_ptr,  value_type());
+	// new_node->data = value_type();
 	new_node->color = black;
 	new_node->left = nullptr;
 	new_node->right = nullptr;
 	new_node->parent = _TNULL;
 	new_node->is_nil = true;
-	new_node->data = value_type();
 	return (new_node);
 }
 
@@ -57,8 +59,10 @@ typename ft::RBTree<T, KeyofValue, Compare, Alloc>::Node* ft::RBTree<T, KeyofVal
 	new_node = _node_alloc.allocate(1);
 	// _node_alloc.construct(new_node, value);
 	// val_ptr = _value_alloc.allocate(1);
-	// _value_alloc.construct(val_ptr,  value_ type());
-	new_node->data = value;
+	// _value_alloc.construct(val_ptr,  value);
+	// new_node->data = *_value_alloc.allocate(1);
+	_value_alloc.construct(&new_node->data, value);
+	// new_node->data = value;
 	new_node->color = red;
 	new_node->left = _TNULL;
 	new_node->right = _TNULL;
@@ -636,9 +640,9 @@ void ft::RBTree<T, KeyofValue, Compare, Alloc>::destroy(Node* node)
 	if (node->right != _TNULL)
 		destroy(node->right);
 	_value_alloc.destroy(&node->data);
-	_node_alloc.destroy(node);
 	// _node_alloc.deallocate(node, 1);
 	// _value_alloc.deallocate(&node->data, 1); // here cause memory issue . maybe no need value_alloc
+	_node_alloc.destroy(node);
 }
 
 template <class T, class KeyofValue, class Compare, class Alloc >
@@ -731,7 +735,13 @@ ft::RBTree<T, KeyofValue, Compare, Alloc>::insert(const value_type& value)
 		else if (_comp(_keyofvalue(current->data), key))
 			current = current->right;
 		else
+		{
+			_value_alloc.destroy(&new_node->data);
+			_node_alloc.deallocate(new_node, 1);
+			_node_alloc.destroy(new_node);
+			// this->destroy(new_node);
 			return (ft::make_pair(iterator(current), false)); /// so need pass, tnull
+		}
 	}
 	new_node->parent = parent;
 	if (parent == nullptr)

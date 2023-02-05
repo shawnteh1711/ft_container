@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:50:14 by steh              #+#    #+#             */
-/*   Updated: 2023/01/17 15:50:43 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/05 23:54:57 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,20 @@
 
 int main(void)
 {
-	ft::print_headers("Map Constructor");
+	{
+		ft::print_headers("Map Constructor");
 
-	// std::map<int, std::string, std::less<int>, ft::RBTree<int, std::string> > myMap;
+		ft::map<std::string, int > map;
+		std::map<std::string, int > std_map;
+	}
 
-	// myMap.insert(1);
+	{
+		ft::print_headers("Range Constructor");
+
+		ft::map<std::string, int > map;
+		std::map<std::string, int > std_map;
+	}
+	// system("leaks ft_container");
+
 	return (0);
 }

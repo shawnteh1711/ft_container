@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 07:19:58 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/12 19:23:16 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/05 20:56:52 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <memory>
 #include <string>
 #include <stack>
+#include <map>
 #include "../vector.hpp"
 #include "../stack.hpp"
 # define RED "\033[0;31m"
@@ -208,6 +209,51 @@ namespace ft
 			*current = *first;
 		}
 		return (current);
+	}
+
+
+	template<typename Key, typename T>
+	void print_map(const ft::map<Key, T>& map)
+	{
+		std::cout << "[";
+		std::for_each(map.begin(), map.end(), print_functor<T>());
+		std::cout << " ]" << std::endl;
+	}
+
+	template<typename Key, typename T>
+	void print_map(const std::map<Key, T>& map)
+	{
+		std::cout << "[";
+		std::for_each(map.begin(), map.end(), print_functor<T>());
+		std::cout << " ]" << std::endl;
+	}
+
+	template<typename Key, typename T>
+	void	map_check(ft::map<Key, T> const &v, std::map<Key, T> const &sv)
+	{
+		(void)v;
+		(void)sv;
+		std::cout << "After operation" << std::endl;
+		std::cout << "My container: ";
+		ft::print_map(v);
+		std::cout << "Std container: ";
+		ft::print_map(sv);
+		ft::test_assert(v.size(), sv.size(), "Size incorrect", "Size Passed");
+		ft::test_assert(v.empty(), sv.empty(), "Empty incorrect", "Empty Passed");
+		if (!v.empty())
+			ft::test_assert(v.top(), sv.top(), "Top incorrect", "Top Passed");
+		// ft::map<T> temp_v = v;
+		// std::stack<T> temp_sv = sv;
+		// while (!temp_v.empty())
+		// {
+		// 	T my_val = temp_v.top();
+		// 	temp_v.pop();
+		// 	T std_val = temp_sv.top();
+		// 	temp_sv.pop();
+		// 	assert(my_val == std_val);
+		// }
+		std::cout << GRN << "All Elements passed" << RST << std::endl;
+		std::cout << std::endl;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 14:31:21 by steh              #+#    #+#             */
-/*   Updated: 2023/02/01 22:15:47 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/05 22:56:03 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,11 @@ namespace ft
 		// pair::operator=
 		pair& operator=(const pair& pr)
 		{
-			if (this == &pr)
-				return (*this);
-			first = pr.first;
-			second = pr.second;
+			if (this != &pr)
+			{
+				first = pr.first;
+				second = pr.second;
+			}
 			return (*this);
 		};
 
