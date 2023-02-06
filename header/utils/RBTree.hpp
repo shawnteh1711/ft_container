@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 19:59:48 by steh              #+#    #+#             */
-/*   Updated: 2023/02/05 22:56:11 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/06 23:04:59 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,47 @@
 
 namespace ft
 {
-	template <typename T>
-	struct KeyofValue 
+	template <typename T, typename = void>
+	struct KeyofValue
 	{
 		typedef T result_type;
-		const T& operator()(const T& value) const
+		const result_type& operator()(const T& value) const
 		{
 			return (value);
 		}
 	};
+
+	template <typename K, typename V>
+	struct KeyofValue<ft::pair<K, V> >
+	{
+		typedef const typename ft::pair<K, V>::first_type result_type;
+		const result_type& operator()(const ft::pair<K, V>& value) const
+		{
+			return (value.first);
+		}
+	};
+
+
+	// template <typename T>
+	// struct KeyofValue<T, typename ft::enable_if<ft::is_same<T, ft::pair<typename T::first_type, typename T::second_type> >::value>::type>
+	// {
+	// 	// typedef K result_type;
+	// 	const T& operator()(const T& value) const
+	// 	{
+	// 		return (value.first);
+	// 	}
+	// };
+
+
+
+	// template <typename T>
+	// struct KeyofValue 
+	// {
+	// 	const T& operator()(const T& value) const
+	// 	{
+	// 		return (value);
+	// 	}
+	// };
 
 	// template <typename T>
 	// struct Compare
@@ -73,6 +105,7 @@ namespace ft
 	// };
 
 
+	// template <class T, class KeyofValue, class Compare = std::less<T>, class Alloc = std::allocator<T> >
 	template <class T, class KeyofValue = ft::KeyofValue<T>, class Compare = std::less<T>, class Alloc = std::allocator<T> >
 	class RBTree
 	{
@@ -81,6 +114,7 @@ namespace ft
 			typedef Compare													value_compare;
 			typedef std::size_t												size_type;
 			typedef T														value_type;
+			typedef typename key_of_value::result_type						result_type;
 			typedef Alloc													allocator_type;
 			typedef typename allocator_type::difference_type				difference_type;
 			typedef typename allocator_type::pointer						pointer;
@@ -109,6 +143,7 @@ namespace ft
 			Node*				predecessor(Node* current_node);
 			void				left_rotate(Node* current_node);
 			void				right_rotate(Node* current_node);
+			Node*				search_node(const value_type& value) const;
 
 			Node*				_root;
 			Node*				_TNULL;

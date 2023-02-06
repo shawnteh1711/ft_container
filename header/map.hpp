@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:43:02 by steh              #+#    #+#             */
-/*   Updated: 2023/02/05 22:56:14 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/06 19:45:58 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,11 @@ namespace ft
 					}
 			};
 
-			typedef ft::RBTree<value_type, value_compare, key_compare, allocator_type>	tree;
+			// typedef ft::RBTree<value_type, value_compare, key_compare, allocator_type>	tree;
+			typedef ft::RBTree<value_type, key_compare, value_compare, allocator_type>	tree;
+			// typedef typename tree::iterator												iterator;
+			// typedef typename tree::const_iterator										const_iterator;
+
 			
 			map();
 

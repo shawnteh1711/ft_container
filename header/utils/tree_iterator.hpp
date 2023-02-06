@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 20:05:24 by steh              #+#    #+#             */
-/*   Updated: 2023/02/04 21:09:16 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/06 22:02:17 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,13 @@ namespace ft
 			typedef std::bidirectional_iterator_tag					iterator_category;
 			typedef T												value_type; 
 			typedef std::ptrdiff_t									difference_type;
-			typedef Node<value_type>								node;
+			typedef value_type										node;
+			typedef value_type*										pointer;
+			typedef value_type&										reference;
+			// typedef Node<value_type>								node;
 			typedef Node<value_type>*								node_pointer;
-			typedef Node<value_type>*								tnull_pointer;
-			typedef Node<value_type>&								reference;
+			// typedef Node<value_type>*								tnull_pointer;
+			// typedef Node<value_type>&								reference;
 		
 			// constructor
 
@@ -83,13 +86,18 @@ namespace ft
 			// dereference operator
 			reference & operator*() const
 			{
-				return (*_current_node);
+				return (_current_node->data);
 			};
 
-			node_pointer operator->() const
+			// reference  operator->() const
+			// {
+			// 	return (&(operator*()));
+			// };
+
+			pointer operator->() const
 			{
-				return (_current_node);
-			};
+				return (&_current_node->data);
+			}
 
 			tree_iterator& operator++()
 			{
@@ -197,12 +205,14 @@ namespace ft
 	class const_tree_iterator
 	{
 		public:
+	
 			typedef std::bidirectional_iterator_tag					iterator_category;
 			typedef T												value_type; 
 			typedef std::ptrdiff_t									difference_type;
-			typedef const Node<value_type>							node;
+			typedef const value_type								node;
+			typedef const value_type*								pointer;
+			typedef const value_type&								reference;
 			typedef const Node<value_type>*							node_pointer;
-			typedef const Node<value_type>&							reference;
 		
 			// constructor
 
@@ -248,13 +258,14 @@ namespace ft
 			// dereference operator
 			reference & operator*() const
 			{
-				return (*_current_node);
+				return (_current_node->data);
 			};
 
-			node_pointer operator->() const
+			pointer operator->() const
 			{
-				return (_current_node);
-			};
+				return (&_current_node->data);
+			}
+
 
 			const_tree_iterator& operator++()
 			{

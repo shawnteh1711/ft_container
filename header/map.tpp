@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:43:02 by steh              #+#    #+#             */
-/*   Updated: 2023/02/05 22:17:43 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/06 23:14:42 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ ft::map<Key, T, Compare, Alloc>::at( const Key& key )
 {
 	iterator	it;
 
-	it = _rbtree.find(key);
-	if (key == this->end())
-		throw (std::out_of_range("Map out of range"));
-	return ((*it)->data.second);
+	it = this->find(key);
+	// if (it == this->end())
+	// 	throw (std::out_of_range("Map out of range"));
+	return (it->second);
 }
 
 
@@ -85,12 +85,12 @@ template<class Key, class T, class Compare, class Alloc>
 const typename ft::map<Key, T, Compare, Alloc>::mapped_value&	
 ft::map<Key, T, Compare, Alloc>::at( const Key& key ) const
 {
-	iterator	it;
+	const_iterator	it;
 
-	it = _rbtree.find(key);
-	if (key == this->end())
-		throw (std::out_of_range("Map out of range"));
-	return ((*it)->data.second);
+	it = this->find(key);
+	// if (it == this->end())
+	// 	throw (std::out_of_range("Map out of range"));
+	return (it->second);
 }
 
 template<class Key, class T, class Compare, class Alloc>
@@ -219,21 +219,21 @@ template<class Key, class T, class Compare, class Alloc>
 typename ft::map<Key, T, Compare, Alloc>::size_type 
 ft::map<Key, T, Compare, Alloc>::count( const Key& key ) const
 {
-	return (_rbtree.count(key));
+	return (_rbtree.count(value_type(key, mapped_value())));
 }
 
 template<class Key, class T, class Compare, class Alloc>
 typename ft::map<Key, T, Compare, Alloc>::iterator 
 ft::map<Key, T, Compare, Alloc>::find( const Key& key )
 {
-	return (_rbtree.find(key));
+	return (_rbtree.find(value_type(key, mapped_value())));
 }
 
 template<class Key, class T, class Compare, class Alloc>
 typename ft::map<Key, T, Compare, Alloc>::const_iterator 
 ft::map<Key, T, Compare, Alloc>::find( const Key& key ) const
 {
-	return (_rbtree.find(key));
+	return (_rbtree.find(value_type(key, mapped_value())));
 }
 
 template<class Key, class T, class Compare, class Alloc>

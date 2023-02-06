@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 07:19:58 by codespace         #+#    #+#             */
-/*   Updated: 2023/02/05 20:56:52 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/06 23:17:22 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,12 +211,25 @@ namespace ft
 		return (current);
 	}
 
+	template<typename T>
+	struct	print_map_functor
+	{
+		void	operator() (const T& value)
+		{			
+			std::cout << " " << value.first;
+			std::cout << " " << value.second;
+		}
+	};
+
 
 	template<typename Key, typename T>
 	void print_map(const ft::map<Key, T>& map)
 	{
 		std::cout << "[";
-		std::for_each(map.begin(), map.end(), print_functor<T>());
+		for (typename ft::map<Key, T>::const_iterator it = map.begin(); it != map.end(); it++)
+		{
+			std::cout << (*it).first << " : " << (*it).second << " ";
+		}
 		std::cout << " ]" << std::endl;
 	}
 
@@ -224,34 +237,39 @@ namespace ft
 	void print_map(const std::map<Key, T>& map)
 	{
 		std::cout << "[";
-		std::for_each(map.begin(), map.end(), print_functor<T>());
+		for (typename std::map<Key, T>::const_iterator it = map.begin(); it != map.end(); it++)
+		{
+			std::cout << (*it).first << " : " << (*it).second << " ";
+		}
 		std::cout << " ]" << std::endl;
 	}
 
 	template<typename Key, typename T>
-	void	map_check(ft::map<Key, T> const &v, std::map<Key, T> const &sv)
+	void	map_check(ft::map<Key, T> const &map, std::map<Key, T> const &smap)
 	{
-		(void)v;
-		(void)sv;
 		std::cout << "After operation" << std::endl;
 		std::cout << "My container: ";
-		ft::print_map(v);
+		ft::print_map(map);
 		std::cout << "Std container: ";
-		ft::print_map(sv);
-		ft::test_assert(v.size(), sv.size(), "Size incorrect", "Size Passed");
-		ft::test_assert(v.empty(), sv.empty(), "Empty incorrect", "Empty Passed");
-		if (!v.empty())
-			ft::test_assert(v.top(), sv.top(), "Top incorrect", "Top Passed");
-		// ft::map<T> temp_v = v;
-		// std::stack<T> temp_sv = sv;
-		// while (!temp_v.empty())
-		// {
-		// 	T my_val = temp_v.top();
-		// 	temp_v.pop();
-		// 	T std_val = temp_sv.top();
-		// 	temp_sv.pop();
-		// 	assert(my_val == std_val);
-		// }
+		ft::print_map(smap);
+		ft::test_assert(map.size(), smap.size(), "Size incorrect", "Size Passed");
+		ft::test_assert(map.empty(), smap.empty(), "Empty incorrect", "Empty Passed");
+
+		typename ft::map<Key, T>::const_iterator	it = map.begin();
+		typename std::map<Key, T>::const_iterator	sit;
+		for (sit = smap.begin(); sit != smap.end(); sit++, it++)
+		{
+			assert(it->first == sit->first);
+			assert(it->second == sit->second);
+			assert(map.at(it->first) == smap.at(sit->first));
+			assert(map.count(it->first) == smap.count(sit->first));
+			assert(map.empty() == smap.empty());
+			assert(map.get_allocator() == smap.get_allocator());
+			std::cout<<"map max_size:"<<map.max_size()<<std::endl;
+			std::cout<<"smap max_size:"<<smap.max_size()<<std::endl;
+			// assert(map.max_size() == smap.max_size());
+			assert(map.size() == smap.size());
+		}
 		std::cout << GRN << "All Elements passed" << RST << std::endl;
 		std::cout << std::endl;
 	}
