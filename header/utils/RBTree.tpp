@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 11:06:25 by steh              #+#    #+#             */
-/*   Updated: 2023/02/06 23:19:32 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/07 18:22:14 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ using namespace std;
 template <class T, class KeyofValue, class Compare, class Alloc >
 ft::RBTree<T, KeyofValue, Compare, Alloc>::RBTree(const value_compare& comp, const Alloc& alloc) :  _size(0), _comp(comp), _node_alloc(node_allocator()), _value_alloc(alloc)
 {
-	std::cout<<"inside constructor"<<std::endl;
 	_TNULL = create_nil_node();
 	_root = _TNULL;
 	return ;
@@ -365,24 +364,24 @@ void	ft::RBTree<T, KeyofValue, Compare, Alloc>::delete_node_helper(Node* node, T
 	Color	original_color_of_successor;
 
 	node_to_delete = _TNULL;
-	// while (node != _TNULL)
-	// {
-	// 	if (_comp(value, node->data))
-	// 		node = node->left;
-	// 	else if (_comp(node->data, value))
-	// 		node = node->right;
-	// 	else
-	// 		node_to_delete = node;
-	// }
 	while (node != _TNULL)
 	{
-		if (node->data == value)
+		if (_comp(node->data, value) == 0)
 			node_to_delete = node;
-		if (node->data <= value)
+		if (_comp(node->data, value))
 			node = node->right;
 		else
 			node = node->left;
 	}
+	// while (node != _TNULL)
+	// {
+	// 	if (node->data == value)
+	// 		node_to_delete = node;
+	// 	if (node->data <= value)
+	// 		node = node->right;
+	// 	else
+	// 		node = node->left;
+	// }
 	if (node_to_delete == _TNULL)
 	{
 		std::cout<<"Value not found in the tree" << std::endl;
@@ -860,9 +859,9 @@ template <class Key>
 typename ft::RBTree<T, KeyofValue, Compare, Alloc>::size_type	
 ft::RBTree<T, KeyofValue, Compare, Alloc>::erase(const Key &key)
 {
-	iterator			it;
+	iterator	it;
 
-	it = search_tree(key);
+	it = search_node(key);
 	if (it != this->end())
 	{
 		erase(it);

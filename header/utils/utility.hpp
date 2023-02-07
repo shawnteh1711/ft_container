@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 07:19:58 by codespace         #+#    #+#             */
-/*   Updated: 2023/02/06 23:17:22 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/07 18:27:12 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <map>
 #include "../vector.hpp"
 #include "../stack.hpp"
+#include "../map.hpp"
 # define RED "\033[0;31m"
 # define GRN "\033[0;32m"
 # define BLU "\033[1;34m"
@@ -228,7 +229,7 @@ namespace ft
 		std::cout << "[";
 		for (typename ft::map<Key, T>::const_iterator it = map.begin(); it != map.end(); it++)
 		{
-			std::cout << (*it).first << " : " << (*it).second << " ";
+			std::cout << (*it).first << " :" << (*it).second << "\t";
 		}
 		std::cout << " ]" << std::endl;
 	}
@@ -239,7 +240,7 @@ namespace ft
 		std::cout << "[";
 		for (typename std::map<Key, T>::const_iterator it = map.begin(); it != map.end(); it++)
 		{
-			std::cout << (*it).first << " : " << (*it).second << " ";
+			std::cout << (*it).first << " :" << (*it).second << "\t";
 		}
 		std::cout << " ]" << std::endl;
 	}
@@ -248,7 +249,7 @@ namespace ft
 	void	map_check(ft::map<Key, T> const &map, std::map<Key, T> const &smap)
 	{
 		std::cout << "After operation" << std::endl;
-		std::cout << "My container: ";
+		std::cout << "My container : ";
 		ft::print_map(map);
 		std::cout << "Std container: ";
 		ft::print_map(smap);

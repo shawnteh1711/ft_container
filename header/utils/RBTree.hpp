@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 19:59:48 by steh              #+#    #+#             */
-/*   Updated: 2023/02/06 23:04:59 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/07 18:01:44 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,14 +112,15 @@ namespace ft
 		public:
 			typedef KeyofValue												key_of_value;
 			typedef Compare													value_compare;
-			typedef std::size_t												size_type;
 			typedef T														value_type;
-			typedef typename key_of_value::result_type						result_type;
 			typedef Alloc													allocator_type;
+			typedef typename key_of_value::result_type						result_type;
+			typedef typename allocator_type::size_type						size_type;
+			// typedef std::ptrdiff_t											difference_type;
 			typedef typename allocator_type::difference_type				difference_type;
 			typedef typename allocator_type::pointer						pointer;
 			typedef typename allocator_type::const_pointer					const_pointer;
-			typedef Node<T>													Node;
+			typedef Node<value_type>										Node;
 			typedef tree_iterator<value_type>								iterator;
 			typedef const_tree_iterator<value_type>							const_iterator;
 			typedef typename allocator_type::template rebind<Node>::other	node_allocator;

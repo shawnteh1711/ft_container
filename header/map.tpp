@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:43:02 by steh              #+#    #+#             */
-/*   Updated: 2023/02/06 23:14:42 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/07 19:34:40 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,12 @@
 template<class Key, class T, class Compare, class Alloc>
 ft::map<Key, T, Compare, Alloc>::map() : _rbtree()
 {
-	std::cout<<"default constructor map"<<std::endl;
 	return ;
 }
 
 template<class Key, class T, class Compare, class Alloc>
 ft::map<Key, T, Compare, Alloc>::map(const Compare& comp, const Alloc& alloc)
 {
-	std::cout<<"template constructor map"<<std::endl;
 	_rbtree(value_compare(comp), alloc);
 	return ;
 }
@@ -41,8 +39,19 @@ ft::map<Key, T, Compare, Alloc>::map( InputIt first, InputIt last,
 template<class Key, class T, class Compare, class Alloc>
 ft::map<Key, T, Compare, Alloc>::map( const map& other )
 {
-	_rbtree = other._rbtree;
-	return ;
+	const_iterator		cit;
+	value_compare		comp;
+	allocator_type		alloc;
+
+	cit = other.begin();
+	if (this != &other)
+	{
+		comp = other.value_comp();
+		alloc = other.get_allocator();
+		for (; cit != other.end(); ++cit)
+			this->insert(*cit);
+	}
+	return;
 }
 
 template<class Key, class T, class Compare, class Alloc>
@@ -75,8 +84,8 @@ ft::map<Key, T, Compare, Alloc>::at( const Key& key )
 	iterator	it;
 
 	it = this->find(key);
-	// if (it == this->end())
-	// 	throw (std::out_of_range("Map out of range"));
+	if (it == this->end())
+		throw (std::out_of_range("Map out of range"));
 	return (it->second);
 }
 
@@ -88,8 +97,8 @@ ft::map<Key, T, Compare, Alloc>::at( const Key& key ) const
 	const_iterator	it;
 
 	it = this->find(key);
-	// if (it == this->end())
-	// 	throw (std::out_of_range("Map out of range"));
+	if (it == this->end())
+		throw (std::out_of_range("Map out of range"));
 	return (it->second);
 }
 
@@ -175,6 +184,11 @@ ft::map<Key, T, Compare, Alloc>::insert( const value_type& value )
 	return (_rbtree.insert(value));
 }
 
+template<class Key, class T, class Compare, class Alloc>
+void ft::map<Key, T, Compare, Alloc>::clear()
+{
+	return (_rbtree.clear());
+}
 
 template<class Key, class T, class Compare, class Alloc>
 typename ft::map<Key, T, Compare, Alloc>::iterator ft::map<Key, T, Compare, Alloc>::insert( iterator pos, const value_type& value )
@@ -206,7 +220,7 @@ ft::map<Key, T, Compare, Alloc>::erase( iterator first, iterator last )
 template<class Key, class T, class Compare, class Alloc>
 typename ft::map<Key, T, Compare, Alloc>::size_type ft::map<Key, T, Compare, Alloc>::erase( const Key& key )
 {
-	return (_rbtree.erase(key));
+	return (_rbtree.erase(value_type(key, mapped_value())));
 }
 
 template<class Key, class T, class Compare, class Alloc>
@@ -241,7 +255,7 @@ ft::pair<typename ft::map<Key, T, Compare, Alloc>::iterator,
 typename ft::map<Key, T, Compare, Alloc>::iterator> 
 ft::map<Key, T, Compare, Alloc>::equal_range( const Key& key )
 {
-	return (_rbtree.equal_range(key));
+	return (_rbtree.equal_range(value_type(key, mapped_value())));
 }
 
 template<class Key, class T, class Compare, class Alloc>
@@ -249,35 +263,35 @@ ft::pair<typename ft::map<Key, T, Compare, Alloc>::const_iterator ,
 typename ft::map<Key, T, Compare, Alloc>::const_iterator > 
 ft::map<Key, T, Compare, Alloc>::equal_range( const Key& key ) const
 {
-	return (_rbtree.equal_range(key));
+	return (_rbtree.equal_range(value_type(key, mapped_value())));
 }
 
 template<class Key, class T, class Compare, class Alloc>
 typename ft::map<Key, T, Compare, Alloc>::iterator 
 ft::map<Key, T, Compare, Alloc>::lower_bound( const Key& key )
 {
-	return (_rbtree.lower_bound(key));
+	return (_rbtree.lower_bound(value_type(key, mapped_value())));
 }
 
 template<class Key, class T, class Compare, class Alloc>
 typename ft::map<Key, T, Compare, Alloc>::const_iterator 
 ft::map<Key, T, Compare, Alloc>::lower_bound( const Key& key ) const
 {
-	return (_rbtree.lower_bound(key));
+	return (_rbtree.lower_bound(value_type(key, mapped_value())));
 }
 
 template<class Key, class T, class Compare, class Alloc>
 typename ft::map<Key, T, Compare, Alloc>::iterator 
 ft::map<Key, T, Compare, Alloc>::upper_bound( const Key& key )
 {
-	return (_rbtree.upper_bound(key));
+	return (_rbtree.upper_bound(value_type(key, mapped_value())));
 }
 
 template<class Key, class T, class Compare, class Alloc>
 typename ft::map<Key, T, Compare, Alloc>::const_iterator 
 ft::map<Key, T, Compare, Alloc>::upper_bound( const Key& key ) const
 {
-	return (_rbtree.upper_bound(key));
+	return (_rbtree.upper_bound(value_type(key, mapped_value())));
 }
 
 // Observer
@@ -286,6 +300,7 @@ typename ft::map<Key, T, Compare, Alloc>::key_compare
 ft::map<Key, T, Compare, Alloc>::key_comp() const
 {
 	return (_rbtree.key_comp());
+	// return (key_compare());
 }
 
 template<class Key, class T, class Compare, class Alloc>
@@ -293,4 +308,5 @@ typename ft::map<Key, T, Compare, Alloc>::value_compare
 ft::map<Key, T, Compare, Alloc>::value_comp() const
 {
 	return (_rbtree.value_comp());
+	// return (value_compare(key_comp()));
 }

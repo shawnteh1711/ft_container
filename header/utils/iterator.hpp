@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 12:40:37 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/03 19:54:49 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/07 17:35:53 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ namespace ft
 		pointer operator->() const
 		{
 			// return std::addressof(operator*());
-			return (&(*this->operator*()));
+			return (&(this->operator*()));
 		};
 
 		// Accesses an element by index

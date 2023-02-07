@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:43:02 by steh              #+#    #+#             */
-/*   Updated: 2023/02/06 19:45:58 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/07 19:10:01 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,10 @@ namespace ft
 			typedef T														mapped_value;
 			typedef ft::pair<const key_type, mapped_value>					value_type;
 			typedef std::size_t												size_type;
-			typedef std::ptrdiff_t											difference_type;
+			// typedef std::ptrdiff_t										difference_type;
 			typedef Compare													key_compare;
 			typedef Allocator												allocator_type;
+			typedef typename allocator_type::difference_type				difference_type;
 			typedef value_type& 											reference;
 			typedef const value_type& 										const_reference;
 			typedef typename allocator_type::pointer						pointer;
@@ -72,6 +73,12 @@ namespace ft
 
 					value_compare() {};
 					value_compare(const key_compare& c) : _comp(c) {};
+					value_compare& operator=(const value_compare& other)
+					{
+						if (this != &other)
+							_comp = other._comp;
+						return (*this);
+					}
 					bool	operator()(const value_type& lhs, const value_type& rhs) const
 					{
 						if (_comp(lhs.first, rhs.first))
