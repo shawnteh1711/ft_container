@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 11:06:25 by steh              #+#    #+#             */
-/*   Updated: 2023/02/07 18:22:14 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/07 20:24:07 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -768,50 +768,6 @@ ft::RBTree<T, KeyofValue, Compare, Alloc>::insert(const value_type& value)
 	_TNULL->parent = _root;
 	return (ft::make_pair(iterator(new_node), true));
 }
-
-// template <class T, class KeyofValue, class Compare, class Alloc>
-// ft::pair<typename ft::RBTree<T, KeyofValue, Compare, Alloc>::iterator, bool>
-// ft::RBTree<T, KeyofValue, Compare, Alloc>::insert(const value_type& value)
-// {
-// 	Node*				new_node;
-
-	// const result_type& key = _keyofvalue(value);
-	// new_node = create_node(value);
-
-	// Node* current = _root;
-	// Node* parent = nullptr;
-	// while (current != _TNULL)
-	// {
-	// 	parent = current;
-	// 	if (_comp(key, _keyofvalue(current->data)))
-	// 		current = current->left;
-	// 	else if (_comp(_keyofvalue(current->data), key))
-	// 		current = current->right;
-	// 	else
-	// 	{
-	// 		_value_alloc.destroy(&new_node->data);
-	// 		_node_alloc.deallocate(new_node, 1);
-	// 		_node_alloc.destroy(new_node);
-	// 		return (ft::make_pair(iterator(current), false)); /// so need pass, tnull
-	// 	}
-	// }
-	// if (parent == nullptr)
-	// 	_root = new_node;
-	// else if (_comp(key, _keyofvalue(parent->data)))
-	// 	parent->left = new_node;
-	// else
-	// 	parent->right = new_node;
-	// if (new_node->parent == nullptr)
-	// {
-	// 	new_node->color = black;
-	// 	return (ft::make_pair(iterator(new_node), true));
-	// }
-	// if (new_node->parent->parent == nullptr || new_node->parent->parent == _TNULL)
-	// 	return (ft::make_pair(iterator(new_node), false));
-	// insert_fix(new_node);
-	// _TNULL->parent = _root;
-	// return (ft::make_pair(iterator(new_node), true));
-// }
 
 template <class T, class KeyofValue, class Compare, class Alloc>
 typename ft::RBTree<T, KeyofValue, Compare, Alloc>::iterator	

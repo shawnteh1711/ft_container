@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 19:59:48 by steh              #+#    #+#             */
-/*   Updated: 2023/02/07 18:01:44 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/07 20:42:19 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,43 +68,6 @@ namespace ft
 		}
 	};
 
-
-	// template <typename T>
-	// struct KeyofValue<T, typename ft::enable_if<ft::is_same<T, ft::pair<typename T::first_type, typename T::second_type> >::value>::type>
-	// {
-	// 	// typedef K result_type;
-	// 	const T& operator()(const T& value) const
-	// 	{
-	// 		return (value.first);
-	// 	}
-	// };
-
-
-
-	// template <typename T>
-	// struct KeyofValue 
-	// {
-	// 	const T& operator()(const T& value) const
-	// 	{
-	// 		return (value);
-	// 	}
-	// };
-
-	// template <typename T>
-	// struct Compare
-	// {
-	// 	bool operator()(const T& x, const T& y) const
-	// 	{
-	// 		if (x < y)
-	// 			return true;
-	// 		else if (y < x)
-	// 			return false;
-	// 		else
-	// 			return false;
-	// 	}
-	// };
-
-
 	// template <class T, class KeyofValue, class Compare = std::less<T>, class Alloc = std::allocator<T> >
 	template <class T, class KeyofValue = ft::KeyofValue<T>, class Compare = std::less<T>, class Alloc = std::allocator<T> >
 	class RBTree
@@ -114,9 +77,7 @@ namespace ft
 			typedef Compare													value_compare;
 			typedef T														value_type;
 			typedef Alloc													allocator_type;
-			typedef typename key_of_value::result_type						result_type;
 			typedef typename allocator_type::size_type						size_type;
-			// typedef std::ptrdiff_t											difference_type;
 			typedef typename allocator_type::difference_type				difference_type;
 			typedef typename allocator_type::pointer						pointer;
 			typedef typename allocator_type::const_pointer					const_pointer;

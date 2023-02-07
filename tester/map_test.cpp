@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:50:14 by steh              #+#    #+#             */
-/*   Updated: 2023/02/07 20:04:53 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/07 22:23:48 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ int main(void)
 		std::map<int, std::string > std_map;
 
 		map.insert(ft::make_pair(1, "a"));
+		map.insert(ft::make_pair(1, "a"));
 		map.insert(ft::make_pair(2, "b"));
+		std_map.insert(std::make_pair(1, "a"));
 		std_map.insert(std::make_pair(1, "a"));
 		std_map.insert(std::make_pair(2, "b"));
 
@@ -43,7 +45,7 @@ int main(void)
 
 		ft::map<int, std::string>	map2(map.begin(), map.end());
 		std::map<int, std::string>	std_map2(std_map.begin(), std_map.end());
-		ft::map_check(map, std_map);
+		ft::map_check(map2, std_map2);
 	}
 
 	{
@@ -278,7 +280,7 @@ int main(void)
 	}
 
 	{
-		// ft::print_headers("Max_size");
+		ft::print_headers("Max_size");
 
 		// ft::map<int, int> 					map;
 		// std::map<int, int> 					std_map;
@@ -291,6 +293,7 @@ int main(void)
 		// std_map.insert(std::make_pair(2, 20));
 		// std_map.insert(std::make_pair(3, 30));
 		// assert(map.size() == std_map.size());
+		// assert(map.size() == std_map.max_size());
 		// ft::map_check(map, std_map);
 	}
 
@@ -669,7 +672,7 @@ int main(void)
 		std::cout << "Performance ratio of ft container compared to std container is: " << ft_vec_time / std_vec_time << " times\n" << std::endl;
 	}
 
-	// system("leaks ft_container");
+	system("leaks ft_container");
 
 	return (0);
 }

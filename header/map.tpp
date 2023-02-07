@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:43:02 by steh              #+#    #+#             */
-/*   Updated: 2023/02/07 19:34:40 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/07 20:49:17 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,13 +300,11 @@ typename ft::map<Key, T, Compare, Alloc>::key_compare
 ft::map<Key, T, Compare, Alloc>::key_comp() const
 {
 	return (_rbtree.key_comp());
-	// return (key_compare());
 }
 
 template<class Key, class T, class Compare, class Alloc>
 typename ft::map<Key, T, Compare, Alloc>::value_compare	
 ft::map<Key, T, Compare, Alloc>::value_comp() const
 {
-	return (_rbtree.value_comp());
-	// return (value_compare(key_comp()));
+	return (value_compare(_rbtree.value_comp()));
 }

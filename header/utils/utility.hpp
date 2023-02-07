@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 07:19:58 by codespace         #+#    #+#             */
-/*   Updated: 2023/02/07 18:27:12 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/07 22:50:11 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@
 #include <string>
 #include <stack>
 #include <map>
+#include <set>
 #include "../vector.hpp"
 #include "../stack.hpp"
 #include "../map.hpp"
+#include "../set.hpp"
 # define RED "\033[0;31m"
 # define GRN "\033[0;32m"
 # define BLU "\033[1;34m"
@@ -226,7 +228,7 @@ namespace ft
 	template<typename Key, typename T>
 	void print_map(const ft::map<Key, T>& map)
 	{
-		std::cout << "[";
+		std::cout << "[	";
 		for (typename ft::map<Key, T>::const_iterator it = map.begin(); it != map.end(); it++)
 		{
 			std::cout << (*it).first << " :" << (*it).second << "\t";
@@ -237,7 +239,7 @@ namespace ft
 	template<typename Key, typename T>
 	void print_map(const std::map<Key, T>& map)
 	{
-		std::cout << "[";
+		std::cout << "[	";
 		for (typename std::map<Key, T>::const_iterator it = map.begin(); it != map.end(); it++)
 		{
 			std::cout << (*it).first << " :" << (*it).second << "\t";
@@ -270,6 +272,56 @@ namespace ft
 			std::cout<<"smap max_size:"<<smap.max_size()<<std::endl;
 			// assert(map.max_size() == smap.max_size());
 			assert(map.size() == smap.size());
+		}
+		std::cout << GRN << "All Elements passed" << RST << std::endl;
+		std::cout << std::endl;
+	}
+
+	template<typename Key>
+	void print_set(const ft::set<Key>& set)
+	{
+		std::cout << "[	";
+		for (typename ft::set<Key>::const_iterator it = set.begin(); it != set.end(); it++)
+		{
+			std::cout << (*it) << "\t";
+		}
+		std::cout << " ]" << std::endl;
+	}
+
+	template<typename Key>
+	void print_set(const std::set<Key>& set)
+	{
+		std::cout << "[	";
+		for (typename std::set<Key>::const_iterator it = set.begin(); it != set.end(); it++)
+		{
+			std::cout << (*it) << "\t";
+		}
+		std::cout << " ]" << std::endl;
+	}
+
+	template<typename Key>
+	void	set_check(ft::set<Key> const &set, std::set<Key> const &sset)
+	{
+		std::cout << "After operation" << std::endl;
+		std::cout << "My container : ";
+		ft::print_set(set);
+		std::cout << "Std container: ";
+		ft::print_set(sset);
+		ft::test_assert(set.size(), sset.size(), "Size incorrect", "Size Passed");
+		ft::test_assert(set.empty(), sset.empty(), "Empty incorrect", "Empty Passed");
+
+		typename ft::set<Key>::const_iterator	it = set.begin();
+		typename std::set<Key>::const_iterator	sit;
+		for (sit = sset.begin(); sit != sset.end(); sit++, it++)
+		{
+			assert(*it == *sit);
+			assert(set.count(*it) == sset.count(*sit));
+			assert(set.empty() == sset.empty());
+			assert(set.get_allocator() == sset.get_allocator());
+			std::cout<<"set max_size:"<<set.max_size()<<std::endl;
+			std::cout<<"sset max_size:"<<sset.max_size()<<std::endl;
+			// assert(set.max_size() == sset.max_size());
+			assert(set.size() == sset.size());
 		}
 		std::cout << GRN << "All Elements passed" << RST << std::endl;
 		std::cout << std::endl;
