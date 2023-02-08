@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:50:14 by steh              #+#    #+#             */
-/*   Updated: 2023/02/07 22:23:48 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/08 18:41:18 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,7 +327,6 @@ int main(void)
 		std_map.insert(std::make_pair(2, 20));
 		std_map.insert(std::make_pair(3, 30));
 
-
 		map.insert(map.begin(), ft::make_pair(0, 0));
 		std_map.insert(std_map.begin(), std::make_pair(0, 0));
 		map.insert(--map.end(), ft::make_pair(4, 40));
@@ -447,6 +446,15 @@ int main(void)
 		assert(range.second->first == std_range.second->first);
 		assert(range.second->second == std_range.second->second);
 		ft::map_check(map, std_map);
+
+		// check no key , return first and second equat set end
+		range = map.equal_range(4);
+		std_range = std_map.equal_range(4);
+		assert(range.first == map.end());
+		assert(range.second ==  map.end());
+		assert(std_range.first == std_map.end());
+		assert(std_range.second ==  std_map.end());
+		ft::map_check(map, std_map);
 	}
 
 	{
@@ -474,8 +482,6 @@ int main(void)
 		// key not found, return end;
 		range = map.lower_bound(4);
 		std_range = std_map.lower_bound(4);
-		// assert(range->first == std_range->first);
-		// assert(range->second == std_range->second);
 		assert(range == map.end());
 		assert(std_range == std_map.end());
 		

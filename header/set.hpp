@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 20:50:34 by steh              #+#    #+#             */
-/*   Updated: 2023/02/07 22:32:18 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/08 18:37:28 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,11 +133,56 @@ namespace ft
 			key_compare key_comp() const;
 
 			value_compare value_comp() const;
-
-
-			
-
 	};
+
+		template< class Key, class Compare, class Alloc >
+	bool operator==( const set<Key, Compare, Alloc>& lhs,
+					const set<Key, Compare, Alloc>& rhs )
+	{
+		return (lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+	}
+	
+	template< class Key, class Compare, class Alloc >
+	bool operator!=( const set<Key, Compare, Alloc>& lhs,
+					const set<Key, Compare, Alloc>& rhs )
+	{
+		return (!(lhs == rhs));
+	}
+	
+	template< class Key, class Compare, class Alloc >
+	bool operator<( const set<Key, Compare, Alloc>& lhs,
+					const set<Key, Compare, Alloc>& rhs )
+	{
+		return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+	}
+	
+	template< class Key, class Compare, class Alloc >
+	bool operator<=( const set<Key, Compare, Alloc>& lhs,
+					const set<Key, Compare, Alloc>& rhs )
+	{
+		return (!(rhs < lhs));
+	}
+	
+	template< class Key, class Compare, class Alloc >
+	bool operator>( const set<Key, Compare, Alloc>& lhs,
+					const set<Key, Compare, Alloc>& rhs )
+	{
+		return (rhs < lhs);
+	}
+	
+	template< class Key, class Compare, class Alloc >
+	bool operator>=( const set<Key, Compare, Alloc>& lhs,
+					const set<Key, Compare, Alloc>& rhs )
+	{
+		return (!(lhs < rhs));
+	}
+	
+	template< class Key, class Compare, class Alloc >
+	void swap( set<Key, Compare, Alloc>& lhs,
+			set<Key, Compare, Alloc>& rhs )
+	{
+		lhs.swap(rhs);
+	}
 }
 
 #endif

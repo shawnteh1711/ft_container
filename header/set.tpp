@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 21:14:50 by steh              #+#    #+#             */
-/*   Updated: 2023/02/07 22:20:46 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/08 17:44:54 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ template <class Key, class Compare, class Allocator>
 typename ft::set<Key, Compare, Allocator>::iterator	
 ft::set<Key, Compare, Allocator>::find( const Key& key )
 {
-	return (_rbtree.count(key));
+	return (_rbtree.find(key));
 }
 
 template <class Key, class Compare, class Allocator>
