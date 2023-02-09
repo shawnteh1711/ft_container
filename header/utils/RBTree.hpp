@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 19:59:48 by steh              #+#    #+#             */
-/*   Updated: 2023/02/07 20:42:19 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/08 20:25:11 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,18 @@ namespace ft
 			typedef typename allocator_type::pointer						pointer;
 			typedef typename allocator_type::const_pointer					const_pointer;
 			typedef Node<value_type>										Node;
+			// typedef typename Node::node_type								node_type;
 			typedef tree_iterator<value_type>								iterator;
 			typedef const_tree_iterator<value_type>							const_iterator;
 			typedef typename allocator_type::template rebind<Node>::other	node_allocator;
+			// typedef typename allocator_type::template rebind<node_type>::other	node_allocator;
+
+
+			// typedef typename rbt_node_types<value_type>::node_type				node_type;
+			// typedef typename rbt_node_types<value_type>::leaf_node_type			leaf_node_type;
+			// typedef typename rbt_node_types<value_type>::node_pointer			node_pointer;
+			// typedef typename rbt_node_types<value_type>::leaf_node_pointer		leaf_node_pointer;
+			// typedef typename allocator_type::template rebind<node_type>::other	node_allocator;
 			// typedef ft::reverse_iterator<iterator>							reverse_iterator;
 			
 		protected:

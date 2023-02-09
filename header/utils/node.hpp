@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 20:44:44 by steh              #+#    #+#             */
-/*   Updated: 2023/02/04 21:05:37 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/08 20:22:19 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ namespace ft
 	class Node
 	{
 		public:
+			
+			typedef	Node<T>			node_type;
+
 			T				data;
 			Color			color;
 			Node			*left;
