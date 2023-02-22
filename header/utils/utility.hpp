@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 07:19:58 by codespace         #+#    #+#             */
-/*   Updated: 2023/02/07 22:50:11 by steh             ###   ########.fr       */
+/*   Updated: 2023/02/22 15:38:11 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,8 +268,8 @@ namespace ft
 			assert(map.count(it->first) == smap.count(sit->first));
 			assert(map.empty() == smap.empty());
 			assert(map.get_allocator() == smap.get_allocator());
-			std::cout<<"map max_size:"<<map.max_size()<<std::endl;
-			std::cout<<"smap max_size:"<<smap.max_size()<<std::endl;
+			// std::cout<<"map max_size:"<<map.max_size()<<std::endl;
+			// std::cout<<"smap max_size:"<<smap.max_size()<<std::endl;
 			// assert(map.max_size() == smap.max_size());
 			assert(map.size() == smap.size());
 		}
@@ -318,8 +318,8 @@ namespace ft
 			assert(set.count(*it) == sset.count(*sit));
 			assert(set.empty() == sset.empty());
 			assert(set.get_allocator() == sset.get_allocator());
-			std::cout<<"set max_size:"<<set.max_size()<<std::endl;
-			std::cout<<"sset max_size:"<<sset.max_size()<<std::endl;
+			// std::cout<<"set max_size:"<<set.max_size()<<std::endl;
+			// std::cout<<"sset max_size:"<<sset.max_size()<<std::endl;
 			// assert(set.max_size() == sset.max_size());
 			assert(set.size() == sset.size());
 		}
