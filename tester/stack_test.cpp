@@ -18,6 +18,9 @@
 #include "../header/stack.tpp"
 #include "../header/vector.tpp"
 #include <ctime> // for clock
+#include <deque>
+#include <list>
+
 
 int	main()
 {
@@ -215,6 +218,14 @@ int	main()
 		my_val = (s >= s2);
 		std_val = (ss >= ss2);
 		ft::test_assert(my_val, std_val, "More than equal incorrect", "More than equal Passed");
+	}
+
+	{
+		ft::print_headers("Testing");
+
+		ft::stack<int, std::deque<int> > s;
+		ft::stack<int, std::list<int> > s2;
+
 	}
 
 	{
