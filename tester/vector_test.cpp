@@ -15,8 +15,9 @@
 #include <cassert>
 #include <iomanip> 
 // #include "tester.hpp"
-#include "../header/vector.hpp"
-#include "../header/vector.tpp"
+// #include "../header/vector.hpp"
+#include "../header/utils/test.hpp"
+// #include "../header/vector.tpp"
 #include <ctime> // for clock
 
 int main(void)

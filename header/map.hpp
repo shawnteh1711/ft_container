@@ -240,4 +240,6 @@ namespace ft
 	}
 }
 
+#include "map.tpp"
+
 # endif

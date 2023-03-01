@@ -22,7 +22,6 @@
 # include "./utils/type_traits.hpp"
 # include "./utils/pair.hpp"
 
-
 /**
  * @brief https://en.cppreference.com/w/cpp/container/vector
  * 
@@ -242,5 +241,7 @@ namespace ft
 	// void swap( ft::vector<T,Alloc>& lhs,
 	// 		ft::vector<T,Alloc>& rhs );
 }
+
+#include "vector.tpp"
 
 #endif

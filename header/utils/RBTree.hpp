@@ -38,13 +38,12 @@
 # define RBTREE_HPP
 
 # include <iostream>
-# include <queue>
 # include "pair.hpp"
 # include "tree_iterator.hpp"
 # include "node.hpp"
 # include "RBTree.algorithms.hpp"
 # include "iterator.hpp"
-
+# include "algorithm.hpp"
 
 namespace ft
 {
@@ -219,6 +218,7 @@ namespace ft
 	// 	os << "(" << (*p.first).data << ", " << (*p.second).data << ")";
 	// 	return os;
 	// }
+	#include "RBTree.tpp"
 }
 
 #endif

@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "RBTree.hpp"
-#include "algorithm.hpp"
 #include <typeinfo>
 #define RED "\033[0;31m"
 #define GRN "\033[0;32m"

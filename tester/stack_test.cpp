@@ -14,9 +14,10 @@
 #include <stack>
 #include <cassert>
 #include <iomanip> 
-#include "../header/stack.hpp"
-#include "../header/stack.tpp"
-#include "../header/vector.tpp"
+// #include "../header/stack.hpp"
+// #include "../header/stack.tpp"
+// #include "../header/vector.tpp"
+#include "../header/utils/test.hpp"
 #include <ctime> // for clock
 #include <deque>
 #include <list>

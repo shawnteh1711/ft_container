@@ -10,9 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/map.hpp"
-#include "../header/map.tpp"
-#include "../header/utils/RBTree.tpp"
+// #include "../header/map.hpp"
+// #include "../header/map.tpp"
+// #include "../header/utils/RBTree.tpp"
+#include "../header/utils/test.hpp"
 #include <map>
 
 int main(void)

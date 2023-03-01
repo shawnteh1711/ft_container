@@ -10,9 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/set.hpp"
-#include "../header/set.tpp"
-#include "../header/utils/RBTree.tpp"
+// #include "../header/set.hpp"
+// #include "../header/set.tpp"
+// #include "../header/utils/RBTree.tpp"
+#include "../header/utils/test.hpp"
 #include <set>
 
 int main(void)

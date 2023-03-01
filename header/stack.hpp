@@ -13,10 +13,8 @@
 #ifndef STACK_HPP
 # define STACK_HPP
 
-# include "vector.hpp"
 # include "./utils/pair.hpp"
-
-
+# include "vector.hpp"
 
 // https://en.cppreference.com/w/cpp/container/stack
 
@@ -58,9 +56,9 @@ namespace ft
 			{
 				return (lhs._c < rhs._c);
 			};
-
-	
 	};
 }
+
+# include "stack.tpp"
 
 #endif

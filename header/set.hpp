@@ -185,4 +185,6 @@ namespace ft
 	}
 }
 
+#include "set.tpp"
+
 #endif
