@@ -508,8 +508,8 @@ typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_itera
 template<typename T, typename Alloc>
 typename ft::vector<T, Alloc>::iterator	ft::vector<T, Alloc>::erase(iterator pos)
 {
-	if (pos < begin() || pos >= end())
-		throw (std::out_of_range("Invalid iterator: Erase"));
+	// if (pos < begin() || pos >= end())
+	// 	throw (std::out_of_range("Invalid iterator: Erase"));
 	for (iterator it = pos; it < end() - 1; ++it)
 		*it = *(it + 1);
 	--_size;
@@ -538,6 +538,7 @@ typename ft::vector<T, Alloc>::iterator	ft::vector<T, Alloc>::erase(const_iterat
 template<typename T, typename Alloc>
 typename ft::vector<T, Alloc>::iterator	ft::vector<T, Alloc>::erase(iterator first, iterator last)
 {
+	std::cout << "non const iterator" << std::endl;
 	if (first < begin() || first >= end() || last < begin() || last > end())
 		throw (std::out_of_range("Invalid iterator: Erase Range"));
 	if (first > last)

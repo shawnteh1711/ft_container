@@ -22,7 +22,7 @@ CXXFLAGS		=	-Wall -Wextra -Werror -std=c++98 -pedantic -g #-fsanitize=address
 CXX				=	c++ 
 
 all				:	$(NAME)
-					./$(NAME) 123
+					time ./$(NAME) 123
 
 $(NAME)			:	$(OBJS)
 					$(CXX) $(CXXFLAGS) $^ -o $@
