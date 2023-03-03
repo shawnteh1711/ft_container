@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:43:01 by codespace         #+#    #+#             */
-/*   Updated: 2023/01/18 15:06:50 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/03 22:41:23 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ namespace ft
 
 		vector_iterator() : _iter(iterator_type()){};
 		explicit vector_iterator(const iterator_type& iter) : _iter(iter) {
-			// std::cout << "vector iterator" << std::endl;
 		};
 
 		// template type constructor
@@ -137,7 +136,7 @@ namespace ft
 	bool operator<(const vector_iterator<Iterator1, Container>& lhs,
 					const vector_iterator<Iterator2, Container>& rhs)
 	{
-		return (lhs.base() < rhs.base());
+ 		return (lhs.base() < rhs.base());
 	}
 
 	template <class Iterator1, class Iterator2, class Container>

@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2023/02/02 14:14:49 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/03 22:18:16 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -508,10 +508,10 @@ typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_itera
 template<typename T, typename Alloc>
 typename ft::vector<T, Alloc>::iterator	ft::vector<T, Alloc>::erase(iterator pos)
 {
-	// if (pos < begin() || pos >= end())
-	// 	throw (std::out_of_range("Invalid iterator: Erase"));
-	for (iterator it = pos; it < end() - 1; ++it)
-		*it = *(it + 1);
+	if (pos < begin() || pos >= end())
+		throw (std::out_of_range("Invalid iterator: Erase"));
+	for (iterator it = pos + 1; it != end(); ++it)
+		 *(it - 1) = *it;
 	--_size;
 	_end = _data + _size;
 	return (pos);
@@ -538,19 +538,19 @@ typename ft::vector<T, Alloc>::iterator	ft::vector<T, Alloc>::erase(const_iterat
 template<typename T, typename Alloc>
 typename ft::vector<T, Alloc>::iterator	ft::vector<T, Alloc>::erase(iterator first, iterator last)
 {
-	std::cout << "non const iterator" << std::endl;
-	if (first < begin() || first >= end() || last < begin() || last > end())
-		throw (std::out_of_range("Invalid iterator: Erase Range"));
-	if (first > last)
-		return (last);
-	iterator it = first;
-	while (it != last)
-	{
-		it = this->erase(it);
-		if (it == end())
-			break;
-	}
-	return (first);
+	size_type		index;
+	difference_type	n;
+
+	if (first < begin() || first >= end() || last <= begin() || last > end() || first > last)
+        throw std::out_of_range("Invalid iterator: Erase Range");
+
+    index = first - begin();
+	n = last - first;
+    for (size_type i = index; i < _size - n; ++i)
+        _data[i] = _data[i + n];
+    _size -= n;
+    _end = _data + _size;
+    return iterator(_data + index);
 }
 
 template<typename T, typename Alloc>
