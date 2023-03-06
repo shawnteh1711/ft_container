@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 11:06:25 by steh              #+#    #+#             */
-/*   Updated: 2023/03/06 20:25:47 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/06 21:07:13 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -567,8 +567,6 @@ void ft::RBTree<T, KeyofValue, Compare, Alloc>::left_rotate(Node *current_node)
 {
 	Node *right_child_of_current_node;
 
-	std::cout << "left" << std::endl;
-
 	right_child_of_current_node = current_node->right;
 	if (right_child_of_current_node == _TNULL)
 		return;
@@ -590,8 +588,6 @@ template <class T, class KeyofValue, class Compare, class Alloc>
 void ft::RBTree<T, KeyofValue, Compare, Alloc>::right_rotate(Node *current_node)
 {
 	Node *left_child_of_current_node;
-
-	std::cout << "left" << std::endl;
 
 	left_child_of_current_node = current_node->left;
 	if (left_child_of_current_node == _TNULL)
