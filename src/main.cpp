@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 16:21:43 by schuah            #+#    #+#             */
-/*   Updated: 2023/02/08 21:33:56 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/04 16:40:32 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 	#include <vector>
 	namespace ft = std;
 #else
-	#include <map.hpp>
-	#include <stack.hpp>
-	#include <vector.hpp>
+	#include "../header/map.hpp"
+	#include "../header/stack.hpp"
+	#include "../header/vector.hpp"
 #endif
 
 #include <stdlib.h>

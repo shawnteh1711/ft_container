@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 06:43:01 by codespace         #+#    #+#             */
-/*   Updated: 2023/03/03 22:41:23 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/04 13:23:39 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,15 @@ namespace ft
 			typedef typename iterator_traits<Iter>::reference			reference;
 
 		vector_iterator() : _iter(iterator_type()){};
-		explicit vector_iterator(const iterator_type& iter) : _iter(iter) {
-		};
 
 		// template type constructor
-		
 		template <class It>
-		vector_iterator(const vector_iterator<It, typename ft::enable_if<std::is_same<It, typename Container::pointer>::value, Container>::type>& iter) : _iter(iter.base()) {
-		};
+		vector_iterator(const vector_iterator<It, typename ft::enable_if<std::is_same<It, typename Container::pointer>::value, Container>::type>& iter) : _iter(iter.base()) {};
 
+		explicit vector_iterator(const iterator_type& iter) : _iter(iter) {};
 		~vector_iterator() {};
 
-		vector_iterator &operator=(const vector_iterator& other)
+		vector_iterator& operator=(const vector_iterator& other)
 		{
 			if (this == &other)
 				return (*this);
@@ -162,7 +159,7 @@ namespace ft
 
 	// Advances the iterator
 	template <class Iterator, class Container>
-	bool operator+(typename vector_iterator<Iterator, Container>::difference_type n,
+	vector_iterator<Iterator, Container> operator+(typename vector_iterator<Iterator, Container>::difference_type n,
 					const vector_iterator<Iterator, Container>& it)
 	{
 		return (vector_iterator<Iterator, Container>(it.base() + n));

@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 11:06:25 by steh              #+#    #+#             */
-/*   Updated: 2023/02/09 16:37:45 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/06 20:25:47 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,25 +72,68 @@ typename ft::RBTree<T, KeyofValue, Compare, Alloc>::Node *ft::RBTree<T, KeyofVal
 template <class T, class KeyofValue, class Compare, class Alloc>
 ft::RBTree<T, KeyofValue, Compare, Alloc>::RBTree(const RBTree &other)
 {
-	_root = other._root;
-	_TNULL = other._TNULL;
-	_size = other._size;
+	// std::cout << "tree copy constructor" << std::endl;
+
+	// _root = other._root;
+	// _TNULL = other._TNULL;
+	// _size = other._size;
+	// _keyofvalue = other._keyofvalue;
+	// _comp = other._comp;
+	// _node_alloc = other._node_alloc;
+	// _value_alloc = other._value_alloc;
+	// this->insert(other.begin(), other.end());
+	this->clear();
+	_TNULL = create_nil_node();
+	_root = _TNULL;
 	_keyofvalue = other._keyofvalue;
 	_comp = other._comp;
 	_node_alloc = other._node_alloc;
 	_value_alloc = other._value_alloc;
+	_keyofvalue = other._keyofvalue;
+	if (!other.empty())
+		this->insert(other.begin(), other.end());
+	_size = other._size;
 }
 
 template <class T, class KeyofValue, class Compare, class Alloc>
 ft::RBTree<T, KeyofValue, Compare, Alloc> &ft::RBTree<T, KeyofValue, Compare, Alloc>::operator=(const RBTree &other)
 {
-	if (this != &other)
-	{
-		RBTree copy(other);
-		this->swap(copy);
-		return (*this);
-	}
+	// std::cout << "tree operatorrr" << std::endl;
+	// if (this != &other)
+	// {
+	// 	this->clear();
+	// 	RBTree copy(other);
+	// 	this->swap(copy);
+	// }
+	// return (*this);
+	// if (this != &other)
+	// {
+	// 	std::cout << "sfdsfsfsafsafsdf" <<std::endl;
+	// 	this->clear();
+	// 	_TNULL = create_nil_node();
+	// 	_root = _TNULL;
+	// 	_size = other._size;
+	// 	_keyofvalue = other._keyofvalue;
+	// 	_comp = other._comp;
+	// 	_node_alloc = other._node_alloc;
+	// 	_value_alloc = other._value_alloc;
+	// 	_keyofvalue = other._keyofvalue;
+	// 	this->insert(other.begin(), other.end());
+	// }
+	// return (*this);
+	this->clear();
+	_TNULL = create_nil_node();
+	_root = _TNULL;
+	_keyofvalue = other._keyofvalue;
+	_comp = other._comp;
+	_node_alloc = other._node_alloc;
+	_value_alloc = other._value_alloc;
+	_keyofvalue = other._keyofvalue;
+	if (!other.empty())
+		this->insert(other.begin(), other.end());
+	_size = other._size;
 	return (*this);
+
 }
 
 template <class T, class KeyofValue, class Compare, class Alloc>
@@ -219,10 +262,7 @@ template <class T, class KeyofValue, class Compare, class Alloc>
 void ft::RBTree<T, KeyofValue, Compare, Alloc>::print_tree()
 {
 	if (_root)
-	{
-		// _myalgo.print_helper(this->_root, "", true);
 		this->print_helper(this->_root, "", true);
-	}
 }
 
 template <class T, class KeyofValue, class Compare, class Alloc>
@@ -357,6 +397,7 @@ void ft::RBTree<T, KeyofValue, Compare, Alloc>::delete_node_helper(Node *node, T
 	Node *successor_of_deleted_node;
 	Color original_color_of_successor;
 
+	// std::cout << "value:" << value.second << std::endl;
 	node_to_delete = _TNULL;
 	while (node != _TNULL)
 	{
@@ -367,15 +408,6 @@ void ft::RBTree<T, KeyofValue, Compare, Alloc>::delete_node_helper(Node *node, T
 		else
 			node = node->left;
 	}
-	// while (node != _TNULL)
-	// {
-	// 	if (node->data == value)
-	// 		node_to_delete = node;
-	// 	if (node->data <= value)
-	// 		node = node->right;
-	// 	else
-	// 		node = node->left;
-	// }
 	if (node_to_delete == _TNULL)
 	{
 		std::cout << "Value not found in the tree" << std::endl;
@@ -413,6 +445,7 @@ void ft::RBTree<T, KeyofValue, Compare, Alloc>::delete_node_helper(Node *node, T
 	}
 	if (original_color_of_successor == black)
 		delete_fix(child_of_deleted_node);
+	
 }
 
 // use sibling to fix violation
@@ -467,8 +500,7 @@ void ft::RBTree<T, KeyofValue, Compare, Alloc>::delete_fix(Node *current_node)
 				right_rotate(current_node->parent);
 				sibling = current_node->parent->left;
 			}
-
-			if (current_node->right->color == black && sibling->right->color == black)
+			if (current_node->right && current_node->right->color == black && sibling->right->color == black)
 			{
 				sibling->color = red;
 				current_node = current_node->parent;
@@ -491,6 +523,7 @@ void ft::RBTree<T, KeyofValue, Compare, Alloc>::delete_fix(Node *current_node)
 		}
 	}
 	current_node->color = black;
+
 }
 
 template <class T, class KeyofValue, class Compare, class Alloc>
@@ -502,6 +535,8 @@ void ft::RBTree<T, KeyofValue, Compare, Alloc>::delete_node(value_type value)
 template <class T, class KeyofValue, class Compare, class Alloc>
 typename ft::RBTree<T, KeyofValue, Compare, Alloc>::Node *ft::RBTree<T, KeyofValue, Compare, Alloc>::minimum(Node *node) const
 {
+	if (node == _TNULL)
+		return (_TNULL);
 	while (node->left != _TNULL)
 		node = node->left;
 	return (node);
@@ -532,7 +567,11 @@ void ft::RBTree<T, KeyofValue, Compare, Alloc>::left_rotate(Node *current_node)
 {
 	Node *right_child_of_current_node;
 
+	std::cout << "left" << std::endl;
+
 	right_child_of_current_node = current_node->right;
+	if (right_child_of_current_node == _TNULL)
+		return;
 	current_node->right = right_child_of_current_node->left;
 	if (right_child_of_current_node->left != _TNULL)
 		right_child_of_current_node->left->parent = current_node;
@@ -552,7 +591,11 @@ void ft::RBTree<T, KeyofValue, Compare, Alloc>::right_rotate(Node *current_node)
 {
 	Node *left_child_of_current_node;
 
+	std::cout << "left" << std::endl;
+
 	left_child_of_current_node = current_node->left;
+	if (left_child_of_current_node == _TNULL)
+		return;
 	current_node->left = left_child_of_current_node->right;
 	if (left_child_of_current_node->right != _TNULL)
 		left_child_of_current_node->right->parent = current_node;
@@ -585,41 +628,6 @@ void ft::RBTree<T, KeyofValue, Compare, Alloc>::post_order()
 	this->post_order_helper(_root);
 }
 
-// template <class T, class KeyofValue, class Compare, class Alloc >
-// typename ft::RBTree<T, KeyofValue, Compare, Alloc>::Node* ft::RBTree<T, KeyofValue, Compare, Alloc>::successor(Node* current_node)
-// {
-// 	Node*	parent_node;
-// 	if (current_node == nullptr)
-// 		return (nullptr);
-// 	if (current_node->right != _TNULL)
-// 		return (minimum(current_node->right));
-// 	parent_node = current_node->parent;
-// 	while (parent_node != nullptr && current_node == parent_node->right)
-// 	{
-// 		current_node = parent_node;
-// 		parent_node = parent_node->parent;
-// 	}
-// 	return (parent_node);
-// }
-
-// template <class T, class KeyofValue, class Compare, class Alloc >
-// typename ft::RBTree<T, KeyofValue, Compare, Alloc>::Node* ft::RBTree<T, KeyofValue, Compare, Alloc>::predecessor(Node* current_node)
-// {
-// 	Node*	parent_node;
-
-// 	if (current_node == nullptr)
-// 		return (nullptr);
-// 	if (current_node->left != _TNULL)
-// 		return (maximum(current_node->left));
-// 	parent_node = current_node->parent;
-// 	while (parent_node != nullptr && current_node == parent_node->left)
-// 	{
-// 		current_node = parent_node;
-// 		parent_node = parent_node->parent;
-// 	}
-// 	return (parent_node);
-// }
-
 template <class T, class KeyofValue, class Compare, class Alloc>
 typename ft::RBTree<T, KeyofValue, Compare, Alloc>::Node *ft::RBTree<T, KeyofValue, Compare, Alloc>::get_tnull()
 {
@@ -631,8 +639,6 @@ void ft::RBTree<T, KeyofValue, Compare, Alloc>::destroy(Node *node)
 {
 	if (node == _TNULL)
 		return;
-	// destroy(node->left);
-	// destroy(node->right);
 	if (node->left != _TNULL)
 		destroy(node->left);
 	if (node->right != _TNULL)
@@ -708,6 +714,8 @@ ft::RBTree<T, KeyofValue, Compare, Alloc>::max_size() const
 template <class T, class KeyofValue, class Compare, class Alloc>
 void ft::RBTree<T, KeyofValue, Compare, Alloc>::clear()
 {
+	if (_root == _TNULL)
+		return ;
 	this->destroy(this->_root);
 	_root = _TNULL;
 }
@@ -719,7 +727,6 @@ ft::RBTree<T, KeyofValue, Compare, Alloc>::insert(const value_type &value)
 	Node *new_node;
 
 	new_node = create_node(value);
-
 	Node *current = _root;
 	Node *parent = nullptr;
 	while (current != _TNULL)
@@ -769,9 +776,7 @@ template <class InputIt>
 void ft::RBTree<T, KeyofValue, Compare, Alloc>::insert(InputIt first, InputIt last, typename ft::enable_if<!std::is_integral<InputIt>::value, InputIt>::type *)
 {
 	for (InputIt tmp = first; tmp != last; tmp++)
-	{
-		insert((*tmp));
-	}
+		this->insert((*tmp));
 }
 
 template <class T, class KeyofValue, class Compare, class Alloc>
@@ -792,7 +797,7 @@ ft::RBTree<T, KeyofValue, Compare, Alloc>::erase(iterator first, iterator last)
 {
 	while (first != last)
 	{
-		first = erase(first);
+		first = this->erase(first);
 	};
 	return (first);
 }

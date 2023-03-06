@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 15:18:59 by steh              #+#    #+#             */
-/*   Updated: 2023/01/12 19:22:19 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/04 16:38:46 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@
 // # include "./utils/utility.hpp"
 
 template <class T, class Container>
-ft::stack<T, Container>::stack( const Container& cont) : _c(cont)
+ft::stack<T, Container>::stack( const Container& cont) : c(cont)
 {
 	return ;
 }
 
 template <class T, class Container>
-ft::stack<T, Container>::stack( const stack& other ) : _c(other._c)
+ft::stack<T, Container>::stack( const stack& other ) : c(other.c)
 {
 	return ;
 }
@@ -32,11 +32,11 @@ ft::stack<T, Container>::stack( const stack& other ) : _c(other._c)
 template <class T, class Container>
 ft::stack<T, Container>::~stack()
 {
-	while(!_c.empty())
+	while(!c.empty())
 	{
-		_c.pop_back();
+		c.pop_back();
 	}
-	_c.clear();
+	c.clear();
 	return ;
 }
 
@@ -44,50 +44,50 @@ template <class T, class Container>
 ft::stack<T, Container>& ft::stack<T, Container>::operator=(const stack& other)
 {
 	if (this != &other)
-		_c = other._c;
+		c = other.c;
 	return (*this);
 }
 
 template <class T, class Container>
 typename ft::stack<T, Container>::reference ft::stack<T, Container>::top()
 {
-	return (_c.back());
+	return (c.back());
 }
 
 template <class T, class Container>
 typename ft::stack<T, Container>::const_reference ft::stack<T, Container>::top() const
 {
-	return (_c.back());
+	return (c.back());
 }
 
 template <class T, class Container>
 bool ft::stack<T, Container>::empty() const
 {
-	return (_c.empty());
+	return (c.empty());
 }
 
 template <class T, class Container>
 typename ft::stack<T, Container>::size_type ft::stack<T, Container>::size() const
 {
-	return (_c.size());
+	return (c.size());
 }
 
 template <class T, class Container>
 void ft::stack<T, Container>::push( const value_type& value )
 {
-	_c.push_back(value);
+	c.push_back(value);
 }
 
 template <class T, class Container>
 void ft::stack<T, Container>::pop()
 {
-	_c.pop_back();
+	c.pop_back();
 }
 
 // template <class T, class Container>
 // bool operator==(const ft::stack<T, Container>& lhs, const ft::stack<T, Container>& rhs)
 // {
-// 	return (lhs._c == rhs._c);
+// 	return (lhs.c == rhs.c);
 // }
 
 template <class T, class Container>
@@ -99,7 +99,7 @@ bool operator!=(const ft::stack<T, Container>& lhs, const ft::stack<T, Container
 // template <class T, class Container>
 // bool operator<(const ft::stack<T, Container>& lhs, const ft::stack<T, Container>& rhs)
 // {
-// 	return (lhs._c < rhs._c);
+// 	return (lhs.c < rhs.c);
 // }
 
 template <class T, class Container>

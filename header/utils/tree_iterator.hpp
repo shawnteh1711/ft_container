@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 20:05:24 by steh              #+#    #+#             */
-/*   Updated: 2023/02/06 22:02:17 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/06 20:11:20 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ namespace ft
 			typedef value_type										node;
 			typedef value_type*										pointer;
 			typedef value_type&										reference;
-			// typedef Node<value_type>								node;
 			typedef Node<value_type>*								node_pointer;
-			// typedef Node<value_type>*								tnull_pointer;
-			// typedef Node<value_type>&								reference;
+			// typedef Node<value_type>								node;
+			// typedef Node<value_type>*							tnull_pointer;
+			// typedef Node<value_type>&							reference;
 		
 			// constructor
 
@@ -51,25 +51,29 @@ namespace ft
 
 			tree_iterator(node_pointer node) : _current_node(node)
 			{ 
-				// std::cout<<"node constructro"<<std::endl;
+				// std::cout<<"copy node constructor"<<std::endl;
 			};
 
 			// This is copy constructor
-			template <class It> 
-			tree_iterator(const tree_iterator<It>& iter) : _current_node(iter._current_node)
-			{
-				// std::cout<<"template constructor"<<std::endl;
-			};
+			// template <class It> 
+			// tree_iterator(const tree_iterator<It>& other) : _current_node(other._current_node)
+			// {
+			// 	// std::cout<<"tree_iterator copy constructor"<<std::endl;
+			// };
 
+			template<class U>
+			tree_iterator(tree_iterator<U>& other)
+				: _current_node(static_cast<node_pointer>(other.get_node_pointer()))
+			{
+				// std::cout<<"tree template constructor"<<std::endl;
+			}
 
 			~tree_iterator() {}
 
 			tree_iterator& operator=(const tree_iterator& other)
 			{
-				if (_current_node != other._current_node)
-				{
+				if (this != &other)
 					_current_node = other._current_node;
-				}
 				return (*this);
 			};
 
@@ -96,6 +100,7 @@ namespace ft
 
 			pointer operator->() const
 			{
+				// std::cout << "operator->" << std::endl;
 				return (&_current_node->data);
 			}
 
@@ -147,56 +152,6 @@ namespace ft
 				return (_current_node);
 			};
 
-			// node_pointer in_order_successor(node_pointer node) 
-			// {
-			// 	node_pointer parent;
-
-			// 	if (node == _TNULL)
-			// 		return (_TNULL);
-			// 	if (node->right != _TNULL)
-			// 	{
-			// 		node = node->right;
-			// 		while (node->left != _TNULL)
-			// 			node = node->left;
-			// 		return (node);
-			// 	}
-			// 	parent = node->parent;
-			// 	while (parent && parent->right == node)
-			// 	{
-			// 		node = parent;
-			// 		parent = parent->parent;
-			// 	}
-			// 	if (!parent)
-			// 		return (_TNULL);
-			// 	return (parent);
-			// }
-
-			// node_pointer in_order_predecessor(node_pointer node) 
-			// {
-			// 	node_pointer parent;
-			// 	// if (node == _TNULL)
-			// 	// 	return (_TNULL);
-			// 	std::cout<<"data:"<<node->data<<std::endl;
-			// 	std::cout<<"left:"<<node->left<<std::endl;
-			// 	std::cout<<"right:"<<node->right<<std::endl;
-			// 	if (node->left != _TNULL)
-			// 	{
-			// 		node = node->left;
-			// 		while (node->right != _TNULL)
-			// 			node = node->right;
-			// 		return (node);
-			// 	}
-			// 	parent = node->parent;
-			// 	while (parent && parent->left == node)
-			// 	{
-			// 		node = parent;
-			// 		parent = parent->parent;
-			// 	}
-			// 	if (!parent)
-			// 		return (_TNULL);
-			// 	return (parent);
-			// }
-
 		protected:
 			node_pointer		_current_node;
 	};
@@ -219,36 +174,38 @@ namespace ft
 			const_tree_iterator() : _current_node(nullptr)
 			{
 				// std::cout<<"default tree iter constructor"<<std::endl;
+				
 			};
 
 			const_tree_iterator(const node_pointer node) : _current_node(node)
-			{ 
+			{
 				// std::cout<<"node constructro"<<std::endl;
 			};
 
 			// This is copy constructor
 			template <class It> 
-			const_tree_iterator(const const_tree_iterator<It>& iter) : _current_node(iter._current_node)
+			const_tree_iterator(const const_tree_iterator<It>& other) : _current_node(other._current_node)
 			{
 				// std::cout<<"template constructor"<<std::endl;
 			};
+
+			template<typename U>
+			const_tree_iterator(const tree_iterator<U>& other)
+				: _current_node(const_cast<const node_pointer>(other.get_node_pointer()))
+			{
+				// std::cout<<"template constructor"<<std::endl;
+			}
 
 
 			~const_tree_iterator() {}
 
 			const_tree_iterator& operator=(const const_tree_iterator& other)
 			{
-				if (_current_node != other._current_node)
-				{
+				// std::cout<<"const_tree_iterator operator="<<std::endl;
+				if (this != &other)
 					_current_node = other._current_node;
-				}
 				return (*this);
 			};
-
-			// const_tree_iterator(pointer ptr) : _current_node(static_cast<node_pointer>(ptr))
-			// {
-			// 	std::cout<<"pointer constructor"<<std::endl;
-			// };
 
 			const node_pointer& base() const
 			{
@@ -263,6 +220,7 @@ namespace ft
 
 			pointer operator->() const
 			{
+				// std::cout << "operator->" << std::endl;
 				return (&_current_node->data);
 			}
 
@@ -282,7 +240,7 @@ namespace ft
 
 			const_tree_iterator& operator--()
 			{
-				_current_node = _current_node->predecessor(_current_node);;
+				_current_node = _current_node->predecessor(_current_node);
 				return (*this);
 			};
 

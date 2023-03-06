@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 19:59:48 by steh              #+#    #+#             */
-/*   Updated: 2023/02/08 20:25:11 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/06 15:56:36 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ namespace ft
 		}
 	};
 
+	
+
 	// template <class T, class KeyofValue, class Compare = std::less<T>, class Alloc = std::allocator<T> >
 	template <class T, class KeyofValue = ft::KeyofValue<T>, class Compare = std::less<T>, class Alloc = std::allocator<T> >
 	class RBTree
@@ -81,13 +83,9 @@ namespace ft
 			typedef typename allocator_type::pointer						pointer;
 			typedef typename allocator_type::const_pointer					const_pointer;
 			typedef Node<value_type>										Node;
-			// typedef typename Node::node_type								node_type;
 			typedef tree_iterator<value_type>								iterator;
 			typedef const_tree_iterator<value_type>							const_iterator;
 			typedef typename allocator_type::template rebind<Node>::other	node_allocator;
-			// typedef typename allocator_type::template rebind<node_type>::other	node_allocator;
-
-
 			// typedef typename rbt_node_types<value_type>::node_type				node_type;
 			// typedef typename rbt_node_types<value_type>::leaf_node_type			leaf_node_type;
 			// typedef typename rbt_node_types<value_type>::node_pointer			node_pointer;
@@ -143,7 +141,7 @@ namespace ft
 			Node*						tree_minimum() const;
 			Node*						maximum(Node* node) const;
 			Node*						tree_maximum() const;
-
+			
 
 			template <class P>
 			void						print_tree(typename ft::enable_if<!ft::is_integral<P>::value, void>::type* = NULL);
@@ -154,7 +152,8 @@ namespace ft
 			Node*						get_tnull();
 			Node*						create_nil_node();
 			Node*						create_node(const value_type &value);
-
+			Node*						copy_tree(Node* root, Node* parent, Node* TNULL, node_allocator& node_alloc, allocator_type& value_alloc);
+			Node*						copy_nodes(Node* node, Node* parent);
 			// member function
 			iterator		begin();
 			const_iterator	begin() const;
@@ -208,9 +207,9 @@ namespace ft
 			// Observer
 			key_of_value	key_comp() const;
 			value_compare	value_comp() const;
-			
-
 	};
+
+	
 
 	// template <typename K, typename V>
 	// std::ostream & operator<<(std::ostream & os, const ft::pair<K, V>& p)

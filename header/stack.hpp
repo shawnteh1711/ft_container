@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 14:49:25 by steh              #+#    #+#             */
-/*   Updated: 2023/01/11 16:13:21 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/04 16:39:43 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ namespace ft
 			typedef typename Container::const_reference		const_reference;
 
 		protected:
-			container_type	_c;
+			container_type c;
 		
 		public:
 			explicit stack( const Container& cont = container_type() );
@@ -45,16 +45,16 @@ namespace ft
 			size_type size() const;
 			void push( const value_type& value );
 			void pop();
-			// friend is used to access protected member _c
+			// friend is used to access protected member c
 			template <class Type, class C>
 			friend bool operator==(const ft::stack<Type, C>& lhs, const ft::stack<Type, C>& rhs)
 			{
-				return (lhs._c == rhs._c);
+				return (lhs.c == rhs.c);
 			};
 			template <class Type, class C>
 			friend bool operator<(const ft::stack<Type, C>& lhs, const ft::stack<Type, C>& rhs)
 			{
-				return (lhs._c < rhs._c);
+				return (lhs.c < rhs.c);
 			};
 	};
 }

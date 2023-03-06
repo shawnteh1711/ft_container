@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:43:02 by steh              #+#    #+#             */
-/*   Updated: 2023/02/07 20:45:40 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/06 18:46:35 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ namespace ft
 			typedef typename allocator_type::const_pointer					const_pointer;
 			typedef typename allocator_type::size_type						size_type;
 			typedef typename allocator_type::difference_type				difference_type;
-			typedef ft::tree_iterator<value_type>							iterator;
-			typedef const_tree_iterator<value_type>							const_iterator;
-			typedef ft::reverse_iterator<iterator>							reverse_iterator;
-			typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
+			// typedef tree_iterator<value_type>								iterator;
+			// typedef const_tree_iterator<value_type>							const_iterator;
+			// typedef ft::reverse_iterator<iterator>							reverse_iterator;
+			// typedef ft::reverse_iterator<const_iterator>						const_reverse_iterator;
 
 
 			class value_compare : std::binary_function<value_type, value_type, bool>
@@ -91,11 +91,16 @@ namespace ft
 					}
 			};
 
+		private:
 			// typedef	value_compare<value_type, value_type, key_compare>					value_compare;
-			typedef ft::RBTree<value_type, key_compare, value_compare, allocator_type>	tree;
-			// typedef typename tree::iterator												iterator;
-			// typedef typename tree::const_iterator										const_iterator;
+			typedef RBTree<value_type, key_compare, value_compare, allocator_type>	tree;
+			tree																	_rbtree;
 
+		public:
+			typedef ft::tree_iterator<value_type>				iterator;
+			typedef ft::const_tree_iterator<value_type>			const_iterator;
+			typedef ft::reverse_iterator<iterator>				reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 			
 			map();
 
@@ -185,9 +190,6 @@ namespace ft
 			key_compare key_comp() const;
 	
 			value_compare value_comp() const;
-
-		private:
-			tree _rbtree;
 	};
 
 	template< class Key, class T, class Compare, class Alloc >
