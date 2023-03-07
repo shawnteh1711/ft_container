@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 14:31:21 by steh              #+#    #+#             */
-/*   Updated: 2023/02/05 22:56:03 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/07 18:31:48 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ namespace ft
 	template<class T1, class T2>
 	bool operator== (const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
 	{
-		return (lhs.first == rhs.second && lhs.first == rhs.second);
+		return (lhs.first == rhs.first && lhs.second == rhs.second);
 	}
 
 	template<class T1, class T2>
@@ -85,13 +85,13 @@ namespace ft
 	template<class T1, class T2>
 	bool operator<= (const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
 	{
-		return (!(rhs<lhs));
+		return (!(rhs < lhs));
 	}
 
 	template<class T1, class T2>
 	bool operator> (const pair<T1, T2>& lhs, const pair<T1, T2>& rhs)
 	{
-		return (rhs<lhs);
+		return (rhs < lhs);
 	}
 
 	template<class T1, class T2>

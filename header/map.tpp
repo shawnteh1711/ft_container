@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:43:02 by steh              #+#    #+#             */
-/*   Updated: 2023/03/06 10:56:08 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/07 19:59:33 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ ft::map<Key, T, Compare, Alloc>::map() : _rbtree()
 
 template<class Key, class T, class Compare, class Alloc>
 ft::map<Key, T, Compare, Alloc>::map(const Compare& comp, const Alloc& alloc)
+: _rbtree(value_compare(comp), alloc)
 {
-	_rbtree(value_compare(comp), alloc);
+	// _rbtree(value_compare(comp), alloc);
 	return ;
 }
-
 
 template<class Key, class T, class Compare, class Alloc>
 template< class InputIt >
@@ -57,9 +57,7 @@ ft::map<Key, T, Compare, Alloc>::map( const map& other )
 	// 	return (*this);
 	// this->_rbtree = other._rbtree;
 	// return (*this);
-
 	_rbtree = other._rbtree;
-
 }
 
 template<class Key, class T, class Compare, class Alloc>

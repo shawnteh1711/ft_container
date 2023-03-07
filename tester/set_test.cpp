@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 21:00:33 by steh              #+#    #+#             */
-/*   Updated: 2023/02/08 18:42:53 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/07 18:44:50 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -680,7 +680,7 @@ int main(void)
 		std::cout << "std vec time: " << std_vec_time << std::endl;
 		std::cout << "Performance ratio of ft container compared to std container is: " << ft_vec_time / std_vec_time << " times\n" << std::endl;
 	}
-	system("leaks ft_container");
+	// system("leaks ft_container");
 
 	return (0);
 }

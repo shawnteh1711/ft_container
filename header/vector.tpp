@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2023/03/03 22:18:16 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/07 22:23:14 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "./utils/algorithm.hpp"
 # include "./utils/utility.hpp"
 # include "./utils/pair.hpp"
-
 # include <vector>
 
 // Member Function: Constructor
@@ -42,7 +41,10 @@ ft::vector<T, Alloc>::vector(size_type n, const value_type& val,
 		const allocator_type& alloc)
 {
 	if (n <= 0 || n > this->max_size())
+	{
+		throw (std::length_error("Length error"));
 		return ;
+	}
 	_alloc = alloc;
 	_size = n;
 	_capacity = n;
@@ -62,9 +64,12 @@ template<typename T, typename Alloc>
 template <class InputIt>
 ft::vector<T, Alloc>::vector(InputIt first, InputIt last, const allocator_type& alloc, typename ft::enable_if<!ft::is_integral<InputIt>::value, void>::type*) : _data(NULL)
 {
-	const size_type size = ft::distance(first, last);
+	const size_type size = std::distance(first, last);
 	if (size == 0 || size > this->max_size())
+	{
+		throw (std::length_error("Length error"));
 		return ;
+	}
 	_alloc = alloc;
 	_data = _alloc.allocate(size);
 	_start = _data;
@@ -315,7 +320,7 @@ bool ft::vector<T, Alloc>::empty() const
 template<typename T, typename Alloc>
 typename ft::vector<T, Alloc>::size_type ft::vector<T, Alloc>::size() const 
 {
-	return (_size);
+	return (ft::distance(this->begin(), this->end()));
 }
 
 // Capacity: max_size
@@ -424,15 +429,16 @@ typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_itera
 		else
 			reserve(capacity() * 2);
 	}
-	pointer new_element = _alloc.allocate(1);
-	_alloc.construct(new_element, value);
+	// pointer new_element = _alloc.allocate(1);
+	// _alloc.construct(new_element, value);
 	for (size_type i = _size; i > index; --i)
 		_data[i] = _data[i - 1];
-	_data[index] = *new_element;
+	// _data[index] = *new_element;
+	_data[index] = value;
 	++_size;
 	_start = _data;
 	_end = _data + _size;
-	_alloc.deallocate(new_element, 1);
+	// _alloc.deallocate(new_element, 1);
 	return (iterator(_data + index));
 }
 
@@ -460,7 +466,6 @@ typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_itera
 	_data[index] = value;
 	_start = _data;
 	++_size;
-	_start = _data;
 	_end = _data + _size;
 	return (iterator(_data + index));
 }

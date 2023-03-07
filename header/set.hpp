@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 20:50:34 by steh              #+#    #+#             */
-/*   Updated: 2023/03/04 16:26:46 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/07 16:16:35 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ namespace ft
 
 			// typedef typename tree::iterator						iterator;
 			// typedef typename tree::const_iterator				const_iterator;
-			typedef ft::tree_iterator<value_type>				iterator;
+			typedef ft::const_tree_iterator<value_type>				iterator;
 			typedef ft::const_tree_iterator<value_type>			const_iterator;
 			typedef ft::reverse_iterator<iterator>				reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
@@ -101,9 +101,11 @@ namespace ft
 			template< class InputIt >
 			void insert( InputIt first, InputIt last );
 
-			iterator erase( iterator pos );
+			// iterator erase( iterator pos );
+			void erase( iterator pos );
 
-			iterator erase( iterator first, iterator last );
+			// iterator erase( iterator first, iterator last );
+			void erase( iterator first, iterator last );
 
 			size_type erase( const Key& key );
 
@@ -135,7 +137,7 @@ namespace ft
 			value_compare value_comp() const;
 	};
 
-		template< class Key, class Compare, class Alloc >
+	template< class Key, class Compare, class Alloc >
 	bool operator==( const set<Key, Compare, Alloc>& lhs,
 					const set<Key, Compare, Alloc>& rhs )
 	{

@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 20:44:44 by steh              #+#    #+#             */
-/*   Updated: 2023/03/06 21:06:15 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/07 18:22:59 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,22 +113,25 @@ namespace ft
 			Node* predecessor(const Node* node) const
 			{
 				Node*	parent_node;
+				Node*	predecessor_node;
 
 				if (node == nullptr)
 					return (nullptr);
 				if (node->is_nil && node->parent)
 				{
 					parent_node = node->parent;
+					while (parent_node->parent != nullptr)
+						parent_node = parent_node->parent;
 					while (!check_nil(parent_node->right))
 						parent_node = parent_node->right;
 					return (parent_node);
 				}
 				if (!check_nil(node->left))
 				{
-					parent_node = node->left;
-					while (!check_nil(parent_node->right))
-						parent_node = parent_node->right;
-					return (parent_node);
+					predecessor_node  = node->left;
+					while (!check_nil(predecessor_node ->right))
+						predecessor_node  = predecessor_node ->right;
+					return (predecessor_node );
 				}
 				// return (maximum(node->left));
 				parent_node = node->parent;
@@ -142,76 +145,39 @@ namespace ft
 				return (parent_node);
 			}
 
-			Node* predecessor(Node* node)
+			Node* predecessor(Node* node) 
 			{
-				// std::cout << "predecessor " << std::endl;
-			// 	Node*	parent_node;
+				Node*	parent_node;
+				Node*	predecessor_node;
 
-			// 	if (node == nullptr)
-			// 		return (nullptr);
-			// 	if (node->is_nil && node->parent)
-			// 	{
-			// 		std::cout << "1 " << std::endl;
-			// 		parent_node = node->parent;
-			// 		while (!check_nil(parent_node->right))
-			// 			parent_node = parent_node->right;
-			// 		std::cout << "2 " << std::endl;
-			// 		return (parent_node);
-			// 	}
-			// 	if (!check_nil(node->left))
-			// 	{
-			// 		std::cout << "3 " << std::endl;
-			// 		parent_node = node->left;
-			// 		while (!check_nil(parent_node->right))
-			// 			parent_node = parent_node->right;
-			// 		std::cout << "4 " << std::endl;
-			// 		return (parent_node);
-			// 	}
-		
-			// 	std::cout << "5 " << std::endl;
-			// 	parent_node = node->parent;
-			// 	while (parent_node != nullptr && node == parent_node->left)
-			// 	{
-			// 		std::cout << "6 " << std::endl;
-			// 		node = parent_node;
-			// 		parent_node = parent_node->parent;
-			// 	}
-			// 		std::cout << "7 " << std::endl;
-			// 	if (!parent_node)
-			// 		return (nullptr);
-			// 		std::cout << "8 " << std::endl;
-			// 	return (parent_node);
-			// }
-
-			if (node == nullptr)
-				return nullptr;
-
-			if (node->is_nil && node->parent)
-			{
-				Node* parent_node = node->parent;
-				while (parent_node->parent != nullptr)
+				if (node == nullptr)
+					return (nullptr);
+				if (node->is_nil && node->parent)
+				{
+					parent_node = node->parent;
+					while (parent_node->parent != nullptr)
+						parent_node = parent_node->parent;
+					while (!check_nil(parent_node->right))
+						parent_node = parent_node->right;
+					return (parent_node);
+				}
+				if (!check_nil(node->left))
+				{
+					predecessor_node  = node->left;
+					while (!check_nil(predecessor_node ->right))
+						predecessor_node  = predecessor_node ->right;
+					return (predecessor_node );
+				}
+				// return (maximum(node->left));
+				parent_node = node->parent;
+				while (parent_node != nullptr && node == parent_node->left)
+				{
+					node = parent_node;
 					parent_node = parent_node->parent;
-				while (!check_nil(parent_node->right))
-					parent_node = parent_node->right;
-				return parent_node;
-			}
-
-			if (!check_nil(node->left))
-			{
-				Node* predecessor_node = node->left;
-				while (!check_nil(predecessor_node->right))
-					predecessor_node = predecessor_node->right;
-				return predecessor_node;
-			}
-
-			Node* parent_node = node->parent;
-			while (parent_node != nullptr && node == parent_node->left)
-			{
-				node = parent_node;
-				parent_node = parent_node->parent;
-			}
-			return parent_node;
-
+				}
+				if (!parent_node)
+					return (nullptr);
+				return (parent_node);
 			}
 
 	};

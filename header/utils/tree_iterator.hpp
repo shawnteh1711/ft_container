@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 20:05:24 by steh              #+#    #+#             */
-/*   Updated: 2023/03/06 20:11:20 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/07 18:21:20 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,6 +215,17 @@ namespace ft
 			// dereference operator
 			reference & operator*() const
 			{
+				// _current_node = const_cast<const node_pointer>(_current_node)->data;
+				// std::cout << " REFERENCE operator*" << std::endl;
+				// std::cout << " REFERENCE operator*" << std::endl;
+				// if (_current_node->is_nil)
+				// 	std::cout << "it is nil" << std::endl;
+				// else
+				// 	std::cout << "it is not nil" << std::endl;
+				// if (_current_node == nullptr)
+				// 	return nullptr;
+				// i am using const iterator, i think _current_node->data cannot return
+				// std::cout << "data:" << _current_node->data << std::endl;
 				return (_current_node->data);
 			};
 
@@ -223,7 +234,6 @@ namespace ft
 				// std::cout << "operator->" << std::endl;
 				return (&_current_node->data);
 			}
-
 
 			const_tree_iterator& operator++()
 			{

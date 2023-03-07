@@ -6,7 +6,7 @@
 #    By: steh <steh@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/18 17:07:14 by steh              #+#    #+#              #
-#    Updated: 2023/03/06 10:04:24 by steh             ###   ########.fr        #
+#    Updated: 2023/03/07 20:29:58 by steh             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ OBJ_DIR			=	obj
 HEAD_DIR		=	header
 DEPENDS 		=	$(patsubst $(SRCS_DIR)/%.cpp, $(OBJ_DIR)/%.d, $(SRCS))
 OBJS			=	$(patsubst $(SRCS_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRCS))
-CXXFLAGS		=	-Wall -Wextra -Werror -std=c++98 -pedantic -g -fsanitize=address
+CXXFLAGS		=	-Wall -Wextra -Werror -std=c++98 -pedantic -g #-fsanitize=address
 CXX				=	c++ 
 
 all				:	$(NAME)
@@ -41,16 +41,32 @@ vector			:
 					$(CXX) $(CXXFLAGS) tester/vector_test.cpp -o $(NAME)
 					./$(NAME)
 
+vector2			:
+					$(CXX) $(CXXFLAGS) tester/vector.cpp -o $(NAME)
+					./$(NAME)
+
 stack			:
 					$(CXX) $(CXXFLAGS) tester/stack_test.cpp -o $(NAME)
+					./$(NAME)
+
+stack2			:
+					$(CXX) $(CXXFLAGS) tester/stack.cpp -o $(NAME)
 					./$(NAME)
 
 map				:
 					$(CXX) $(CXXFLAGS) tester/map_test.cpp -o $(NAME)
 					./$(NAME)
 
+map2				:
+					$(CXX) $(CXXFLAGS) tester/map.cpp -o $(NAME)
+					./$(NAME)
+
 set				:
 					$(CXX) $(CXXFLAGS) tester/set_test.cpp -o $(NAME)
+					./$(NAME)
+
+set2				:
+					$(CXX) $(CXXFLAGS) tester/set.cpp -o $(NAME)
 					./$(NAME)
 
 clean			:

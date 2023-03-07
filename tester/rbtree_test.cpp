@@ -6,11 +6,11 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 22:17:04 by steh              #+#    #+#             */
-/*   Updated: 2023/02/06 21:45:56 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/07 16:37:42 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/utils/RBTree.tpp"
+#include "../header/utils/RBTree.hpp"
 #include <iostream>
 #include <map>
 #include <iterator>

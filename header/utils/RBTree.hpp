@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 19:59:48 by steh              #+#    #+#             */
-/*   Updated: 2023/03/06 15:56:36 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/07 17:02:21 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,12 +168,17 @@ namespace ft
 			void						clear();
 			ft::pair<iterator, bool> 	insert(const value_type& value);
 			iterator					insert(iterator pos, const value_type& value);
+			iterator					insert(const_iterator pos, const value_type& value);
 			template <class InputIt>
 			void						insert(InputIt first, InputIt last, typename ft::enable_if<!std::is_integral<InputIt>::value, InputIt>::type* = NULL);
 			iterator					erase(iterator pos);
+			const_iterator				erase(const_iterator pos);
 			iterator					erase(iterator first, iterator last);
+			const_iterator				erase(const_iterator first, const_iterator last);
+			// void						erase(const_iterator first, const_iterator last);
 			template <class Key>
 			size_type					erase(const Key &key);
+			// size_type					erase(const value_type &key);
 			void						swap(RBTree &other);
 
 			// Lookup

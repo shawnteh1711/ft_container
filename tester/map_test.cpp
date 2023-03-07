@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:50:14 by steh              #+#    #+#             */
-/*   Updated: 2023/03/06 17:16:35 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/07 18:44:42 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ int main(void)
 		ft::print_headers("Range Constructor");
 
 		ft::map<int, std::string > map;
+		std::map<int, std::string > std_map;
 		map.insert(ft::make_pair(1, "a"));
 		map.insert(ft::make_pair(2, "b"));
-		std::map<int, std::string > std_map;
 		std_map.insert(std::make_pair(1, "a"));
 		std_map.insert(std::make_pair(2, "b"));
 
@@ -133,6 +133,7 @@ int main(void)
 		std_map.insert(std::make_pair(3, 30));
 		
 		ft::map<int, int> 					map2(map);
+
 		std::map<int, int> 					std_map2(std_map);
 		map.clear();
 		std_map.clear();
@@ -727,194 +728,226 @@ int main(void)
 		std::cout << "Performance ratio of ft container compared to std container is: " << ft_vec_time / std_vec_time << " times\n" << std::endl;
 	}
 
-	{
-		ft::print_headers("const_iterator");
+	// {
+	// 	ft::print_headers("const_iterator");
 
-		ft::map<int, int>			map;
-		std::map<int, int>			smap;
-		// map.insert(ft::make_pair(1, 10));
-		// smap.insert(std::make_pair(1, 10));
+	// 	ft::map<int, int>			map;
+	// 	std::map<int, int>			smap;
+	// 	// map.insert(ft::make_pair(1, 10));
+	// 	// smap.insert(std::make_pair(1, 10));
 
-		ft::map<int, int>::const_iterator cit = map.begin(), cite = map.end();
-		std::map<int, int>::const_iterator scit = smap.begin(), scite = smap.end();
+	// 	ft::map<int, int>::const_iterator cit = map.begin(), cite = map.end();
+	// 	std::map<int, int>::const_iterator scit = smap.begin(), scite = smap.end();
 
-		if (cit == cite)
-			std::cout << "map is empty" << std::endl;
-		else
-			std::cout << "map is not empty" << std::endl;
+	// 	if (cit == cite)
+	// 		std::cout << "map is empty" << std::endl;
+	// 	else
+	// 		std::cout << "map is not empty" << std::endl;
 
-		if (scit == scite)
-			std::cout << "map is empty" << std::endl;
-		else
-			std::cout << "map is not empty" << std::endl;
+	// 	if (scit == scite)
+	// 		std::cout << "map is empty" << std::endl;
+	// 	else
+	// 		std::cout << "map is not empty" << std::endl;
 
-		for (; cit != cite; ++cit)
-			std::cout << "data: " << cit->first  << std::endl;
-		for (; scit != scite; ++cit)
-			std::cout << "data: " << scit->first  << std::endl;
-	}
+	// 	for (; cit != cite; ++cit)
+	// 		std::cout << "data: " << cit->first  << std::endl;
+	// 	for (; scit != scite; ++cit)
+	// 		std::cout << "data: " << scit->first  << std::endl;
+	// }
 
 
-{
-		ft::print_headers("ite_arrow");
+	// {
+	// 	ft::print_headers("ite_arrow");
 
-		ft::list<ft::pair<T1, T2> > lst;
-		unsigned int lst_size = 5;
-		for (unsigned int i = 0; i < lst_size; ++i)
-        	lst.push_back(ft::make_pair(2.5 + i, i + 1));
+	// 	ft::list<ft::pair<T1, T2> > lst;
+	// 	unsigned int lst_size = 5;
+	// 	for (unsigned int i = 0; i < lst_size; ++i)
+    //     	lst.push_back(ft::make_pair(2.5 + i, i + 1));
 
-		for (ft::list<ft::pair<T1, T2> >::const_iterator it = lst.begin(); it != lst.end(); ++it)
-  	    	ft::cout << (*it).first << ", " << (*it).second << std::endl;
+	// 	for (ft::list<ft::pair<T1, T2> >::const_iterator it = lst.begin(); it != lst.end(); ++it)
+  	//     	ft::cout << (*it).first << ", " << (*it).second << std::endl;
 
-		std::list<std::pair<T1, T2> > slst;
-		unsigned int slst_size = 5;
-		for (unsigned int i = 0; i < slst_size; ++i)
-        	slst.push_back(std::make_pair(2.5 + i, i + 1));
+	// 	std::list<std::pair<T1, T2> > slst;
+	// 	unsigned int slst_size = 5;
+	// 	for (unsigned int i = 0; i < slst_size; ++i)
+    //     	slst.push_back(std::make_pair(2.5 + i, i + 1));
 
-		for (std::list<std::pair<T1, T2> >::const_iterator sit = slst.begin(); sit != slst.end(); ++sit)
-  	    	std::cout << (*sit).first << ", " << (*sit).second << std::endl;
+	// 	for (std::list<std::pair<T1, T2> >::const_iterator sit = slst.begin(); sit != slst.end(); ++sit)
+  	//     	std::cout << (*sit).first << ", " << (*sit).second << std::endl;
 		
-		ft::map<T1, T2>			map(lst.begin(), lst.end());
-		std::map<T1, T2>			smap(slst.begin(), slst.end());
+	// 	ft::map<T1, T2>			map(lst.begin(), lst.end());
+	// 	std::map<T1, T2>			smap(slst.begin(), slst.end());
 
-		ft::map<T1, T2>::iterator it(map.begin());
-		std::map<T1, T2>::iterator sit(smap.begin());
-		ft::map<T1, T2>::const_iterator cit(map.begin());
-		std::map<T1, T2>::const_iterator scit(smap.begin());
+	// 	ft::map<T1, T2>::iterator it(map.begin());
+	// 	std::map<T1, T2>::iterator sit(smap.begin());
+	// 	ft::map<T1, T2>::const_iterator cit(map.begin());
+	// 	std::map<T1, T2>::const_iterator scit(smap.begin());
 
-		++it;
-		++sit;
-		std::cout << "key: " << it->first << "| value: " << it->second << std::endl;
-		std::cout << "std key: " << sit->first << "| value: " << sit->second << std::endl;
+	// 	++it;
+	// 	++sit;
+	// 	std::cout << "key: " << it->first << "| value: " << it->second << std::endl;
+	// 	std::cout << "std key: " << sit->first << "| value: " << sit->second << std::endl;
 	
-		++cit;
-		++scit;
-		std::cout << "key: " << cit->first << "| value: " << cit->second << std::endl;
-		std::cout << "std key: " << scit->first << "| value: " << scit->second << std::endl;
+	// 	++cit;
+	// 	++scit;
+	// 	std::cout << "key: " << cit->first << "| value: " << cit->second << std::endl;
+	// 	std::cout << "std key: " << scit->first << "| value: " << scit->second << std::endl;
 	
-		it->second.m();
-		cit->second.m();
-		cit++;
-		scit++;
-		std::cout << "key: " << cit->first << "| value: " << cit->second << std::endl;
-		std::cout << "std key: " << scit->first << "| value: " << scit->second << std::endl;
+	// 	it->second.m();
+	// 	cit->second.m();
+	// 	cit++;
+	// 	scit++;
+	// 	std::cout << "key: " << cit->first << "| value: " << cit->second << std::endl;
+	// 	std::cout << "std key: " << scit->first << "| value: " << scit->second << std::endl;
 
-		cit++;
-		scit++;
-		std::cout << "key: " << cit->first << "| value: " << cit->second << std::endl;
-		std::cout << "std key: " << scit->first << "| value: " << scit->second << std::endl;
+	// 	cit++;
+	// 	scit++;
+	// 	std::cout << "key: " << cit->first << "| value: " << cit->second << std::endl;
+	// 	std::cout << "std key: " << scit->first << "| value: " << scit->second << std::endl;
 
-		++cit;
-		++scit;
-		std::cout << "key: " << cit->first << "| value: " << cit->second << std::endl;
-		std::cout << "std key: " << scit->first << "| value: " << scit->second << std::endl;
+	// 	++cit;
+	// 	++scit;
+	// 	std::cout << "key: " << cit->first << "| value: " << cit->second << std::endl;
+	// 	std::cout << "std key: " << scit->first << "| value: " << scit->second << std::endl;
 		
-		--cit;
-		--scit;
-		std::cout << "key: " << cit->first << "| value: " << cit->second << std::endl;
-		std::cout << "std key: " << scit->first << "| value: " << scit->second << std::endl;
-	}
+	// 	--cit;
+	// 	--scit;
+	// 	std::cout << "key: " << cit->first << "| value: " << cit->second << std::endl;
+	// 	std::cout << "std key: " << scit->first << "| value: " << scit->second << std::endl;
+	// }
 
-	{
-		ft::print_headers("rite_arrow");
+	// {
+	// 	ft::print_headers("rite_arrow");
 
-		ft::list<ft::pair<T1, T2> > lst;
-		unsigned int lst_size = 5;
-		for (unsigned int i = 0; i < lst_size; ++i)
-        	lst.push_back(ft::make_pair(2.5 + i, i + 1));
+	// 	ft::list<ft::pair<T1, T2> > lst;
+	// 	unsigned int lst_size = 5;
+	// 	for (unsigned int i = 0; i < lst_size; ++i)
+    //     	lst.push_back(ft::make_pair(2.5 + i, i + 1));
 
-		for (ft::list<ft::pair<T1, T2> >::const_iterator it = lst.begin(); it != lst.end(); ++it)
-  	    	ft::cout << (*it).first << ", " << (*it).second << std::endl;
+	// 	for (ft::list<ft::pair<T1, T2> >::const_iterator it = lst.begin(); it != lst.end(); ++it)
+  	//     	ft::cout << (*it).first << ", " << (*it).second << std::endl;
 
-		std::list<std::pair<T1, T2> > slst;
-		unsigned int slst_size = 5;
-		for (unsigned int i = 0; i < slst_size; ++i)
-        	slst.push_back(std::make_pair(2.5 + i, i + 1));
+	// 	std::list<std::pair<T1, T2> > slst;
+	// 	unsigned int slst_size = 5;
+	// 	for (unsigned int i = 0; i < slst_size; ++i)
+    //     	slst.push_back(std::make_pair(2.5 + i, i + 1));
 
-		for (std::list<std::pair<T1, T2> >::const_iterator sit = slst.begin(); sit != slst.end(); ++sit)
-  	    	std::cout << (*sit).first << ", " << (*sit).second << std::endl;
+	// 	for (std::list<std::pair<T1, T2> >::const_iterator sit = slst.begin(); sit != slst.end(); ++sit)
+  	//     	std::cout << (*sit).first << ", " << (*sit).second << std::endl;
 		
-		ft::map<T1, T2>			map(lst.begin(), lst.end());
-		std::map<T1, T2>			smap(slst.begin(), slst.end());
+	// 	ft::map<T1, T2>			map(lst.begin(), lst.end());
+	// 	std::map<T1, T2>			smap(slst.begin(), slst.end());
 
-		ft::map<T1, T2>::reverse_iterator it(map.rbegin());
-		std::map<T1, T2>::reverse_iterator sit(smap.rbegin());
-		ft::map<T1, T2>::const_reverse_iterator cit(map.rbegin());
-		std::map<T1, T2>::const_reverse_iterator scit(smap.rbegin());
+	// 	ft::map<T1, T2>::reverse_iterator it(map.rbegin());
+	// 	std::map<T1, T2>::reverse_iterator sit(smap.rbegin());
+	// 	ft::map<T1, T2>::const_reverse_iterator cit(map.rbegin());
+	// 	std::map<T1, T2>::const_reverse_iterator scit(smap.rbegin());
 
-		++cit;
-		++scit;
-		std::cout << "key: " << cit->first << "| value: " << cit->second << std::endl;
-		std::cout << "std key: " << scit->first << "| value: " << scit->second << std::endl;
+	// 	++cit;
+	// 	++scit;
+	// 	std::cout << "key: " << cit->first << "| value: " << cit->second << std::endl;
+	// 	std::cout << "std key: " << scit->first << "| value: " << scit->second << std::endl;
 	
-		cit++;
-		scit++;
-		std::cout << "key: " << cit->first << "| value: " << cit->second << std::endl;
-		std::cout << "std key: " << scit->first << "| value: " << scit->second << std::endl;
+	// 	cit++;
+	// 	scit++;
+	// 	std::cout << "key: " << cit->first << "| value: " << cit->second << std::endl;
+	// 	std::cout << "std key: " << scit->first << "| value: " << scit->second << std::endl;
 
-		cit++;
-		scit++;
-		std::cout << "key: " << cit->first << "| value: " << cit->second << std::endl;
-		std::cout << "std key: " << scit->first << "| value: " << scit->second << std::endl;
+	// 	cit++;
+	// 	scit++;
+	// 	std::cout << "key: " << cit->first << "| value: " << cit->second << std::endl;
+	// 	std::cout << "std key: " << scit->first << "| value: " << scit->second << std::endl;
 	
-		++cit;
-		++scit;
-		std::cout << "key: " << cit->first << "| value: " << cit->second << std::endl;
-		std::cout << "std key: " << scit->first << "| value: " << scit->second << std::endl;
+	// 	++cit;
+	// 	++scit;
+	// 	std::cout << "key: " << cit->first << "| value: " << cit->second << std::endl;
+	// 	std::cout << "std key: " << scit->first << "| value: " << scit->second << std::endl;
 
-		it->second.m();
-		sit->second.m();
-		cit->second.m();
-		scit->second.m();
+	// 	it->second.m();
+	// 	sit->second.m();
+	// 	cit->second.m();
+	// 	scit->second.m();
 
-		++it;
-		++sit;
-		std::cout << "key: " << it->first << "| value: " << it->second << std::endl;
-		std::cout << "std key: " << sit->first << "| value: " << sit->second << std::endl;
+	// 	++it;
+	// 	++sit;
+	// 	std::cout << "key: " << it->first << "| value: " << it->second << std::endl;
+	// 	std::cout << "std key: " << sit->first << "| value: " << sit->second << std::endl;
 
-		it++;
-		sit++;
-		std::cout << "key: " << it->first << "| value: " << it->second << std::endl;
-		std::cout << "std key: " << sit->first << "| value: " << sit->second << std::endl;
+	// 	it++;
+	// 	sit++;
+	// 	std::cout << "key: " << it->first << "| value: " << it->second << std::endl;
+	// 	std::cout << "std key: " << sit->first << "| value: " << sit->second << std::endl;
 		
-		it++;
-		sit++;
-		std::cout << "key: " << it->first << "| value: " << it->second << std::endl;
-		std::cout << "std key: " << sit->first << "| value: " << sit->second << std::endl;
+	// 	it++;
+	// 	sit++;
+	// 	std::cout << "key: " << it->first << "| value: " << it->second << std::endl;
+	// 	std::cout << "std key: " << sit->first << "| value: " << sit->second << std::endl;
 		
-		++it;
-		++sit;
-		std::cout << "key: " << it->first << "| value: " << it->second << std::endl;
-		std::cout << "std key: " << sit->first << "| value: " << sit->second << std::endl;
+	// 	++it;
+	// 	++sit;
+	// 	std::cout << "key: " << it->first << "| value: " << it->second << std::endl;
+	// 	std::cout << "std key: " << sit->first << "| value: " << sit->second << std::endl;
 
-		(*it).second.m();
-		(*sit).second.m();
-		(*cit).second.m();
-		(*scit).second.m();
+	// 	(*it).second.m();
+	// 	(*sit).second.m();
+	// 	(*cit).second.m();
+	// 	(*scit).second.m();
 	
-		--it;
-		--sit;
-		std::cout << "key: " << it->first << "| value: " << it->second << std::endl;
-		std::cout << "std key: " << sit->first << "| value: " << sit->second << std::endl;
+	// 	--it;
+	// 	--sit;
+	// 	std::cout << "key: " << it->first << "| value: " << it->second << std::endl;
+	// 	std::cout << "std key: " << sit->first << "| value: " << sit->second << std::endl;
 
-		it--;
-		sit--;
-		std::cout << "key: " << it->first << "| value: " << it->second << std::endl;
-		std::cout << "std key: " << sit->first << "| value: " << sit->second << std::endl;
+	// 	it--;
+	// 	sit--;
+	// 	std::cout << "key: " << it->first << "| value: " << it->second << std::endl;
+	// 	std::cout << "std key: " << sit->first << "| value: " << sit->second << std::endl;
 		
-		it--;
-		sit--;
-		std::cout << "key: " << it->first << "| value: " << it->second << std::endl;
-		std::cout << "std key: " << sit->first << "| value: " << sit->second << std::endl;
+	// 	it--;
+	// 	sit--;
+	// 	std::cout << "key: " << it->first << "| value: " << it->second << std::endl;
+	// 	std::cout << "std key: " << sit->first << "| value: " << sit->second << std::endl;
 		
-		--it;
-		--sit;
-		std::cout << "key: " << it->first << "| value: " << it->second << std::endl;
-		std::cout << "std key: " << sit->first << "| value: " << sit->second << std::endl;
+	// 	--it;
+	// 	--sit;
+	// 	std::cout << "key: " << it->first << "| value: " << it->second << std::endl;
+	// 	std::cout << "std key: " << sit->first << "| value: " << sit->second << std::endl;
 
-	}
+	// }
 
+	// {
+	// 	ft::print_headers("find_count");
 
+	// 	ft::map<int, std::string> mp;
+	// 	ft::map<int, std::string>::iterator it = mp.end();
+
+	// 	mp[42] = "fgzgxfn";
+	// 	mp[25] = "funny";
+	// 	mp[80] = "hey";
+	// 	mp[12] = "no";
+	// 	mp[27] = "bee";
+	// 	mp[90] = "8";
+
+	// 	mp.find(27)->second = "newly inserted mapped_value";
+	// }
+
+	// {
+	// 	ft::print_headers("insert");
+
+	// 	#define T3 int
+	// 	#define T4 std::string
+	// 	typedef ft::map<T3, T4>::value_type T5;
+	// 	typedef ft::map<T3, T4>::iterator iterator;
+	// 	ft::map<T3, T4> mp, mp2;
+
+	// 	mp.insert(T5(42, "lol"));
+	// 	ft::pair<iterator, bool> tmp;
+
+	// 	tmp = mp.insert(T5(42, "lol"));
+	// 	std::cout << "Created new node: " << tmp.second << std::endl;
+	// 	tmp = mp.insert(T5(42, "mdr"));
+	// 	std::cout << "Created new node: " << tmp.second << std::endl;
+	// }
 	// system("leaks ft_container");
 
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 21:14:50 by steh              #+#    #+#             */
-/*   Updated: 2023/02/08 17:44:54 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/07 16:25:07 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ ft::set<Key, Compare, Allocator>::insert( const value_type& value )
 }
 
 template <class Key, class Compare, class Allocator>
-typename ft::set<Key, Compare, Allocator>::iterator	
+typename ft::set<Key, Compare, Allocator>::iterator
 ft::set<Key, Compare, Allocator>::insert( iterator pos, const value_type& value )
 {
 	return (_rbtree.insert(pos, value));
@@ -162,22 +162,27 @@ template <class Key, class Compare, class Allocator>
 template< class InputIt >
 void ft::set<Key, Compare, Allocator>::insert( InputIt first, InputIt last )
 {
-	return (_rbtree.insert(first, last));
+	// return (_rbtree.insert(first, last));
+	_rbtree.insert(first, last);
 }
 
 
 template <class Key, class Compare, class Allocator>
-typename ft::set<Key, Compare, Allocator>::iterator	
+// typename ft::set<Key, Compare, Allocator>::iterator
+void
 ft::set<Key, Compare, Allocator>::erase( iterator pos )
 {
-	return (_rbtree.erase(pos));
+	// return (_rbtree.erase(pos));
+	_rbtree.erase(pos);
 }
 
 template <class Key, class Compare, class Allocator>
-typename ft::set<Key, Compare, Allocator>::iterator	
+// typename ft::set<Key, Compare, Allocator>::iterator
+void	
 ft::set<Key, Compare, Allocator>::erase( iterator first, iterator last )
 {
-	return (_rbtree.erase(first, last));
+	// return (_rbtree.erase(first, last));
+	_rbtree.erase(first, last);
 }
 
 template <class Key, class Compare, class Allocator>
