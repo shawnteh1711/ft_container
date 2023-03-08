@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:50:14 by steh              #+#    #+#             */
-/*   Updated: 2023/03/08 19:38:39 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/08 21:43:06 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -962,7 +962,6 @@ int main(void)
 		ft::map_check(m, sm);
 		
 	}
-	system("leaks ft_container");
-
+	// system("leaks ft_container");
 	return (0);
 }

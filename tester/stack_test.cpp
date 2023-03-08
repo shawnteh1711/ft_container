@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 15:10:08 by steh              #+#    #+#             */
-/*   Updated: 2023/03/08 19:05:54 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/08 21:42:55 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,6 +295,5 @@ int	main()
 		std::cout << "Performance ratio of ft container compared to std container is: " << ft_vec_time / std_vec_time << " times\n" << std::endl;
 	}
 	// system("leaks ft_container");
-
 	return (0);
 }
