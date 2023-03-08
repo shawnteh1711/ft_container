@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 03:08:21 by codespace         #+#    #+#             */
-/*   Updated: 2023/03/07 22:23:14 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/08 18:08:20 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "./utils/utility.hpp"
 # include "./utils/pair.hpp"
 # include <vector>
+# include <memory>
 
 // Member Function: Constructor
 
@@ -101,6 +102,8 @@ ft::vector<T, Alloc>::vector(const vector& x) : _alloc(x._alloc), _size(x._size)
 	_data = new_data;
 	_start = _data;
 	_end = _data + _size;
+	// if (_capacity < _size)
+	// 	_capacity = _size;
 }
 
 // Member Function: Destructor
@@ -351,6 +354,7 @@ void ft::vector<T, Alloc>::reserve(size_type new_cap)
 		// for (pointer q = _start; q != _end; ++q)
 		// 	*p++ = *q;
 		ft::uninitialized_copy(_data, _data + _size, new_data);
+		// std::uninitialized_copy(_data, _data + _size, new_data);
 		if (_capacity || _data)
 			_alloc.deallocate(_data, _capacity);
 		_data = new_data;
@@ -485,6 +489,7 @@ typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_itera
 		_data[i + count - 1] = _data[i - 1];
 	for (size_t i = index; i < index + count; ++i)
 		_data[i] = value;
+	_start = _data;
 	_end += count;
 	_size += count;
 	return (iterator(_data + index));
@@ -493,20 +498,48 @@ typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_itera
 // Insert elements from range [first, last) before pos: range
 template<typename T, typename Alloc>
 template <class InputIt>
-typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_iterator pos, InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type*)
+// typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(const_iterator pos, InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type*)
+typename ft::vector<T, Alloc>::iterator ft::vector<T, Alloc>::insert(iterator pos, InputIt first, InputIt last, typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type*)
 {
+	// size_type	index;
+
+	// if (pos < begin() || pos > end())
+	// 	throw (std::out_of_range("Invalid iterator: Insert"));
+	// // empty range
+	// if (first == last)
+    //     return (pos);
+	// if ((first == this->begin() && last == this->end()))
+	// {
+	// 	vector copy(first, last);
+	// 	return (this->insert(pos, copy.begin(), copy.end()));
+	// }
+	// index = ft::distance<const_iterator>(this->begin(), pos);
+	// for (InputIt it = first; it != last; ++it)
+	// {
+	// 	this->insert(begin() + index, *it);
+	// 	++index;
+	// }
+	// return iterator(begin() + index);
+
 	size_type	index;
 
 	if (pos < begin() || pos > end())
 		throw (std::out_of_range("Invalid iterator: Insert"));
-	index = ft::distance<const_iterator>(this->begin(), pos);
-	for (InputIt it = first; it != last; ++it)
+	// empty range
+	if (first == last)
+        return (pos);
+	vector copy(first, last);
+	index = ft::distance(this->begin(), pos);
+	for (iterator it = copy.begin(); it != copy.end(); ++it)
 	{
-		this->insert(begin() + index, *it);
-		++index;
+		// this->insert(begin() + index, *it);
+		// ++index;
+		pos = insert(pos, *it);
+		++pos;
 	}
-	return iterator(begin() + index);
+	return (iterator(begin() + index));
 }
+
 // Modifiers: erase
 
 // erase one element at iterator pos

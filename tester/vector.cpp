@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 15:20:25 by schuah            #+#    #+#             */
-/*   Updated: 2023/03/07 22:18:40 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/08 18:09:02 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -560,9 +560,7 @@ int	main(void)
 
 		ft_v1.insert(ft_v1.begin(), ft_v1.begin(), ft_v1.end());
 		std_v1.insert(std_v1.begin(), std_v1.begin(), std_v1.end());
-		// std_vector_print(std_v1);
-		// vector_check(ft_v1, std_v1);
-		ft_vector_print(ft_v1);
+		vector_check(ft_v1, std_v1);
 
 		ft_v1.insert(ft_v1.end(), ft_v1.begin(), ft_v1.end());
 		std_v1.insert(std_v1.end(), std_v1.begin(), std_v1.end());

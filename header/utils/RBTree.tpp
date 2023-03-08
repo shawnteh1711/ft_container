@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 11:06:25 by steh              #+#    #+#             */
-/*   Updated: 2023/03/07 18:22:11 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/08 18:59:32 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -689,7 +689,6 @@ ft::RBTree<T, KeyofValue, Compare, Alloc>::insert(const value_type &value)
 {
 	Node *new_node;
 
-	new_node = create_node(value);
 	Node *current = _root;
 	Node *parent = nullptr;
 	while (current != _TNULL)
@@ -700,13 +699,9 @@ ft::RBTree<T, KeyofValue, Compare, Alloc>::insert(const value_type &value)
 		else if (_comp(current->data, value))
 			current = current->right;
 		else
-		{
-			_value_alloc.destroy(&new_node->data);
-			_node_alloc.deallocate(new_node, 1);
-			// _node_alloc.destroy(new_node);
 			return (ft::make_pair(iterator(current), false)); /// so need pass, tnull
-		}
 	}
+	new_node = create_node(value);
 	new_node->parent = parent;
 	if (parent == nullptr)
 		_root = new_node;
@@ -721,6 +716,7 @@ ft::RBTree<T, KeyofValue, Compare, Alloc>::insert(const value_type &value)
 	}
 	if (new_node->parent->parent == _TNULL)
  		return (ft::make_pair(iterator(new_node), false));
+	
 	insert_fix(new_node);
 	_TNULL->parent = _root;
 	return (ft::make_pair(iterator(new_node), true));

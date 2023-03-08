@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 15:10:08 by steh              #+#    #+#             */
-/*   Updated: 2023/03/07 18:44:57 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/08 19:05:54 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,6 +226,15 @@ int	main()
 
 		ft::stack<int, std::deque<int> > s;
 		ft::stack<int, std::list<int> > s2;
+		std::stack<int, std::deque<int> > ss;
+		std::stack<int, std::list<int> > ss2;
+		
+		s.push(1);
+		ss.push(1);
+		s2.push(2);
+		ss2.push(2);
+		assert(s.top() == ss.top());
+		assert(s2.top() == ss2.top());
 
 	}
 

@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 13:16:42 by schuah            #+#    #+#             */
-/*   Updated: 2023/03/07 20:01:43 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/08 16:30:08 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -518,8 +518,8 @@ int	main(void)
 
 		it = ft_m1.lower_bound(43);
 		assert(it != ft_m1.end());
-		// assert(it->first == 100);
-		// assert(it->second == 'N');
+		assert(it->first == 55);
+		assert(it->second == 'D');
 
 		it = ft_m1.lower_bound(101);
 		assert(it == ft_m1.end());
@@ -547,8 +547,8 @@ int	main(void)
 
 		it = ft_m1.lower_bound(43);
 		assert(it != ft_m1.end());
-		// assert(it->first == 100);
-		// assert(it->second == 'N');
+		assert(it->first == 55);
+		assert(it->second == 'D');
 
 		it = ft_m1.upper_bound(101);
 		assert(it == ft_m1.end());

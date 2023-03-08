@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:50:14 by steh              #+#    #+#             */
-/*   Updated: 2023/03/07 18:44:42 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/08 19:38:39 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -948,7 +948,21 @@ int main(void)
 	// 	tmp = mp.insert(T5(42, "mdr"));
 	// 	std::cout << "Created new node: " << tmp.second << std::endl;
 	// }
-	// system("leaks ft_container");
+
+	{
+		ft::print_headers("Check unique key");
+
+		ft::map<int, int> m;
+		std::map<int, int> sm;
+
+		m.insert(ft::make_pair(1, 10));
+		m.insert(ft::make_pair(1, 20));
+		sm.insert(std::make_pair(1, 10));
+		sm.insert(std::make_pair(1, 20));
+		ft::map_check(m, sm);
+		
+	}
+	system("leaks ft_container");
 
 	return (0);
 }
