@@ -20,7 +20,7 @@ There are multiple containers in c++ and have different usage. We need to unders
 
 
 ## Container
-In c++, a contianer is a data structure that is designed to hold and organize a collections of objects or values. It provides a way to store and access data efficiently and conveniently, and comes with a set of methods for manipulating the data it contains.
+In c++, a container is a data structure that is designed to hold and organize a collections of objects or values. It provides a way to store and access data efficiently and conveniently, and comes with a set of methods for manipulating the data it contains.
 
 
 C++ provides several container types in its standard library including arrays, vectors, lists, maps, multimap (permit multiple entries with same key), sets, multisets(multiple keys with equivalent values are allowed.
@@ -36,7 +36,7 @@ Using containers in C++ can help ,ake your code more organized, efficient and ea
 Dynamic array is a type of data structure tha allow for the efficient allocation and deallocation of memory as needed. Unlike static arrays, which have fixed size that must be specified at the time of creation, dynamic arrays can grow or shrink in size during runtime. Similarlym if elements are removed from the array, and the remaining elements use less memory than the allocated memory, the dynamic array can free up the extra memory. Dynamic arrays are often used when the size of the data stored is not known ahead of time, or when the size of data may change over time.
 
 ## What is an Iterator 
-An iterator ia a programming concept that provides a way to acces the elements of a collection or container. An iterator can be thought of as a generalized pointer to an element of a collection, with additional functionaality for transveersing the collection. 
+An iterator ia a programming concept that provides a way to acces the elements of a collection or container. An iterator can be thought of as a generalized pointer to an element of a collection, with additional functionality for transveersing the collection. 
 
 
 ## Iterator category
