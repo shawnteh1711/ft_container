@@ -255,6 +255,7 @@ void ft::RBTree<T, KeyofValue, Compare, Alloc>::rb_transplant(Node *node_to_repl
 ```
 
 2. delete - delete the node
+```
 Locate the node to be deleted: Start at the root node and traverse the tree until the node to be deleted is found. Once the node is found, we must check whether it has zero, one or two children
 3 Cases to handle
 Case 1: node to delete has only one right child, replace it with its child
@@ -264,16 +265,19 @@ Case 3: the node has two children, replace it with its successor
         - If the parent of the successor node is the node to be deleted, the child_of_deleted_node's parent is updated to point to the successor node.
         - otherwise, the successor node is unlinked from its current position in the tree and is transplanted to the position of the node to be deleted using rb_transplant function.
         - The successot of deleted node then linked to the node to be deleted's left child and is given the same color as the node to be deleted.
+```
 
 
 
 3. delete_fixup - fixes any violation
+```
 Delete the node while maintaining the properties of the RBTree: The process of deleting a node can be broken down into different cases based on whether the node has zero, one or two children. In each case, we must maintain the properties of the RBTree such as the color of the nodes and their relationships with their parent and children.
 4 cases to fix 
 case 1: sibling is red
 case 2: sibling is black and both children are black
 case 3: sibling is black, left childred is red,  right children is black
 case 4: sibling is black and right children is red
+```
 
 
 ## Reference
