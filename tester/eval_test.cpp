@@ -6,15 +6,44 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 20:10:36 by steh              #+#    #+#             */
-/*   Updated: 2023/03/08 21:25:24 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/09 08:41:23 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/vector.hpp"
 #include "../header/utils/test.hpp"
 
+class objectClass
+{
+    public:
+        int         id;
+        std::string name;
+
+
+    objectClass(int id, std::string name)
+    {
+        this->id = id;
+        this->name = name;
+    }
+};
+
 void    eval_test(void)
 {
+    ft::print_headers("Store object");
+
+    ft::vector<objectClass> myV;
+
+    objectClass obj1(1, "i");
+    objectClass obj2(2, "am");
+    objectClass obj3(3, "you");
+
+    myV.push_back(obj1);
+    myV.push_back(obj2);
+    myV.push_back(obj3);
+
+    for (size_t i = 0; i < myV.size(); i++)
+        std::cout << "Object " << i + 1 << ": id=" << myV[i].id  << ", name= "<< myV[i].name << std::endl;
+
     ft::print_headers("iterator and const iterator comparison");
 
     ft::vector<int>                 v;

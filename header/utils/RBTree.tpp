@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 11:06:25 by steh              #+#    #+#             */
-/*   Updated: 2023/03/08 21:24:08 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/09 10:18:50 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ void ft::RBTree<T, KeyofValue, Compare, Alloc>::insert_fix(Node *current_node)
 	Node *uncle_node;
 	while (current_node->parent->color == red)
 	{
-		// check if new node parent os right or left child of its grandparent.
+		// check if new node parent is right or left child of its grandparent.
 		// it sets the uncle node to be left or right child of grandparent
 		if (current_node->parent == current_node->parent->parent->right)
 		{
@@ -361,8 +361,10 @@ void ft::RBTree<T, KeyofValue, Compare, Alloc>::delete_node_helper(Node *node, T
 		std::cout << "Value not found in the tree" << std::endl;
 		return;
 	}
+	// Save the successor and its color before deleting the node
 	successor_of_deleted_node = node_to_delete;
 	original_color_of_successor = successor_of_deleted_node->color;
+	// If the node has only one child, replace it with its child
 	if (node_to_delete->left == _TNULL)
 	{
 		child_of_deleted_node = node_to_delete->right;
@@ -375,17 +377,21 @@ void ft::RBTree<T, KeyofValue, Compare, Alloc>::delete_node_helper(Node *node, T
 	}
 	else
 	{
+		// If the node has left and right child, use its successor (smallest node in the right subtree) as the replacement
 		successor_of_deleted_node = minimum(node_to_delete->right);
 		original_color_of_successor = successor_of_deleted_node->color;
 		child_of_deleted_node = successor_of_deleted_node->right;
+		// If the parent of the successor node is the node to be deleted, the child_of_deleted_node's parent is updated to point to the successor node.
 		if (successor_of_deleted_node->parent == node_to_delete)
 			child_of_deleted_node->parent = successor_of_deleted_node;
 		else
 		{
+			// the successor node is unlinked from its current position in the tree and is transplanted to the position of the node to be deleted using the rb_transplant function.
 			rb_transplant(successor_of_deleted_node, successor_of_deleted_node->right);
 			successor_of_deleted_node->right = node_to_delete->right;
 			successor_of_deleted_node->right->parent = successor_of_deleted_node;
 		}
+		// The successor_of_deleted_node is then linked to the node to be deleted's left child and is given the same color as the node to be deleted.
 		rb_transplant(node_to_delete, successor_of_deleted_node);
 		successor_of_deleted_node->left = node_to_delete->left;
 		successor_of_deleted_node->left->parent = successor_of_deleted_node;
@@ -397,7 +403,6 @@ void ft::RBTree<T, KeyofValue, Compare, Alloc>::delete_node_helper(Node *node, T
 	// _node_alloc.deallocate(node_to_delete, 1);
 	if (original_color_of_successor == black)
 		delete_fix(child_of_deleted_node);
-
 }
 
 // use sibling to fix violation
@@ -429,7 +434,7 @@ void ft::RBTree<T, KeyofValue, Compare, Alloc>::delete_fix(Node *current_node)
 			}
 			else
 			{
-				// case 3: sibling is black and right children is black
+				// case 3: sibling is black, left childred is red,  right children is black
 				if (sibling->right->color == black)
 				{
 					sibling->left->color = black;
