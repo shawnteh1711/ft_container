@@ -38,6 +38,27 @@ Dynamic array is a type of data structure tha allow for the efficient allocation
 ## What is an Iterator 
 An iterator ia a programming concept that provides a way to acces the elements of a collection or container. An iterator can be thought of as a generalized pointer to an element of a collection, with additional functionaality for transveersing the collection. 
 
+
+## Iterator category
+The iterator_category is a type trait that describes the category of the iterator. The category determines the operations that can performed on the iterator, and also affects the efficiency of those operations.
+
+There are five iterator categories in C++:
+1. Input Iterator
+2. Output Iterator
+3. Forward Iterator
+4. Bidirectional Iterator
+5. Random Access Iterator
+
+| Iterator Type        | Capabilities                                                       | Examples of Containers  |
+|----------------------|--------------------------------------------------------------------|------------------------|
+| Input Iterator       | Reads values from a sequence of elements, single-pass traversal    | std::istream, std::vector, std::list       |
+| Output Iterator      | Writes values to a sequence of elements, single-pass traversal     | std::ostream, std::vector, std::list       |
+| Forward Iterator     | Reads and writes values, single-pass traversal, supports ++        | std::list, std::forward_list                |
+| Bidirectional Iterator | Reads and writes values, forward and backward traversal, supports ++ and -- | std::list, std::set                       |
+| Random Access Iterator | Reads and writes values, constant-time addition and subtraction, supports ++, --, and [] | std::vector, std::array, std::deque |
+
+
+
 ## Iterator comparison to Pointer
 A pointer is a variable that stores the memory address of another variable or object. Pointers are a low-level programming construct and are used for memory manipulation, data structures, and low-level optimizations.
 

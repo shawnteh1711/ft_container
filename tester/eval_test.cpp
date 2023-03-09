@@ -6,7 +6,7 @@
 /*   By: steh <steh@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 20:10:36 by steh              #+#    #+#             */
-/*   Updated: 2023/03/09 08:41:23 by steh             ###   ########.fr       */
+/*   Updated: 2023/03/09 11:14:04 by steh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,21 @@ void    eval_test(void)
 
     for (size_t i = 0; i < myV.size(); i++)
         std::cout << "Object " << i + 1 << ": id=" << myV[i].id  << ", name= "<< myV[i].name << std::endl;
+
+
+    ft::print_headers("iterator category");
+
+    ft::vector<int>             vect;
+
+    vect.push_back(1);
+    vect.push_back(2);
+    vect.push_back(3);
+    ft::vector<int>::iterator ite = vect.begin();
+
+    typedef ft::iterator_traits<decltype(ite)>::iterator_category category;
+
+    std::cout << "category:" << typeid(category).name() << std::endl;
+
 
     ft::print_headers("iterator and const iterator comparison");
 
